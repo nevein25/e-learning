@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Reflection.Emit;
 
 namespace API.Context
 {
@@ -23,8 +24,17 @@ namespace API.Context
 
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Student> Students { get; set; }
-
         public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<Rate> Rates { get; set; }
+
+        public DbSet<Wishlist> Wishlists { get; set; }
+        public DbSet<Module> Modules { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<StudentLesson> StudentLessons { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -67,9 +77,73 @@ namespace API.Context
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
 
+            ///Student and Lesson
+            builder.Entity<StudentLesson>()
+           .HasKey(sl => new { sl.StudentId, sl.LessonId });
+
+            builder.Entity<StudentLesson>()
+                .HasOne(sl => sl.Student)
+                .WithMany(s => s.StudentLessons)
+                .HasForeignKey(sl => sl.StudentId);
+
+            builder.Entity<StudentLesson>()
+                .HasOne(sl => sl.Lesson)
+                .WithMany(l => l.StudentLessons)
+                .HasForeignKey(sl => sl.LessonId);
+            ///
+            
+            ///Student and Course Enrollments
+            builder.Entity<Enrollment>()
+          .HasKey(e => new { e.StudentId, e.CourseId });
+
+            builder.Entity<Enrollment>()
+                .HasOne(e => e.Student)
+                .WithMany(s => s.Enrollments)
+                .HasForeignKey(e => e.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Enrollment>()
+                .HasOne(e => e.Course)
+                .WithMany(c => c.Enrollments)
+                .HasForeignKey(e => e.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
+            ///
+
+            ///Student and Course Rates
+            builder.Entity<Rate>()
+          .HasKey(e => new { e.StudentId, e.CourseId });
+
+            builder.Entity<Rate>()
+                .HasOne(e => e.Student)
+                .WithMany(s => s.Rates)
+                .HasForeignKey(e => e.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Rate>()
+                .HasOne(e => e.Course)
+                .WithMany(c => c.Rates)
+                .HasForeignKey(e => e.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
+            ///
+
+            ///Student and Course Wishlist
+            builder.Entity<Wishlist>()
+          .HasKey(e => new { e.StudentId, e.CourseId });
+
+            builder.Entity<Wishlist>()
+                .HasOne(e => e.Student)
+                .WithMany(s => s.Wishlists)
+                .HasForeignKey(e => e.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Wishlist>()
+                .HasOne(e => e.Course)
+                .WithMany(c => c.Wishlists)
+                .HasForeignKey(e => e.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
             ///
         }
 
 
-        }
+    }
     }
