@@ -1,0 +1,164 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\ITI\\Grad-Project\\e-learning\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|d:\\iti\\grad-project\\e-learning\\api\\entities\\instructor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|solutionrelative:api\\entities\\instructor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|d:\\iti\\grad-project\\e-learning\\api\\common\\roles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|solutionrelative:api\\common\\roles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|d:\\iti\\grad-project\\e-learning\\api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|solutionrelative:api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|d:\\iti\\grad-project\\e-learning\\api\\context\\ecommercecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|solutionrelative:api\\context\\ecommercecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|d:\\iti\\grad-project\\e-learning\\api\\entities\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|solutionrelative:api\\entities\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|d:\\iti\\grad-project\\e-learning\\api\\entities\\appuserrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|solutionrelative:api\\entities\\appuserrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|d:\\iti\\grad-project\\e-learning\\api\\entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|solutionrelative:api\\entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|d:\\iti\\grad-project\\e-learning\\api\\entities\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCA4DD42-515C-405A-B5F3-C73D64EA0E4E}|API\\API.csproj|solutionrelative:api\\entities\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Roles.cs",
+              "DocumentMoniker": "D:\\ITI\\Grad-Project\\e-learning\\API\\Common\\Roles.cs",
+              "RelativeDocumentMoniker": "API\\Common\\Roles.cs",
+              "ToolTip": "D:\\ITI\\Grad-Project\\e-learning\\API\\Common\\Roles.cs",
+              "RelativeToolTip": "API\\Common\\Roles.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T13:49:50.932Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\ITI\\Grad-Project\\e-learning\\API\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\AccountController.cs",
+              "ToolTip": "D:\\ITI\\Grad-Project\\e-learning\\API\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "API\\Controllers\\AccountController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T13:49:20.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EcommerceContext.cs",
+              "DocumentMoniker": "D:\\ITI\\Grad-Project\\e-learning\\API\\Context\\EcommerceContext.cs",
+              "RelativeDocumentMoniker": "API\\Context\\EcommerceContext.cs",
+              "ToolTip": "D:\\ITI\\Grad-Project\\e-learning\\API\\Context\\EcommerceContext.cs",
+              "RelativeToolTip": "API\\Context\\EcommerceContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC8AAABAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T13:41:17.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Instructor.cs",
+              "DocumentMoniker": "D:\\ITI\\Grad-Project\\e-learning\\API\\Entities\\Instructor.cs",
+              "RelativeDocumentMoniker": "API\\Entities\\Instructor.cs",
+              "ToolTip": "D:\\ITI\\Grad-Project\\e-learning\\API\\Entities\\Instructor.cs",
+              "RelativeToolTip": "API\\Entities\\Instructor.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T13:38:09.184Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Student.cs",
+              "DocumentMoniker": "D:\\ITI\\Grad-Project\\e-learning\\API\\Entities\\Student.cs",
+              "RelativeDocumentMoniker": "API\\Entities\\Student.cs",
+              "ToolTip": "D:\\ITI\\Grad-Project\\e-learning\\API\\Entities\\Student.cs",
+              "RelativeToolTip": "API\\Entities\\Student.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T13:37:58.508Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "D:\\ITI\\Grad-Project\\e-learning\\API\\Entities\\Admin.cs",
+              "RelativeDocumentMoniker": "API\\Entities\\Admin.cs",
+              "ToolTip": "D:\\ITI\\Grad-Project\\e-learning\\API\\Entities\\Admin.cs",
+              "RelativeToolTip": "API\\Entities\\Admin.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T13:37:48.094Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AppUserRole.cs",
+              "DocumentMoniker": "D:\\ITI\\Grad-Project\\e-learning\\API\\Entities\\AppUserRole.cs",
+              "RelativeDocumentMoniker": "API\\Entities\\AppUserRole.cs",
+              "ToolTip": "D:\\ITI\\Grad-Project\\e-learning\\API\\Entities\\AppUserRole.cs",
+              "RelativeToolTip": "API\\Entities\\AppUserRole.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T13:37:29.398Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AppUser.cs",
+              "DocumentMoniker": "D:\\ITI\\Grad-Project\\e-learning\\API\\Entities\\AppUser.cs",
+              "RelativeDocumentMoniker": "API\\Entities\\AppUser.cs",
+              "ToolTip": "D:\\ITI\\Grad-Project\\e-learning\\API\\Entities\\AppUser.cs",
+              "RelativeToolTip": "API\\Entities\\AppUser.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T13:36:36.849Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
