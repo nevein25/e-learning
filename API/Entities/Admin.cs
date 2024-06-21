@@ -2,7 +2,7 @@
 {
     public class Admin : AppUser
     {
-        public string WorkNumber { get; set; }
+        public string? WorkNumber { get; set; }
 
     }
 }

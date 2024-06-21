@@ -91,7 +91,7 @@ namespace API.Context
                 .WithMany(l => l.StudentLessons)
                 .HasForeignKey(sl => sl.LessonId);
             ///
-            
+
             ///Student and Course Enrollments
             builder.Entity<Enrollment>()
           .HasKey(e => new { e.StudentId, e.CourseId });
@@ -142,8 +142,14 @@ namespace API.Context
                 .HasForeignKey(e => e.CourseId)
                 .OnDelete(DeleteBehavior.Restrict);
             ///
+
+            // to solve decimal warning
+            builder.Entity<Course>().Property(c=> c.Duration).HasColumnType("decimal(18,4)");
+            builder.Entity<Course>().Property(c => c.Price).HasColumnType("decimal(18,4)");
+
+
         }
 
 
     }
-    }
+}

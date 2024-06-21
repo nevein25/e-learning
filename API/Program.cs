@@ -1,49 +1,39 @@
 using API.Context;
 using API.Entities;
+using API.Extensions;
 using API.Repositories.Classes;
 using API.Repositories.Interfaces;
 using API.Seed;
+using API.Services.Classes;
+using API.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 
 // Add services to the container.
-builder.Services.AddDbContext<EcommerceContext>(op =>
-      op.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection"))
-);
 
 
-builder.Services.AddIdentity<AppUser, AppRole>()
-    .AddEntityFrameworkStores<EcommerceContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        builder =>
-        {
-            builder.AllowAnyHeader()
-                   .AllowAnyMethod()
-                   .AllowCredentials()
-                   .WithOrigins("http://localhost:4200");
-        });
-});
 
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
+
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 
-app.UseCors("AllowAllOrigins");
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -54,7 +44,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
+    .WithOrigins("http://localhost:4200", "https://localhost:4200"));
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 
