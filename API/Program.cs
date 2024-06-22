@@ -1,6 +1,7 @@
 using API.Context;
 using API.Entities;
 using API.Extensions;
+using API.Middleware;
 using API.Repositories.Classes;
 using API.Repositories.Interfaces;
 using API.Seed;
@@ -31,7 +32,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
+app.UseMiddleware<ExceptionMiddleware>();
 
 
 

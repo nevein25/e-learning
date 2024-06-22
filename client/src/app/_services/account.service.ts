@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import { User } from '../_models/User';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs';
+import { UserRegister } from '../_models/UserRegister';
 import { UserLogin } from '../_models/UserLogin';
+import { User } from '../_models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class AccountService {
     )
   }
 
-  register(model: any) {
+  register(model: UserRegister) {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map(user => {
         if (user)
@@ -44,5 +45,12 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUser.set(null);
+  }
+
+  setCurrentUserOnOpenApp() {
+    const userString = localStorage.getItem('user');
+    if (!userString) return;
+    const user = JSON.parse(userString);
+    this.setCurrentUser(user);
   }
 }
