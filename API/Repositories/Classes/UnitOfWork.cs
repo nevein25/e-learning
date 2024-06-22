@@ -13,6 +13,8 @@ namespace API.Repositories.Classes
         }
 
         public IUserRepo UserRepository => new UserRepo(_context);
+        public IReviewRepo ReviewRepository => new ReviewRepo(_context);
+        public IRateRepo RateRepository => new RateRepo(_context);
 
         public async Task<bool> SaveChanges()
         {
