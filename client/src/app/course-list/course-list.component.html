@@ -1,0 +1,16 @@
+<div>
+  <h2>Courses</h2>
+  <form (ngSubmit)="searchCourses()">
+    <input [(ngModel)]="searchName" name="searchName" placeholder="Name" />
+    <input [(ngModel)]="searchMinPrice" name="searchMinPrice" type="number" placeholder="Min Price" />
+    <input [(ngModel)]="searchMaxPrice" name="searchMaxPrice" type="number" placeholder="Max Price" />
+    <input [(ngModel)]="searchCategoryId" name="searchCategoryId" type="number" placeholder="Category ID" />
+    <button type="submit">Search</button>
+  </form>
+  <div *ngFor="let course of courses">
+    <h3>{{ course.name }}</h3>
+    <p>{{ course.description }}</p>
+    <p>Price: {{ course.price }}</p>
+    <p>Duration: {{ course.duration }} hours</p>
+  </div>
+</div>

@@ -1,18 +1,21 @@
 ﻿using API.Context;
 using API.Repositories.Interfaces;
+using AutoMapper;
 
 namespace API.Repositories.Classes
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly EcommerceContext _context;
-
-        public UnitOfWork(EcommerceContext context)
+        private readonly IMapper _mapper;
+        public UnitOfWork(EcommerceContext context , IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public IUserRepo UserRepository => new UserRepo(_context);
+        public ICourseRepository CourseRepository => new CourseRepository(_context , _mapper);
 
         public async Task<bool> SaveChanges()
         {
