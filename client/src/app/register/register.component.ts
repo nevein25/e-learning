@@ -4,11 +4,13 @@ import { UserRegister } from '../_models/UserRegister';
 import { Role } from '../_models/Roles.enum';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { RouterLink } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink, NgIf],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -28,8 +30,33 @@ export class RegisterComponent {
       next: response => {
         console.log(response);
       },
-      error: error => this.toaster.error(error)
+      error: error => {
+        let returnedError = error;
+        if (Array.isArray(error)) {
+          const containsPasswordError = error.some(msg => msg.toLowerCase().includes('password'));
+          if (!containsPasswordError) {
+            this.toaster.error(returnedError);
+          }
+        }
+
+      }
     })
+  }
+
+  validatePassword(control: any): { [key: string]: boolean } | null {
+    const value = control.value;
+    if (!value) {
+      return null;
+    }
+
+    const hasUpperCase = /[A-Z]+/.test(value);
+    const hasLowerCase = /[a-z]+/.test(value);
+    const hasNumeric = /[0-9]+/.test(value);
+    const validLength = value.length >= 6 && value.length <= 12;
+
+    const passwordValid = hasUpperCase && hasLowerCase && hasNumeric && validLength;
+
+    return !passwordValid ? { passwordStrength: true } : null;
   }
 
 }

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs';
 import { UserRegister } from '../_models/UserRegister';
@@ -15,6 +15,15 @@ export class AccountService {
   currentUser = signal<User | null>(null); // so i can use it any where (the new way, instead of observable)
   baseUrl = environment.apiUrl;
 
+  // so i can get value from the currentUser signal
+  role = computed(() => { 
+    const user = this.currentUser();
+    if (user && user.token) {
+      const role = JSON.parse(atob(user.token.split('.')[1])).role;
+      return role;
+    }
+    return;
+  })
 
 
   login(model: UserLogin) {

@@ -1,4 +1,4 @@
-<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+<!-- <form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
     <h2 class="text-center text-primary">Sign up</h2>
     <hr>
     <div class="mb-3 form-floating">
@@ -31,15 +31,10 @@
     </div>
     }
     <div class="mb-3 form-floating">
-        <select 
-            class="form-control"
-            name="role"
-            [(ngModel)]="model.role"
-            required
-        >
-        @for (role of roles; track $index) {
-            <option  [value]="role">{{ role }}</option>
-        }
+        <select class="form-control" name="role" [(ngModel)]="model.role" required>
+            @for (role of roles; track $index) {
+            <option [value]="role">{{ role }}</option>
+            }
         </select>
         <label>Role</label>
     </div>
@@ -56,4 +51,65 @@
     <div class="form-group text-center">
         <button class="btn btn-success me-2" type="submit">Register</button>
     </div>
-</form>
+</form> -->
+<div class="main">
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content">
+                <form #loginForm="ngForm" (ngSubmit)="register()" id="signup-form" class="signup-form">
+                    <h2 class="form-title">Sign Up</h2>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="username" [(ngModel)]="model.username" placeholder="Username" required />
+                        <div *ngIf="loginForm.submitted && loginForm.controls['username']?.invalid" class="error-message text-danger mt-2 ms-1">
+                            Username is required.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" class="form-input" name="email" [(ngModel)]="model.email" placeholder="Email" required email />
+                        <div *ngIf="loginForm.submitted && loginForm.controls['email']?.invalid" class="error-message text-danger mt-2 ms-1">
+                            A valid email is required.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-input" name="password" [(ngModel)]="model.password" placeholder="Password" required #password="ngModel" [ngModelOptions]="{updateOn: 'blur'}" (ngModelChange)="password.control.setErrors(validatePassword(password.control))" />
+                        <div *ngIf="loginForm.submitted && password.errors" class="error-message text-danger mt-2 ms-1">
+                            <div *ngIf="password.errors['required']">Password is required.</div>
+                            <div *ngIf="password.errors['passwordStrength']">
+                                Password must be 6-12 characters long, with at least one digit, one uppercase letter, and one lowercase letter.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="name" [(ngModel)]="model.name" placeholder="Name" required />
+                        <div *ngIf="loginForm.submitted && loginForm.controls['name']?.invalid" class="error-message text-danger mt-2 ms-1">
+                            Name is required.
+                        </div>
+                    </div>
+
+                    <div class="form-group" *ngIf="model.role !== 'Student'">
+                        <input type="text" class="form-input" name="biography" [(ngModel)]="model.biography" placeholder="Biography" required />
+                    </div>
+
+                    <div class="mb-3 form-floating">
+                        <select class="form-control" name="role" [(ngModel)]="model.role" required>
+                            @for (role of roles; track $index) {
+                            <option [value]="role">{{ role }}</option>
+                            }
+                        </select>
+                        <label>Role</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" name="submit" id="submit" class="form-submit" value="Sign Up" [disabled]="!loginForm.dirty" />
+                    </div>
+                </form>
+                <p class="loginhere mt-2">
+                    Have an account already? <a routerLink="/login" routerLinkActive="router-link-active" class="loginhere-link">Log IN</a>
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
