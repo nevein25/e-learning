@@ -1,8 +1,11 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { LoginComponent } from "./login/login.component";
+import { CourseComponent } from './course/course.component';
+import { ModuleComponent } from './module/module.component';
+import { LessonComponent } from './lesson/lesson.component';
 
 @Component({
     selector: 'app-root',
@@ -12,7 +15,11 @@ import { LoginComponent } from "./login/login.component";
     imports: [
         RouterOutlet, 
         BsDropdownModule,
-        LoginComponent
+        LoginComponent,
+        CourseComponent,
+        ModuleComponent,
+        LessonComponent,
+        RouterModule
     ]
 })
 export class AppComponent implements OnInit {

@@ -1,14 +1,17 @@
 using API.Context;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Repositories.Classes;
 using API.Repositories.Interfaces;
 using API.Seed;
 using API.Services.Classes;
 using API.Services.Interfaces;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -20,8 +23,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-
-
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 
@@ -29,6 +30,20 @@ builder.Services.AddIdentityServices(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Cloudinary Services Configration
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddScoped<Cloudinary>(sp =>
+{
+    var settings = sp.GetRequiredService<IOptions<CloudinarySettings>>().Value;
+    return new Cloudinary(new Account(
+        settings.CloudName,
+        settings.ApiKey,
+        settings.ApiSecret
+    ));
+});
+builder.Services.AddScoped<IUploadService, UploadVideoToCloudinary>();
+
 
 var app = builder.Build();
 

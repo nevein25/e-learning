@@ -1,0 +1,33 @@
+
+
+
+
+<form [formGroup]="lessonForm" (ngSubmit)="onSubmit()">
+    <label for="lName">Lesson Name</label>
+    <input type="text" id="lName" placeholder="lesson Name.." formControlName="lName">
+  
+    <div *ngIf="lessonForm.get('lName')?.invalid && lessonForm.get('lName')?.touched">    
+          Lesson Name jjjjjjjj.    </div>
+
+    <label for="lContent">Lesson Content</label>
+    <input type="text" id="lContent" placeholder="lesson Content.." formControlName="lContent">
+
+    <label for="lLessonNumber">Lesson Number</label>
+    <input type="number" id="lLessonNumber" placeholder="Lesson Number.." formControlName="lLessonNumber">
+
+    <label for="lType">Lesson Type</label>
+    <select id="lType" formControlName="lType">
+        <option *ngFor="let t of LessonType | keyvalue" [value]="t.value">{{ t.key }}</option>
+    </select>
+
+    <label for="cModules">Select Module</label>
+    <select id="cModules" formControlName="cModules">
+        <option *ngFor="let m of Modules" [value]="m.id">{{ m.name }}</option>
+    </select>
+
+    <label for="video">Upload Video</label>
+    <input type="file" id="video" (change)="onFileChange($event)" placeholder="Upload Video..">    
+
+    <button type="submit" [disabled]="!lessonForm.valid" id="mybtn">Submit</button>
+
+</form>
