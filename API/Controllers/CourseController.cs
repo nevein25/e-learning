@@ -1,4 +1,4 @@
-﻿using API.Context;
+using API.Context;
 using API.DTOs;
 using API.Entities;
 using API.Helpers;
@@ -6,6 +6,7 @@ using API.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API.Repositories.Interfaces;
 
 namespace API.Controllers
 {
@@ -15,10 +16,13 @@ namespace API.Controllers
     {
         private EcommerceContext _context { get; }
         private readonly IUploadService _uploadService;
-        public CourseController(IUploadService uploadService , EcommerceContext context) 
+        private readonly IUnitOfWork _unitOfWork;
+
+        public CourseController(IUploadService uploadService , EcommerceContext context , IUnitOfWork unitOfWork) 
         { 
             _uploadService = uploadService;
             _context = context;
+             _unitOfWork = unitOfWork;
         }
 
 
@@ -50,6 +54,18 @@ namespace API.Controllers
 
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
+
+            return Ok(course);
+        }
+        [HttpGet("Course/{id}")]
+        public async Task<IActionResult> SearchCourseById(int id)
+        {
+            var course = await _unitOfWork.CourseRepository.GetCourseById(id);
+            if (course is null)
+            {
+                Console.WriteLine("No courses found matching the search criteria");
+                return NotFound("No courses found matching the search criteria");
+            }
 
             return Ok(course);
         }
@@ -144,7 +160,6 @@ namespace API.Controllers
                     Thumbnail = course.Thumbnail,
                     InstructorId = course.InstructorId,
                     CategoryId = course.CategoryId,
-                    Modules = course.Modules.Select(m => m.Name).ToList()
                 })
                 .ToListAsync();
 
@@ -167,5 +182,20 @@ namespace API.Controllers
                 return Ok(modules);
             }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchCourses([FromQuery] CourseSearchDto searchParams)
+        {
+            Console.WriteLine($"Received search request with parameters: Name={searchParams.Name}, MinPrice={searchParams.MinPrice}, MaxPrice={searchParams.MaxPrice}, CategoryId={searchParams.CategoryId}, PageNumber={searchParams.PageNumber}, PageSize={searchParams.PageSize}");
+
+            var (courses, totalCourses) = await _unitOfWork.CourseRepository.SearchCoursesAsync(searchParams);
+
+            if (!courses.Any())
+            {
+                Console.WriteLine("No courses found matching the search criteria");
+                return NotFound("No courses found matching the search criteria");
+            }
+
+            return Ok(new { Courses = courses, TotalCourses = totalCourses });
+        }
     }
 }

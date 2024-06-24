@@ -9,8 +9,8 @@
         public decimal Price { get; set; }
         public string Language { get; set; }
         public string Thumbnail { get; set; }
+        public DateTime UploadDate { get; set; }
         public int InstructorId { get; set; }
         public int CategoryId { get; set; }
-        public ICollection<string> Modules { get; set; } = new List<string>();
     }
 }

@@ -82,7 +82,9 @@ try
     // making the db from migrations if the db does not exsist
     await context.Database.MigrateAsync();
 
-    await Seed.SeedRoles(roleManager); 
+    await Seed.SeedRoles(roleManager);
+
+    Seed.SeedCoursesWithDependencies(context);
 
 }
 catch (Exception ex)

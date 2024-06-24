@@ -13,17 +13,17 @@ namespace API.Entities
         public DateTime UploadDate { get; set; }
         public string Thumbnail { get; set; }
 
-        public ICollection<Module> Modules { get; set; }
-        public ICollection<Review> Reviews { get; set; }
-        public ICollection<Enrollment> Enrollments { get; set; }
-        public ICollection<Rate> Rates { get; set; }
-        public ICollection<Wishlist> Wishlists { get; set; }
+        public ICollection<Module>? Modules { get; set; }
+        public ICollection<Review>? Reviews { get; set; }
+        public ICollection<Enrollment>? Enrollments { get; set; }
+        public ICollection<Rate>? Rates { get; set; }
+        public ICollection<Wishlist>? Wishlists { get; set; }
 
         public int InstructorId { get; set; }
-        public Instructor Instructor { get; set; }
+        public Instructor? Instructor { get; set; }
 
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
     }
 
 }

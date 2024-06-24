@@ -6,6 +6,8 @@ import { LoginComponent } from "./login/login.component";
 import { CourseComponent } from './course/course.component';
 import { ModuleComponent } from './module/module.component';
 import { LessonComponent } from './lesson/lesson.component';
+import { CourseListComponent } from "./course-list/course-list.component";
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -13,13 +15,15 @@ import { LessonComponent } from './lesson/lesson.component';
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
     imports: [
-        RouterOutlet, 
+        RouterOutlet,
         BsDropdownModule,
         LoginComponent,
         CourseComponent,
         ModuleComponent,
         LessonComponent,
-        RouterModule
+        RouterModule,
+        CourseListComponent,
+        RouterLink,
     ]
 })
 export class AppComponent implements OnInit {
