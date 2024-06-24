@@ -26,6 +26,11 @@ namespace API.Repositories.Classes
 
         }
 
+        public string GetCustomerIdByUserId(int userId)
+        {
+            return _context.Users.Where(u => u.Id == userId).Select(u => u.CustomerId).FirstOrDefault();
+        }
+
 
     }
 }

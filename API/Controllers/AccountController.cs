@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection.PortableExecutable;
 using System;
 using API.Services.Interfaces;
+using Stripe;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
@@ -19,14 +20,17 @@ namespace API.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
+        private readonly IUnitOfWork _unitOfWork;
 
         public AccountController(UserManager<AppUser> userManager,
                                  SignInManager<AppUser> signInManager,
-                                 ITokenService tokenService)
+                                 ITokenService tokenService,
+                                 IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _unitOfWork = unitOfWork;
         }
 
 
@@ -59,7 +63,7 @@ namespace API.Controllers
             {
                 Username = user.UserName!,
                 Email = user.Email!,
-                Token = await _tokenService.CreateToken(user)
+                Token = await _tokenService.CreateToken(user, DateTime.Now, false)
             };
 
             return userDto;
@@ -79,11 +83,34 @@ namespace API.Controllers
             if (!result)
                 return Unauthorized("Invalid username or password");
 
+
+
+            ///
+            /// 		
+            var isSubscriber = false;
+            DateTime? expDate = null;
+            var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            if (userRole == Roles.Student.ToString())
+            {
+
+                var subscription = await _unitOfWork.SubscriptionRepository.GetByCustomerIdAsync(user.CustomerId);
+
+                if (subscription != null && subscription.Status == "active")
+                {
+                    isSubscriber = true;
+                    expDate = subscription.CurrentPeriodEnd;
+                }
+                else
+                {
+                    expDate = DateTime.Now.AddDays(7);
+                }
+            }
+            ///
             return new UserDto
             {
                 Email = user.Email,
                 Username = user.UserName!,
-                Token = await _tokenService.CreateToken(user)
+                Token = await _tokenService.CreateToken(user, expDate, isSubscriber)
             };
         }
         private AppUser CreateUser(RegisterDto registerDto)

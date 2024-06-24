@@ -4,6 +4,6 @@ namespace API.Services.Interfaces
 {
     public interface ITokenService
     {
-        Task<string> CreateToken(AppUser user);
+        Task<string> CreateToken(AppUser user, DateTime? expDateOfSubscription, bool isSubscribed);
     }
 }

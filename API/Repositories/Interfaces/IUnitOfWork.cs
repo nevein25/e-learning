@@ -3,6 +3,7 @@
     public interface IUnitOfWork
     {
         IUserRepo UserRepository { get; }
+        ISubscriptionRepository SubscriptionRepository { get; }
         Task<bool> SaveChanges(); // for rollback if someting filled in one of the transactions
 
         /* tell us if EF is tracking anything that's been changed inside its transaction.*/

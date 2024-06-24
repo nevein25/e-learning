@@ -13,6 +13,8 @@ namespace API.Repositories.Classes
         }
 
         public IUserRepo UserRepository => new UserRepo(_context);
+        public ISubscriptionRepository SubscriptionRepository => new SubscriptionRepository(_context);
+
 
         public async Task<bool> SaveChanges()
         {

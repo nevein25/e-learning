@@ -1,4 +1,5 @@
 using API.Context;
+using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.Middleware;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 
+
+StripeConfiguration.ApiKey = builder.Configuration.GetValue<string>("StripeSettings:PrivateKey");
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 
 
 

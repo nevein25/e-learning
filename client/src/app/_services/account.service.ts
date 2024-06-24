@@ -25,6 +25,14 @@ export class AccountService {
     return;
   })
 
+  isSubscriber = computed(() => { 
+    const user = this.currentUser();
+    if (user && user.token) {
+      const subscriber = JSON.parse(atob(user.token.split('.')[1])).isSubscriber;
+      return subscriber;
+    }
+    return;
+  })
 
   login(model: UserLogin) {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
