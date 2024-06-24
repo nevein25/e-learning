@@ -15,12 +15,22 @@ namespace API.Repositories.Classes
         public void Rate(int StdId, int CourseId, int Stars)
         {
             Rate rate = new();
-            //if (Stars != 0){ }
+            if (StdId != 0 && CourseId != 0)
+            {
                 rate.Stars = Stars;
-                rate.StudentId=StdId;
-                rate.CourseId=CourseId;
+                rate.StudentId = StdId;
+                rate.CourseId = CourseId;
+                _context.Rates.Update(rate);
+                _context.SaveChanges();
+            }
+            else
+            {
+                rate.Stars = Stars;
+                rate.StudentId = StdId;
+                rate.CourseId = CourseId;
                 _context.Rates.Add(rate);
                 _context.SaveChanges();
+            }
             
         }
     }
