@@ -1,0 +1,34 @@
+
+
+<form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+    <label for="cName">Course Name</label>
+    <input type="text" id="cName" placeholder="Course Name.." formControlName="cName">
+
+    <label for="cDuration">Course Duration</label>
+    <input type="number" id="cDuration" placeholder="Course Duration.." formControlName="cDuration">
+
+    <label for="cDescription">Course Description</label>
+    <textarea id="cDescription" placeholder = "Description.." formControlName="cDescription"></textarea>
+
+    <label for="cPrice">Course Price</label>
+    <input type="number" id="cPrice" placeholder="Course Price.." formControlName="cPrice">
+
+    <label for="cLanguage">Course Language</label>
+    <input type="text" id="cLanguage" placeholder="Course Language.." formControlName="cLanguage">
+
+    <label for="cThumbnail">Course Thumbnail</label>
+    <input type="text" id="cThumbnail" placeholder="Course Thumbnail.." formControlName="cThumbnail">
+
+    <label for="cInstructor">Select Instructor</label>
+    <select id="cInstructor" formControlName="cInstructor">
+        <option *ngFor="let instructor of instructors" [value]="instructor.id">{{ instructor.name }}</option>
+    </select>
+
+    <label for="cCategory">Select Category</label>
+    <select id="cCategory" formControlName="cCategory">
+        <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    </select>
+
+    <button type="submit" [disabled]="!courseForm.valid" id="mybtn">Submit</button>
+
+</form>

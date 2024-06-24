@@ -10,7 +10,6 @@ namespace API.Entities
         public bool IsDeleted { get; set; }
         public string Content { get; set; }
         public int LessonNumber { get; set; }
-
         public int ModuleId { get; set; }
         public Module Module { get; set; }
         public ICollection<StudentLesson> StudentLessons { get; set; }
