@@ -16,6 +16,8 @@ namespace API.Repositories.Classes
 
         public IUserRepo UserRepository => new UserRepo(_context);
         public ICourseRepository CourseRepository => new CourseRepository(_context , _mapper);
+        public IInstructorRepository InstructorRepository => new InstructorRepository(_context , _mapper);
+
 
         public async Task<bool> SaveChanges()
         {

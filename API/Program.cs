@@ -69,7 +69,7 @@ try
 
     await Seed.SeedRoles(roleManager);
 
-    Seed.SeedCourses(context);
+    Seed.SeedCoursesWithDependencies(context);
 
 }
 catch (Exception ex)

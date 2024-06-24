@@ -1,3 +1,5 @@
+import { Instructor } from "./Instructor";
+
 export interface Course {
     id: number;
     name: string;
@@ -9,4 +11,6 @@ export interface Course {
     thumbnail: string;
     instructorId: number;
     categoryId: number;
+    instructor: Instructor;
+
   }

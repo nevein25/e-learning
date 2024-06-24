@@ -9,6 +9,8 @@ namespace API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<Course, CourseDto>();
+            CreateMap<Instructor, InstructorDto>();
+
         }
     }
 }

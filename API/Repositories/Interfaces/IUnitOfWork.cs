@@ -4,6 +4,8 @@
     {
         IUserRepo UserRepository { get; }
         ICourseRepository CourseRepository { get; }
+        IInstructorRepository InstructorRepository { get; }
+
 
         Task<bool> SaveChanges(); // for rollback if something filled in one of the transactions
 

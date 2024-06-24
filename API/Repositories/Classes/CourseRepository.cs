@@ -27,13 +27,13 @@ namespace API.Repositories.Classes
             return courseDto;
         }
 
-        public async Task<IEnumerable<Course>> SearchCoursesAsync(CourseSearchDto searchParams)
+        public async Task<(IEnumerable<Course>, int)> SearchCoursesAsync(CourseSearchDto searchParams)
         {
             try
             {
                 var query = _context.Courses.AsQueryable();
 
-                Console.WriteLine($"Searching courses with parameters: Name={searchParams.Name}, MinPrice={searchParams.MinPrice}, MaxPrice={searchParams.MaxPrice}, CategoryId={searchParams.CategoryId}");
+                Console.WriteLine($"Searching courses with parameters: Name={searchParams.Name}, MinPrice={searchParams.MinPrice}, MaxPrice={searchParams.MaxPrice}, CategoryId={searchParams.CategoryId}, PageNumber={searchParams.PageNumber}, PageSize={searchParams.PageSize}");
 
                 if (!string.IsNullOrEmpty(searchParams.Name))
                 {
@@ -55,15 +55,20 @@ namespace API.Repositories.Classes
                     query = query.Where(c => c.CategoryId == searchParams.CategoryId.Value);
                 }
 
-                var result = await query.ToListAsync();
-                Console.WriteLine($"Found {result.Count} courses");
+                var totalCourses = await query.CountAsync();
 
-                return result;
+                // Pagination
+                var skip = (searchParams.PageNumber - 1) * searchParams.PageSize;
+                var pagedCourses = await query.Skip(skip).Take(searchParams.PageSize).ToListAsync();
+
+                Console.WriteLine($"Found {pagedCourses.Count} courses");
+
+                return (pagedCourses, totalCourses);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while searching for courses: {ex.Message}");
-                return Enumerable.Empty<Course>();
+                return (Enumerable.Empty<Course>(), 0);
             }
         }
     }

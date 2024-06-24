@@ -33,9 +33,9 @@ namespace API.Controllers
         [HttpGet("search")]
         public async Task<IActionResult> SearchCourses([FromQuery] CourseSearchDto searchParams)
         {
-            Console.WriteLine($"Received search request with parameters: Name={searchParams.Name}, MinPrice={searchParams.MinPrice}, MaxPrice={searchParams.MaxPrice}, CategoryId={searchParams.CategoryId}");
+            Console.WriteLine($"Received search request with parameters: Name={searchParams.Name}, MinPrice={searchParams.MinPrice}, MaxPrice={searchParams.MaxPrice}, CategoryId={searchParams.CategoryId}, PageNumber={searchParams.PageNumber}, PageSize={searchParams.PageSize}");
 
-            var courses = await _unitOfWork.CourseRepository.SearchCoursesAsync(searchParams);
+            var (courses, totalCourses) = await _unitOfWork.CourseRepository.SearchCoursesAsync(searchParams);
 
             if (!courses.Any())
             {
@@ -43,7 +43,7 @@ namespace API.Controllers
                 return NotFound("No courses found matching the search criteria");
             }
 
-            return Ok(courses);
+            return Ok(new { Courses = courses, TotalCourses = totalCourses });
         }
     }
 }

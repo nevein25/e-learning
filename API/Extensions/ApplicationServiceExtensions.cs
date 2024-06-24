@@ -21,6 +21,7 @@ namespace API.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IInstructorRepository, InstructorRepository>();
 
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
