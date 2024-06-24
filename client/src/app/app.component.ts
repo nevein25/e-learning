@@ -3,15 +3,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { LoginComponent } from "./login/login.component";
-<<<<<<< HEAD
 import { CourseComponent } from './course/course.component';
 import { ModuleComponent } from './module/module.component';
 import { LessonComponent } from './lesson/lesson.component';
 import { CourseListComponent } from "./course-list/course-list.component";
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-=======
 import { RateandreviewComponent } from './rateandreview/rateandreview.component';
->>>>>>> rate-review
 
 @Component({
     selector: 'app-root',
@@ -22,16 +19,13 @@ import { RateandreviewComponent } from './rateandreview/rateandreview.component'
         RouterOutlet,
         BsDropdownModule,
         LoginComponent,
-<<<<<<< HEAD
         CourseComponent,
         ModuleComponent,
         LessonComponent,
         RouterModule,
         CourseListComponent,
         RouterLink,
-=======
         RateandreviewComponent
->>>>>>> rate-review
     ]
 })
 export class AppComponent implements OnInit {
