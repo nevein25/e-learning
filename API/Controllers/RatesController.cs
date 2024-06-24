@@ -21,13 +21,16 @@ namespace API.Controllers
         public async Task<ActionResult> SetRate(RateDto rateDto)
         {
             Rate rate = new();
-            if (rateDto.Stars != rate.Stars )
+            if (rateDto.Stars <= 0 || rateDto.Stars >= 5)
             {
-                rate.StudentId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                rate.CourseId =rateDto.CourseId;
-                rate.Stars = rateDto.Stars;
-                _unitOfWork.RateRepository.Rate(rate.StudentId, rate.CourseId, rate.Stars);
-                return Ok(rate);
+                if (rateDto.Stars != rate.Stars)
+                {
+                    rate.StudentId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    rate.CourseId = rateDto.CourseId;
+                    rate.Stars = rateDto.Stars;
+                    _unitOfWork.RateRepository.Rate(rate.StudentId, rate.CourseId, rate.Stars);
+                    return Ok(rate);
+                }
             }
             return BadRequest();
         }
