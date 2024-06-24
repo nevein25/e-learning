@@ -3,6 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { LoginComponent } from "./login/login.component";
+import { RateandreviewComponent } from './rateandreview/rateandreview.component';
 
 @Component({
     selector: 'app-root',
@@ -12,7 +13,8 @@ import { LoginComponent } from "./login/login.component";
     imports: [
         RouterOutlet, 
         BsDropdownModule,
-        LoginComponent
+        LoginComponent,
+        RateandreviewComponent
     ]
 })
 export class AppComponent implements OnInit {
