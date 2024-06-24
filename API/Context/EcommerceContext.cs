@@ -35,8 +35,11 @@ namespace API.Context
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<StudentLesson> StudentLessons { get; set; }
+        public DbSet<Subscriber> Subscribers { get; set; }
+        public DbSet<CoursePurchase> CoursePurchases { get; set; }
 
 
+        //public DbSet<PaymentDetail> PaymentDetails { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

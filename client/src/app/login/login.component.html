@@ -1,3 +1,4 @@
+<!-- 
 <div class="container">
 
 
@@ -21,4 +22,43 @@
     }
 
 
+</div> -->
+
+<div class="main">
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content">
+                <form #loginForm="ngForm" (ngSubmit)="login()" id="signup-form" class="signup-form">
+                    <h2 class="form-title">Login</h2>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="usernameOrEmail" [(ngModel)]="model.emailOrUsername"
+                            id="email" placeholder="Email or Username" required />
+                        @if(loginForm.submitted && loginForm.controls['usernameOrEmail'].invalid){
+
+                        <div class="error-message text-danger mt-2 ms-1">
+                            Email or Username is required.
+                        </div>
+                        }
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-input" name="password" [(ngModel)]="model.password"
+                            id="password" placeholder="Password" required />
+                        @if (loginForm.submitted && loginForm.controls['password'].invalid) {
+                        <div class="error-message text-danger mt-2 ms-1">
+                            Password is required.
+                        </div>
+                        }
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" id="submit" class="form-submit" value="Log In"
+                            [disabled]="loginForm.invalid && loginForm.submitted" />
+                    </div>
+                </form>
+                <p class="loginhere">
+                    Do not have an account yet? <a routerLink="/register" routerLinkActive="router-link-active"
+                        class="loginhere-link">SignUp here</a>
+                </p>
+            </div>
+        </div>
+    </section>
 </div>

@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
-import { User } from '../_models/User';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs';
+import { UserRegister } from '../_models/UserRegister';
 import { UserLogin } from '../_models/UserLogin';
+import { User } from '../_models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,24 @@ export class AccountService {
   currentUser = signal<User | null>(null); // so i can use it any where (the new way, instead of observable)
   baseUrl = environment.apiUrl;
 
+  // so i can get value from the currentUser signal
+  role = computed(() => { 
+    const user = this.currentUser();
+    if (user && user.token) {
+      const role = JSON.parse(atob(user.token.split('.')[1])).role;
+      return role;
+    }
+    return;
+  })
 
+  isSubscriber = computed(() => { 
+    const user = this.currentUser();
+    if (user && user.token) {
+      const subscriber = JSON.parse(atob(user.token.split('.')[1])).isSubscriber;
+      return subscriber;
+    }
+    return;
+  })
 
   login(model: UserLogin) {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
@@ -25,7 +43,7 @@ export class AccountService {
     )
   }
 
-  register(model: any) {
+  register(model: UserRegister) {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map(user => {
         if (user)
@@ -44,5 +62,12 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUser.set(null);
+  }
+
+  setCurrentUserOnOpenApp() {
+    const userString = localStorage.getItem('user');
+    if (!userString) return;
+    const user = JSON.parse(userString);
+    this.setCurrentUser(user);
   }
 }

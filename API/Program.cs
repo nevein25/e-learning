@@ -1,7 +1,9 @@
 using API.Context;
+using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.Helpers;
+using API.Middleware;
 using API.Repositories.Classes;
 using API.Repositories.Interfaces;
 using API.Seed;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +23,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
+
+
+
+StripeConfiguration.ApiKey = builder.Configuration.GetValue<string>("StripeSettings:PrivateKey");
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 
 
 
@@ -36,7 +44,7 @@ builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection(
 builder.Services.AddScoped<Cloudinary>(sp =>
 {
     var settings = sp.GetRequiredService<IOptions<CloudinarySettings>>().Value;
-    return new Cloudinary(new Account(
+    return new Cloudinary(new CloudinaryDotNet.Account(
         settings.CloudName,
         settings.ApiKey,
         settings.ApiSecret
@@ -46,7 +54,7 @@ builder.Services.AddScoped<IUploadService, UploadVideoToCloudinary>();
 
 
 var app = builder.Build();
-
+app.UseMiddleware<ExceptionMiddleware>();
 
 
 
