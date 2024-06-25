@@ -40,6 +40,19 @@ namespace API.Controllers
                 return NotFound("Category not found");
             }
 
+            // Get the file name and extension
+            var fileName = Path.GetFileName(courseDto.Thumbnail.FileName);
+
+            // Set the file path where the file will be saved
+            string filePath = Path.Combine("uploads", fileName);
+
+            // Save the file
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await courseDto.Thumbnail.CopyToAsync(stream);
+            }
+
+            // Store only the file name and extension in the database
             var course = new Course
             {
                 Name = courseDto.Name,
@@ -47,9 +60,10 @@ namespace API.Controllers
                 Description = courseDto.Description,
                 Price = courseDto.Price,
                 Language = courseDto.Language,
-                Thumbnail = courseDto.Thumbnail,
+                Thumbnail = fileName, // Save only the file name and extension
                 InstructorId = courseDto.InstructorId,
                 CategoryId = courseDto.CategoryId,
+                UploadDate = DateTime.UtcNow
             };
 
             _context.Courses.Add(course);
@@ -57,6 +71,7 @@ namespace API.Controllers
 
             return Ok(course);
         }
+
         [HttpGet("Course/{id}")]
         public async Task<IActionResult> SearchCourseById(int id)
         {
@@ -157,7 +172,7 @@ namespace API.Controllers
                     Description = course.Description,
                     Price = course.Price,
                     Language = course.Language,
-                    Thumbnail = course.Thumbnail,
+                    img = course.Thumbnail,
                     InstructorId = course.InstructorId,
                     CategoryId = course.CategoryId,
                 })

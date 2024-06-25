@@ -13,7 +13,7 @@ export class CourseService {
   private http = inject(HttpClient); 
   baseUrl = environment.apiUrl;
 
-  addCourse(courseObj : any){
+  addCourse(courseObj : FormData){
     return this.http.post<any>(`${this.baseUrl}Course/create-new-course` , courseObj)
   }
 
@@ -29,7 +29,7 @@ export class CourseService {
     return this.http.get<any[]>(this.baseUrl + 'Course/GetAllModules');
   }
 
-  addLesson(LessonObj : any){
+  addLesson(LessonObj: FormData){
     return this.http.post<any>(`${this.baseUrl}Course/create-new-Lesson` , LessonObj)
   }
 

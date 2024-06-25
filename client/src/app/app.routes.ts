@@ -12,12 +12,14 @@ import { MembershipCheckoutComponent } from './payments/membership-checkout/memb
 import { MembershipOptionsComponent } from './payments/membership-options/membership-options.component';
 import { CourseCheckoutComponent } from './payments/course-checkout/course-checkout.component';
 import { SuccessPaymentComponent } from './payment/success-payment/success-payment.component';
+import { LessonComponent } from './lesson/lesson.component';
 
 
 export const routes: Routes = [
     { path: "", component: CourseComponent },
     { path: "course", component: CourseComponent },
     { path: "module", component: ModuleComponent },
+    { path: "lesson", component: LessonComponent },
     { path: 'course-list', component: CourseListComponent },
     { path: 'course-main-page/:id', component: CourseMainPageComponent },
     { path: 'register', component: RegisterComponent },

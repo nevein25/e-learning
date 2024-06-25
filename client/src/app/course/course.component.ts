@@ -24,7 +24,7 @@ export class CourseComponent implements OnInit {
   courseForm: FormGroup;
   instructors: any[] = [];
   categories: any[] = [];
-
+  selectedFile: File | null = null;
   constructor(
     private fb: FormBuilder,
     private instructorService: InstructorService,
@@ -61,24 +61,33 @@ export class CourseComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    if (this.courseForm.valid) {
-      const course = {
-        name: this.courseForm.value.cName,
-        duration: this.courseForm.value.cDuration,
-        description: this.courseForm.value.cDescription,
-        price: this.courseForm.value.cPrice,
-        language: this.courseForm.value.cLanguage,
-        thumbnail: this.courseForm.value.cThumbnail,
-        instructorId: this.courseForm.value.cInstructor,
-        categoryId: this.courseForm.value.cCategory
-      };
+  onFileChange(event: any): void {
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
 
-      this.courseService.addCourse(course).subscribe({
+  onSubmit(): void {
+    if (this.courseForm.valid && this.selectedFile) {
+      const formData = new FormData();
+      formData.append('name', this.courseForm.get('cName')?.value);
+      formData.append('duration', this.courseForm.get('cDuration')?.value);
+      formData.append('description', this.courseForm.get('cDescription')?.value);
+      formData.append('price', this.courseForm.get('cPrice')?.value);
+      formData.append('language', this.courseForm.get('cLanguage')?.value);
+      formData.append('instructorId', this.courseForm.get('cInstructor')?.value);
+      formData.append('categoryId', this.courseForm.get('cCategory')?.value);
+      formData.append('thumbnail', this.selectedFile);
+  
+      console.log('Form Data:');
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+  
+      this.courseService.addCourse(formData).subscribe({
         next: () => {
-          // Navigate to another route if needed, e.g., course list
-           this.route.navigate(['/module']);
           console.log('Course added successfully');
+          this.route.navigate(['/module']);
         },
         error: (err) => {
           console.error('Error adding course:', err);
@@ -86,4 +95,5 @@ export class CourseComponent implements OnInit {
       });
     }
   }
+
 }

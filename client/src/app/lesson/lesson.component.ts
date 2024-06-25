@@ -29,11 +29,13 @@ export class LessonComponent implements OnInit {
     private router: Router
   ) {
     this.lessonForm = this.fb.group({
-      lName: [''],
-      lContent: [''],
+      lName: ['',Validators.required],
+      lContent: ['',Validators.required],
       lLessonNumber: ['', Validators.required],
       lType: ['', Validators.required],
       cModules: ['', Validators.required],
+      video: ['', Validators.required],
+
     });
   }
 
@@ -52,31 +54,20 @@ export class LessonComponent implements OnInit {
     if (event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
     }
-    setTimeout(() =>
-      {
-      
-    }, 7000); // Simulate 2 seconds delay for each upload process
+    
   }
-  //this.course.chapters[chapterIndex].ifDone=true;
-
   
-
-
-
   onSubmit(): void {
-    if (this.lessonForm.valid) {
-      const lesson = {
-        name: this.lessonForm.value.lName,
-        type: +this.lessonForm.value.lType,
-        content: this.lessonForm.value.lContent,      
-        lessonNumber: this.lessonForm.value.lLessonNumber,
-        moduleId: this.lessonForm.value.cModules,
-        videoContent: this.selectedFile
-      };
-  
-      console.log('Lesson data to be submitted:', lesson);
+    if (this.lessonForm.valid && this.selectedFile) {
+      const formData = new FormData();
+      formData.append('name', this.lessonForm.get('lName')?.value);
+      formData.append('type', this.lessonForm.get('lType')?.value);
+      formData.append('content', this.lessonForm.get('lContent')?.value);
+      formData.append('lessonNumber', this.lessonForm.get('lLessonNumber')?.value);
+      formData.append('moduleId', this.lessonForm.get('cModules')?.value);
+      formData.append('videoContent', this.selectedFile);
 
-      this.courseService.addLesson(lesson).subscribe({
+      this.courseService.addLesson(formData).subscribe({
         next: () => {
           console.log('Lesson added successfully');
         },
@@ -87,5 +78,4 @@ export class LessonComponent implements OnInit {
       });
     }
   }
-  
 }

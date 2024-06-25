@@ -7,7 +7,7 @@
     <input type="text" id="lName" placeholder="lesson Name.." formControlName="lName">
   
     <div *ngIf="lessonForm.get('lName')?.invalid && lessonForm.get('lName')?.touched">    
-          Lesson Name jjjjjjjj.    </div>
+          Lesson Name is required.    </div>
 
     <label for="lContent">Lesson Content</label>
     <input type="text" id="lContent" placeholder="lesson Content.." formControlName="lContent">
@@ -26,7 +26,7 @@
     </select>
 
     <label for="video">Upload Video</label>
-    <input type="file" id="video" (change)="onFileChange($event)" placeholder="Upload Video..">    
+    <input type="file" id="video" (change)="onFileChange($event)" placeholder="Upload Video.." formControlName="video">    
 
     <button type="submit" [disabled]="!lessonForm.valid" id="mybtn">Submit</button>
 

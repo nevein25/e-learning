@@ -54,7 +54,7 @@ export class ModuleComponent implements OnInit {
       this.courseService.addModule(module).subscribe({
         next: () => {
           // Navigate to another route if needed, e.g., course list
-           this.route.navigate(['/lessons']);
+           this.route.navigate(['/lesson']);
           console.log('Module added successfully');
         },
         error: (err) => {

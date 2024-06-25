@@ -16,8 +16,11 @@
     <label for="cLanguage">Course Language</label>
     <input type="text" id="cLanguage" placeholder="Course Language.." formControlName="cLanguage">
 
-    <label for="cThumbnail">Course Thumbnail</label>
-    <input type="text" id="cThumbnail" placeholder="Course Thumbnail.." formControlName="cThumbnail">
+    <!-- <label for="cThumbnail">Course Thumbnail</label>
+    <input type="text" id="cThumbnail" placeholder="Course Thumbnail.." formControlName="cThumbnail"> -->
+
+    <label for="img">Upload Thumbnail</label>
+    <input type="file" id="img" (change)="onFileChange($event)" placeholder="Upload Thumbnail.." formControlName="cThumbnail">    
 
     <label for="cInstructor">Select Instructor</label>
     <select id="cInstructor" formControlName="cInstructor">
