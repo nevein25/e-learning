@@ -15,12 +15,12 @@ namespace API.Controllers
     public class CourseController : ControllerBase
     {
         private EcommerceContext _context { get; }
-        private readonly IUploadService _uploadService;
+        private readonly IVideoService _videoService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CourseController(IUploadService uploadService , EcommerceContext context , IUnitOfWork unitOfWork) 
+        public CourseController(IVideoService videoService , EcommerceContext context , IUnitOfWork unitOfWork) 
         { 
-            _uploadService = uploadService;
+            _videoService = videoService;
             _context = context;
              _unitOfWork = unitOfWork;
         }
@@ -132,7 +132,7 @@ namespace API.Controllers
 
             //Here Upload the Video to the Cloudinary.
             //IFormFile mockVideoFile = MoqIFormFile.CreateMockFormFile(videoFilePath);
-            var uploadResult = await _uploadService.Upload(lessonDto.VideoContent, filePath);
+            var uploadResult = await _videoService.Upload(lessonDto.VideoContent, filePath);
             if (uploadResult == null) return BadRequest("File upload failed");
 
             var newLesson = new Lesson
@@ -216,5 +216,7 @@ namespace API.Controllers
 
             return Ok(new { Courses = courses, TotalCourses = totalCourses });
         }
+
+        
     }
 }

@@ -50,7 +50,7 @@ builder.Services.AddScoped<Cloudinary>(sp =>
         settings.ApiSecret
     ));
 });
-builder.Services.AddScoped<IUploadService, UploadVideoToCloudinary>();
+builder.Services.AddScoped<IVideoService, VideoOnCloudinary>();
 
 
 var app = builder.Build();

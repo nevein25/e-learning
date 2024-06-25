@@ -1,14 +1,19 @@
 ﻿using API.Services.Interfaces;
 using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
+using System.Net;
 
 namespace API.Services.Classes
 {
-    public class UploadVideoToCloudinary : IUploadService
+    public class VideoOnCloudinary : IVideoService
     {
         private readonly Cloudinary cloudinary;
-        public UploadVideoToCloudinary(Cloudinary _clodinary) => cloudinary = _clodinary;
+        public VideoOnCloudinary(Cloudinary _clodinary) => cloudinary = _clodinary;
 
+        public string GetVideo(string publicId)
+        {
+            return  cloudinary.Api.UrlVideoUp.BuildUrl($"{publicId}.mp4");
+        }
         public async Task<UploadResult> Upload(IFormFile file, string filePath)
         {
             using (var stream = file.OpenReadStream())
@@ -21,6 +26,6 @@ namespace API.Services.Classes
                 };
                 return await cloudinary.UploadAsync(uploadParams);
             }
-        }
+        }    
     }
 }

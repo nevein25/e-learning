@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,RouterModule],
   templateUrl: './module.component.html',
   styleUrl: './module.component.css'
+  
 })
 export class ModuleComponent implements OnInit {
 
