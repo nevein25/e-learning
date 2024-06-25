@@ -1,74 +1,49 @@
-/* Custom Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+/* src/app/course-main-page/course-main-page.component.css */
 
-body {
-  font-family: 'Roboto', sans-serif;
+.container {
+  margin-top: 3rem;
 }
 
 .card {
-  border-radius: 10px;
-  border: 1px solid #dee2e6; /* Add a border to the card for clarity */
+  border: none;
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 
-.card-img {
-  height: 100%;
-  width: 100%; /* Ensure the image covers the entire card */
+.card-img-top {
+  width: 100%;
+  height: auto;
   object-fit: cover;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px; /* Rounded corners only on left side */
-}
-
-.card-body {
-  padding: 1.5rem;
 }
 
 .card-title {
   font-size: 2.5rem;
-  font-weight: 700;
   margin-bottom: 1rem;
 }
 
 .card-text {
-  font-size: 1.1rem;
-  color: #6c757d;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
 }
 
 .list-group-item {
-  font-size: 1.1rem;
+  font-size: 1rem;
+  padding: 0.75rem 1.25rem;
 }
 
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
+.btn-lg {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
 }
 
-.btn-primary:hover {
-  background-color: #0069d9;
-  border-color: #0062cc;
+.d-flex {
+  margin-top: 1.5rem;
 }
 
-.btn-outline-secondary {
-  color: #6c757d;
-  border-color: #6c757d;
+.mt-5 {
+  margin-top: 3rem !important;
 }
 
-.btn-outline-secondary:hover {
-  color: #495057;
-  border-color: #6c757d;
-}
-
-.d-grid {
-  gap: 1rem;
-}
-
-@media (max-width: 768px) {
-  .card-title {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .card-title {
-    font-size: 1.5rem;
-  }
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
