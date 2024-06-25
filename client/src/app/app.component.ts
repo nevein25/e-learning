@@ -7,35 +7,35 @@ import { CourseComponent } from './course/course.component';
 import { ModuleComponent } from './module/module.component';
 import { LessonComponent } from './lesson/lesson.component';
 import { CourseListComponent } from "./course-list/course-list.component";
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { RateandreviewComponent } from './rateandreview/rateandreview.component';
 import { RegisterComponent } from "./register/register.component";
 import { NavComponent } from "./nav/nav.component";
 import { MembershipService } from './_services/membership.service';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
-  imports: [
-    RouterOutlet,
-    BsDropdownModule,
-    LoginComponent,
-    CourseComponent,
-    ModuleComponent,
-    LessonComponent,
-    RouterModule,
-    CourseListComponent,
-    RouterLink,
-    RateandreviewComponent,
-    RouterOutlet,
-    BsDropdownModule,
-    LoginComponent,
-    RegisterComponent,
-    NavComponent,
-    RouterLink
-  ]
+    selector: 'app-root',
+    standalone: true,
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    imports: [
+        RouterOutlet,
+        BsDropdownModule,
+        LoginComponent,
+        CourseComponent,
+        ModuleComponent,
+        LessonComponent,
+        RouterModule,
+        CourseListComponent,
+        RouterLink,
+        RateandreviewComponent,
+        RouterOutlet,
+        BsDropdownModule,
+        LoginComponent,
+        RegisterComponent,
+        NavComponent,
+        RouterLink
+    ]
 })
 export class AppComponent implements OnInit {
 

@@ -11,11 +11,12 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { MembershipCheckoutComponent } from './payments/membership-checkout/membership-checkout.component';
 import { MembershipOptionsComponent } from './payments/membership-options/membership-options.component';
 import { CourseCheckoutComponent } from './payments/course-checkout/course-checkout.component';
-import { SuccessPaymentComponent } from './payment/success-payment/success-payment.component';
+import { SuccessPaymentComponent } from './payments/success-payment/success-payment.component';
+import { HomeComponent } from './home/home.component';
 
 
 export const routes: Routes = [
-    { path: "", component: CourseComponent },
+    { path: "", component: HomeComponent },
     { path: "course", component: CourseComponent },
     { path: "module", component: ModuleComponent },
     { path: 'course-list', component: CourseListComponent },
@@ -28,5 +29,5 @@ export const routes: Routes = [
     { path: 'membership-options', component: MembershipOptionsComponent },
     { path: 'course-payment/:id', component: CourseCheckoutComponent },
     { path: 'success-payment', component: SuccessPaymentComponent },
-    // {path: '**', component: LoginComponent, pathMatch: 'full'}, // the default if no match, maybe home component
+    {path: '**', component: HomeComponent, pathMatch: 'full'}
 ];

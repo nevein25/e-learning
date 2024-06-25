@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserLogin } from '../_models/UserLogin';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +15,7 @@ import { RouterLink } from '@angular/router';
 export class LoginComponent {
   accountService = inject(AccountService); 
   private toastr = inject(ToastrService);
+  router = inject(Router);
 
 
   model: UserLogin = {
@@ -29,7 +30,7 @@ export class LoginComponent {
     }
 
     this.accountService.login(this.model).subscribe({
-      next: _ => this.toastr.success("success"),
+      next: _ => this.router.navigate(['/', 'home']),
       error: error => this.toastr.error(error.error)
 
     });
