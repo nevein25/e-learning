@@ -27,7 +27,7 @@ namespace API.Controllers
 
 
         [HttpPost("create-new-course")]
-        public async Task<IActionResult> CreateCourseAsync(CourseDto courseDto)
+        public async Task<IActionResult> CreateCourseAsync(CourseImgDto courseDto)
         {
             var instructorExists = await _context.Instructors.AnyAsync(i => i.Id == courseDto.InstructorId);
             if (!instructorExists)
@@ -168,7 +168,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetAllCourses()
         {
             var courses = await _context.Courses
-                .Select(course => new CourseDto
+                .Select(course => new CourseImgDto
                 {
                     Id = course.Id,
                     Name = course.Name,
