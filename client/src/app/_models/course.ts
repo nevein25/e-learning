@@ -1,4 +1,5 @@
 import { Instructor } from "./Instructor";
+import { Category } from "./Category";
 
 export interface Course {
     id: number;
@@ -12,5 +13,6 @@ export interface Course {
     instructorId: number;
     categoryId: number;
     instructor: Instructor;
+    category: Category;
 
   }

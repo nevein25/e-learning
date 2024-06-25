@@ -1,0 +1,19 @@
+
+<div class="container mt-4">
+  <div *ngIf="wishlist.length > 0" class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let course of wishlist">
+      <div class="card h-100">
+        <img class="card-img-top" [src]="'assets/Courses/' + course.thumbnail" alt="Course Thumbnail">
+        <div class="card-body">
+          <h5 class="card-title text-truncate" title="{{ course.courseName }}">{{ course.courseName }}</h5>
+          <p class="card-text">{{ course.courseDescription }}</p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <button class="btn btn-outline-danger" (click)="removeFromWishlist(course.courseId)">Remove</button>
+            <button class="btn btn-primary px-3">Enroll now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="wishlist.length === 0" class="alert alert-info mt-3">Your wishlist is empty.</div>
+</div>

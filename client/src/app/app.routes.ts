@@ -14,6 +14,7 @@ import { CourseCheckoutComponent } from './payments/course-checkout/course-check
 import { SuccessPaymentComponent } from './payment/success-payment/success-payment.component';
 import { LessonComponent } from './lesson/lesson.component';
 import { HomeComponent } from './home/home.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 
 export const routes: Routes = [
@@ -31,5 +32,7 @@ export const routes: Routes = [
     { path: 'membership-options', component: MembershipOptionsComponent },
     { path: 'course-payment/:id', component: CourseCheckoutComponent },
     { path: 'success-payment', component: SuccessPaymentComponent },
+    { path: 'wishlist', component: WishlistComponent },
+
     // {path: '**', component: LoginComponent, pathMatch: 'full'}, // the default if no match, maybe home component
 ];

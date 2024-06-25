@@ -10,6 +10,8 @@ namespace API.Helpers
         {
             CreateMap<Course, CourseDto>();
             CreateMap<Instructor, InstructorDto>();
+            CreateMap<Wishlist, WishlistDto>();
+
 
         }
     }

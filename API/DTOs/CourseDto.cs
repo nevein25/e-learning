@@ -13,5 +13,7 @@
         public DateTime UploadDate { get; set; }
         public int InstructorId { get; set; }
         public int CategoryId { get; set; }
+        public string Instructor { get; set; }
+        public string Category { get; set; }
     }
 }
