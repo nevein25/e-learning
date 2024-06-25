@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnInit, inject, input } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { RateReviewService } from '../_services/rate-review.service';
 import { ToastrService } from 'ngx-toastr';
 import { RatingModule } from 'ngx-bootstrap/rating';

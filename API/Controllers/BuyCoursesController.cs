@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Checkout;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -35,12 +36,15 @@ namespace API.Controllers
         {
             try
             {
+                var testid = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                Console.WriteLine(testid);
                 var course = await _unitOfWork.SubscriptionRepository.GetCourseById(int.Parse(req.CourseId)); // Fetch course details
 
                 var options = new SessionCreateOptions
                 {
                     SuccessUrl = req.SuccessUrl,
                     CancelUrl = req.FailureUrl,
+                    
                     PaymentMethodTypes = new List<string>
                     {
                         "card",
@@ -64,6 +68,7 @@ namespace API.Controllers
                     },
                     Metadata = new Dictionary<string, string>
                     {
+
                         { "courseId", course.Id.ToString() }, // Example: Course ID
                         { "userId", User.GetUserId().ToString() } // Example: User ID (if using JWT)
                     }
@@ -195,7 +200,7 @@ namespace API.Controllers
                     {
                         CourseId = courseId,
                         UserId = int.Parse(userId),
-                        CustomerId = user.CustomerId,
+                        CustomerId = userId,
                         PurchaseDate = DateTime.Now
                     };
                     await _unitOfWork.SubscriptionRepository.CreateCoursePurchaseAsync(coursePurchase);

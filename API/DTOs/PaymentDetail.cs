@@ -8,7 +8,7 @@ namespace API.DTOs
         [Required]
 
         public string? CourseId { get; set; } /////
-        [Required]
+        
 
         public string? PriceId { get; set; }
         [Required]

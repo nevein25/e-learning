@@ -4,7 +4,7 @@ import { UserRegister } from '../_models/UserRegister';
 import { Role } from '../_models/Roles.enum';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -17,6 +17,8 @@ import { NgIf } from '@angular/common';
 export class RegisterComponent {
   private accountService = inject(AccountService);
   private toaster = inject(ToastrService);
+  router = inject(Router);
+
   model: UserRegister = {
     email: '',
     name: '',
@@ -28,7 +30,8 @@ export class RegisterComponent {
   register() {
     this.accountService.register(this.model).subscribe({
       next: response => {
-        console.log(response);
+        this.toaster.success("Registration Successful!");
+         this.router.navigate(['/', 'home']);
       },
       error: error => {
         let returnedError = error;

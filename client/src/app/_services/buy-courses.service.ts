@@ -24,9 +24,9 @@ export class BuyCoursesService {
     this.http
       .post<ISession>(this.baseUrl + 'buycourses/create-checkout-session', {
         courseId: courseId,
-        priceId: "60000",
+        // priceId: "60000",
         successUrl: environment.successUrl,
-        failureUrl: environment.cancelUrl,
+        failureUrl: environment.cancelUrl
       })
       .subscribe((session) => {
         this.redirectToCheckout(session);

@@ -53,10 +53,10 @@
     </div>
 </form> -->
 <div class="main">
-    <section class="signup">
+    <section class="signup mt-1">
         <div class="container">
-            <div class="signup-content">
-                <form #loginForm="ngForm" (ngSubmit)="register()" id="signup-form" class="signup-form">
+            <div class="signup-content pt-3">
+                <form #loginForm="ngForm" (ngSubmit)="register()" id="signup-form" class="signup-form pt-0">
                     <h2 class="form-title">Sign Up</h2>
                     <div class="form-group">
                         <input type="text" class="form-input" name="username" [(ngModel)]="model.username" placeholder="Username" required />

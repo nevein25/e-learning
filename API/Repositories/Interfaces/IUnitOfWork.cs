@@ -11,6 +11,7 @@
                 IRateRepo RateRepository { get; }
 
                 ISubscriptionRepository SubscriptionRepository { get; }
+                ICoursePurchaseRepository CoursePurchaseRepository { get; }
 
                 Task<bool> SaveChanges(); // for rollback if something filled in one of the transactions
 

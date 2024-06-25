@@ -1,28 +1,28 @@
 <!-- src/app/course-main-page/course-main-page.component.html -->
- 
+
 <div *ngIf="course" class="container mt-4">
   <div class="row">
-  <div class="col-lg-8">
-  <div class="card">
-  <img class="card-img-top" [src]="'assets/Courses/' + course.thumbnail" alt="Course Thumbnail">
-  <div class="card-body">
-  <h2 class="card-title">{{ course.name }}</h2>
-  <p class="card-text">{{ course.description }}</p>
-  <ul class="list-group mb-3">
-  <li class="list-group-item"><strong>Category:</strong> {{ course.category }}</li>
-  <li class="list-group-item"><strong>Language:</strong> {{ course.language }}</li>
-  <li class="list-group-item"><strong>Duration:</strong> {{ course.duration }} hours</li>
-  <li class="list-group-item"><strong>Price:</strong> ${{ course.price }}</li>
-  <li class="list-group-item"><strong>Instructor:</strong> {{ course.instructor }}</li>
-  <li class="list-group-item"><strong>Uploaded:</strong> {{ course.uploadDate }}</li>
-  </ul>
-  <div class="d-flex justify-content-center">
-  <button class="btn btn-outline-primary me-3"(click)="addToWishlist(course.id)">Add to Wishlist</button>
-  <button class="btn btn-primary me-3" >Enroll Now</button>
-  <app-rateandreview [id]="courseId"></app-rateandreview>
+    <div class="col-lg-8">
+      <div class="card">
+        <img class="card-img-top" [src]="'assets/Courses/' + course.thumbnail" alt="Course Thumbnail">
+        <div class="card-body">
+          <h2 class="card-title">{{ course.name }}</h2>
+          <p class="card-text">{{ course.description }}</p>
+          <ul class="list-group mb-3">
+            <li class="list-group-item"><strong>Category:</strong> {{ course.category }}</li>
+            <li class="list-group-item"><strong>Language:</strong> {{ course.language }}</li>
+            <li class="list-group-item"><strong>Duration:</strong> {{ course.duration }} hours</li>
+            <li class="list-group-item"><strong>Price:</strong> ${{ course.price }}</li>
+            <li class="list-group-item"><strong>Instructor:</strong> {{ course.instructor }}</li>
+            <li class="list-group-item"><strong>Uploaded:</strong> {{ course.uploadDate }}</li>
+          </ul>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-outline-primary me-3"(click)="addToWishlist(course.id)">Add to Wishlist</button>
+            <app-enroll [id]="courseId"></app-enroll>
+            <app-rateandreview [id]="courseId"></app-rateandreview>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
+</div>

@@ -3,13 +3,15 @@ import { CourseService } from '../_services/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../_models/course';
 import { CommonModule } from '@angular/common';
+import { EnrollComponent } from "../payments/enroll/enroll.component";
+import { FormsModule } from '@angular/forms';
 import { WishlistService } from '../_services/wishlist.service';
 import { RateandreviewComponent } from '../rateandreview/rateandreview.component';
 
 @Component({
   selector: 'app-course-main-page',
   standalone: true,
-  imports: [CommonModule,RateandreviewComponent],
+  imports: [CommonModule,RateandreviewComponent, CommonModule, EnrollComponent, FormsModule, RateandreviewComponent],
   templateUrl: './course-main-page.component.html',
   styleUrls: ['./course-main-page.component.css']
 })
