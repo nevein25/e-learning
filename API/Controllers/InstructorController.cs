@@ -22,7 +22,7 @@ namespace API.Controllers
         // GET: api/instructors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Instructor>>> GetInstructors()
-        {
+         {
             var instructors = await _repository.GetInstructorsAsync();
             return Ok(instructors);
         }

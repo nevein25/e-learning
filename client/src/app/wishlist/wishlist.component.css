@@ -1,0 +1,25 @@
+
+.card-title {
+    font-size: 1.25rem; /* Adjust font size for title */
+    font-weight: bold;  /* Make the title bold */
+  }
+  
+  .card-img-top {
+    width: 100%;       /* Ensure the image takes full width */
+    height: 200px;     /* Set a fixed height for the images */
+    object-fit: cover; /* Ensure the image covers the area */
+  }
+  
+  .d-flex.justify-content-between {
+    margin-top: 1rem;  /* Add some space above the buttons */
+  }
+  
+  .btn-outline-danger {
+    flex-grow: 1;      /* Allow the remove button to grow */
+    margin-right: 0.5rem; /* Add some space between the buttons */
+  }
+  
+  .btn-primary {
+    flex-grow: 1;      /* Allow the enroll button to grow */
+  }
+  

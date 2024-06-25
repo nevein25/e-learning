@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Course } from '../_models/course';
 import { CourseInput } from '../_models/courseSearchInput';
+import { Category } from '../_models/Category';
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +53,9 @@ export class CourseService {
 
 getCourseById(id: number): Observable<Course> {
   return this.http.get<Course>(`${this.baseUrl}course/Course/${id}`);
+}
+
+getCategories(): Observable<Category[]> {
+  return this.http.get<Category[]>(this.baseUrl + 'GetAllCategories');
 }
 }

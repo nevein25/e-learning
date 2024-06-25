@@ -20,18 +20,25 @@ namespace API.Repositories.Classes
 
         public async Task<CourseDto> GetCourseById(int Id)
         {
-            var course = _context.Courses.Where(c=>c.Id == Id).FirstOrDefault();
-            
+            var course = await _context.Courses.Include(c => c.Category).Include(c => c.Instructor)
+                .FirstOrDefaultAsync(c => c.Id == Id);
+
             var courseDto = _mapper.Map<CourseDto>(course);
+
+            courseDto.Category = course.Category?.Name;
+            courseDto.Instructor = course.Instructor?.Name;
 
             return courseDto;
         }
 
-        public async Task<(IEnumerable<Course>, int)> SearchCoursesAsync(CourseSearchDto searchParams)
+        public async Task<(IEnumerable<CourseDto>, int)> SearchCoursesAsync(CourseSearchDto searchParams)
         {
             try
             {
-                var query = _context.Courses.AsQueryable();
+                var query = _context.Courses
+                            .Include(c => c.Category)
+                            .Include(c => c.Instructor)
+                            .AsQueryable();
 
                 Console.WriteLine($"Searching courses with parameters: Name={searchParams.Name}, MinPrice={searchParams.MinPrice}, MaxPrice={searchParams.MaxPrice}, CategoryId={searchParams.CategoryId}, PageNumber={searchParams.PageNumber}, PageSize={searchParams.PageSize}");
 
@@ -60,15 +67,26 @@ namespace API.Repositories.Classes
                 // Pagination
                 var skip = (searchParams.PageNumber - 1) * searchParams.PageSize;
                 var pagedCourses = await query.Skip(skip).Take(searchParams.PageSize).ToListAsync();
+                var coursesDto = _mapper.Map<IEnumerable<CourseDto>>(pagedCourses);
+                foreach(var courseDto in coursesDto)
+                {
+                    var course = pagedCourses.FirstOrDefault(c => c.Id == courseDto.Id);
+                    if (course != null)
+                    {
+                        courseDto.Category = course.Category?.Name;
+                        courseDto.Instructor = course.Instructor?.Name;
+                    }
+                }
+
 
                 Console.WriteLine($"Found {pagedCourses.Count} courses");
 
-                return (pagedCourses, totalCourses);
+                return (coursesDto, totalCourses);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while searching for courses: {ex.Message}");
-                return (Enumerable.Empty<Course>(), 0);
+                return (Enumerable.Empty<CourseDto>(), 0);
             }
         }
     }

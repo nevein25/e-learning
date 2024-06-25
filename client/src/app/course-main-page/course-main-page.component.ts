@@ -3,6 +3,7 @@ import { CourseService } from '../_services/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../_models/course';
 import { CommonModule } from '@angular/common';
+import { WishlistService } from '../_services/wishlist.service';
 
 @Component({
   selector: 'app-course-main-page',
@@ -17,7 +18,9 @@ export class CourseMainPageComponent implements OnInit {
 
   constructor(
     private courseService: CourseService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private wishlistService: WishlistService
+
   ) {}
 
   ngOnInit(): void {
@@ -50,5 +53,33 @@ export class CourseMainPageComponent implements OnInit {
   getInstructorName(instructorId: number): string {
     // Implement logic to get instructor name based on instructorId
     return 'Instructor Name'; // Replace with actual logic
+  }
+
+  addToWishlist( courseId: number): void {
+    this.wishlistService.addToWishlist(courseId)
+      .subscribe(
+        () => {
+          // Handle success (e.g., show a success message)
+          console.log('Course added to wishlist successfully');
+        },
+        (error) => {
+          console.error('Error adding course to wishlist:', error);
+          // Handle error (e.g., show an error message)
+        }
+      );
+  }
+
+  removeFromWishlist( courseId: number): void {
+    this.wishlistService.removeFromWishlist(courseId)
+      .subscribe(
+        () => {
+          // Handle success (e.g., show a success message)
+          console.log('Course removed from wishlist successfully');
+        },
+        (error) => {
+          console.error('Error removing course from wishlist:', error);
+          // Handle error (e.g., show an error message)
+        }
+      );
   }
 }

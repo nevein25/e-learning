@@ -34,7 +34,7 @@ import { MembershipService } from './_services/membership.service';
     LoginComponent,
     RegisterComponent,
     NavComponent,
-    RouterLink
+    HttpClientModule,
   ]
 })
 export class AppComponent implements OnInit {

@@ -3,6 +3,9 @@ import { CourseService } from '../_services/course.service';
 import { Course } from '../_models/course';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { Category } from '../_models/Category';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-course-list',
@@ -13,7 +16,10 @@ import { NgFor } from '@angular/common';
 })
 export class CourseListComponent implements OnInit {
   courses: Course[] = [];
+  categories: Category[] = [];  // Add an array to store categories
   searchName: string = '';
+  searchCategoryName: string = '';
+
   searchMinPrice?: number;
   searchMaxPrice?: number;
   searchCategoryId?: number;
@@ -21,7 +27,7 @@ export class CourseListComponent implements OnInit {
   pageSize: number = 9;
   totalCourses: number = 0;
 
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService , private router: Router) { }
 
   ngOnInit(): void {
     this.searchCourses();
@@ -42,5 +48,17 @@ export class CourseListComponent implements OnInit {
 
   getTotalPages(): number {
     return Math.ceil(this.totalCourses / this.pageSize);
+  }
+
+  getCategories(): void {
+    this.courseService.getCategories().subscribe(categories => {
+      console.log(categories);  // Debugging line
+      this.categories = categories;
+    });
+  }
+
+  navigateToCourse(courseId: number): void {
+    // Navigate to the course main page URL
+    this.router.navigateByUrl(`/course-main-page/${courseId}`);
   }
 }
