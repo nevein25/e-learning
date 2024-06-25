@@ -122,8 +122,12 @@ namespace API.Controllers
                 return NotFound("Module not found");
             }
 
+            var highestLessonNumber = _context.Lessons
+            .OrderByDescending(l => l.LessonNumber)
+            .FirstOrDefault()?.LessonNumber ?? 0;
+
             //For Test Only
-            var filePath = $"{module.Course.Name}/Chapter_{lessonDto.ModuleId}/Lesson_{lessonDto.LessonNumber}";
+            var filePath = $"{module.Course.Name}/Chapter_{lessonDto.ModuleId}/Lesson_{highestLessonNumber}";
             //string videoFilePath = "C:\\Users\\pc\\Downloads\\SQL.mp4";
 
             //Here Upload the Video to the Cloudinary.
@@ -134,10 +138,10 @@ namespace API.Controllers
             var newLesson = new Lesson
             {
                 Name = lessonDto.Name,
-                Type = lessonDto.Type,     
+                Type = lessonDto.Type,
                 Content = lessonDto.Content,
-                LessonNumber = lessonDto.LessonNumber,
-                ModuleId = lessonDto.ModuleId
+                LessonNumber = highestLessonNumber + 1,
+                ModuleId = lessonDto.ModuleId,
             };
 
             _context.Lessons.Add(newLesson);

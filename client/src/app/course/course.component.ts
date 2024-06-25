@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InstructorService } from '../_services/instructor.service';
 import { CategoryService } from '../_services/category.service';
@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { CourseService } from '../_services/course.service';
 import { Router, RouterModule } from '@angular/router';
 import { CourseDataService } from '../shared/course-data.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -27,6 +28,8 @@ export class CourseComponent implements OnInit {
   instructors: any[] = [];
   categories: any[] = [];
   selectedFile: File | null = null;
+  private toastr = inject(ToastrService);
+
   constructor(
     private fb: FormBuilder,
     private instructorService: InstructorService,
@@ -90,12 +93,14 @@ export class CourseComponent implements OnInit {
       this.courseService.addCourse(formData).subscribe({
         next: (response) => {
           console.log('Course added successfully');
+          this.toastr.success("Course added successfully")
           const courseId = response.id;
           console.log(courseId)
           this.courseDataService.setCourseId(courseId);
           this.route.navigate(['/module']);
         },
         error: (err) => {
+          this.toastr.error(err.error)
           console.error('Error adding course:', err);
         }
       });

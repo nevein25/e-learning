@@ -1,33 +1,44 @@
-
-
-
-
 <form [formGroup]="lessonForm" (ngSubmit)="onSubmit()">
     <label for="lName">Lesson Name</label>
-    <input type="text" id="lName" placeholder="lesson Name.." formControlName="lName">
+    <input type="text" id="lName" placeholder="Lesson Name.." formControlName="lName">
+    <div *ngIf="lessonForm.get('lName')?.invalid && (lessonForm.get('lName')?.touched || lessonForm.get('lName')?.dirty)" class="error-message">
+      <div *ngIf="lessonForm.get('lName')?.errors?.['required']">Lesson Name is required.</div>
+    </div>
   
-    <div *ngIf="lessonForm.get('lName')?.invalid && lessonForm.get('lName')?.touched">    
-          Lesson Name is required.    </div>
-
     <label for="lContent">Lesson Content</label>
-    <input type="text" id="lContent" placeholder="lesson Content.." formControlName="lContent">
-
-    <label for="lLessonNumber">Lesson Number</label>
+    <input type="text" id="lContent" placeholder="Lesson Content.." formControlName="lContent">
+    <div *ngIf="lessonForm.get('lContent')?.invalid && (lessonForm.get('lContent')?.touched || lessonForm.get('lContent')?.dirty)" class="error-message">
+      <div *ngIf="lessonForm.get('lContent')?.errors?.['required']">Lesson Content is required.</div>
+    </div>
+  
+    <!-- <label for="lLessonNumber">Lesson Number</label>
     <input type="number" id="lLessonNumber" placeholder="Lesson Number.." formControlName="lLessonNumber">
-
+    <div *ngIf="lessonForm.get('lLessonNumber')?.invalid && (lessonForm.get('lLessonNumber')?.touched || lessonForm.get('lLessonNumber')?.dirty)" class="error-message">
+      <div *ngIf="lessonForm.get('lLessonNumber')?.errors?.['required']">Lesson Number is required.</div>
+    </div> -->
+  
     <label for="lType">Lesson Type</label>
     <select id="lType" formControlName="lType">
-        <option *ngFor="let t of LessonType | keyvalue" [value]="t.value">{{ t.key }}</option>
+      <option *ngFor="let t of LessonType | keyvalue" [value]="t.value">{{ t.key }}</option>
     </select>
-
+    <div *ngIf="lessonForm.get('lType')?.invalid && (lessonForm.get('lType')?.touched || lessonForm.get('lType')?.dirty)" class="error-message">
+      <div *ngIf="lessonForm.get('lType')?.errors?.['required']">Lesson Type is required.</div>
+    </div>
+  
     <label for="cModules">Select Module</label>
     <select id="cModules" formControlName="cModules">
-        <option *ngFor="let m of Modules" [value]="m.id">{{ m.name }}</option>
+      <option *ngFor="let m of Modules" [value]="m.id">{{ m.name }}</option>
     </select>
-
+    <div *ngIf="lessonForm.get('cModules')?.invalid && (lessonForm.get('cModules')?.touched || lessonForm.get('cModules')?.dirty)" class="error-message">
+      <div *ngIf="lessonForm.get('cModules')?.errors?.['required']">Module selection is required.</div>
+    </div>
+  
     <label for="video">Upload Video</label>
-    <input type="file" id="video" (change)="onFileChange($event)" placeholder="Upload Video.." formControlName="video">    
-
-    <button type="submit" [disabled]="!lessonForm.valid" id="mybtn">Submit</button>
-
-</form>
+    <input type="file" id="video" (change)="onFileChange($event)" placeholder="Upload Video.." formControlName="video">
+    <div *ngIf="lessonForm.get('video')?.invalid && (lessonForm.get('video')?.touched || lessonForm.get('video')?.dirty)" class="error-message">
+      <div *ngIf="lessonForm.get('video')?.errors?.['required']">Video upload is required.</div>
+    </div>
+  
+    <button type="submit" [disabled]="!lessonForm.valid" id="mybtn">ADD</button>
+  </form>
+  

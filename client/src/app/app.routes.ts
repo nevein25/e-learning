@@ -13,10 +13,11 @@ import { MembershipOptionsComponent } from './payments/membership-options/member
 import { CourseCheckoutComponent } from './payments/course-checkout/course-checkout.component';
 import { SuccessPaymentComponent } from './payment/success-payment/success-payment.component';
 import { LessonComponent } from './lesson/lesson.component';
+import { HomeComponent } from './home/home.component';
 
 
 export const routes: Routes = [
-    { path: "", component: CourseComponent },
+    { path: "", component: HomeComponent },
     { path: "course", component: CourseComponent },
     { path: "module", component: ModuleComponent },
     { path: "lesson", component: LessonComponent },

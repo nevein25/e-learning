@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , inject } from '@angular/core';
 import { LessonType } from '../_models/LessonType';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CourseService } from '../_services/course.service';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-lesson',
@@ -23,6 +25,8 @@ export class LessonComponent implements OnInit {
   Modules: any[] = [];
   LessonType = LessonType;  // Reference the enum here
   selectedFile: File | null = null;
+  private toastr = inject(ToastrService);
+
   constructor(
     private fb: FormBuilder, 
     private courseService: CourseService,
@@ -31,7 +35,7 @@ export class LessonComponent implements OnInit {
     this.lessonForm = this.fb.group({
       lName: ['',Validators.required],
       lContent: ['',Validators.required],
-      lLessonNumber: ['', Validators.required],
+      // lLessonNumber: ['', Validators.required],
       lType: ['', Validators.required],
       cModules: ['', Validators.required],
       video: ['', Validators.required],
@@ -63,18 +67,24 @@ export class LessonComponent implements OnInit {
       formData.append('name', this.lessonForm.get('lName')?.value);
       formData.append('type', this.lessonForm.get('lType')?.value);
       formData.append('content', this.lessonForm.get('lContent')?.value);
-      formData.append('lessonNumber', this.lessonForm.get('lLessonNumber')?.value);
+      // formData.append('lessonNumber', this.lessonForm.get('lLessonNumber')?.value);
       formData.append('moduleId', this.lessonForm.get('cModules')?.value);
       formData.append('videoContent', this.selectedFile);
 
       this.courseService.addLesson(formData).subscribe({
         next: () => {
+           this.toastr.success("Lesson added successfully")
           console.log('Lesson added successfully');
+          this.lessonForm.reset();
+          this.selectedFile = null;
         },
         error: (err) => {
+          this.toastr.error(err.error)
           console.error('Error adding Lesson:', err);
           console.error('Detailed error:', err.error);
+      
         }
+
       });
     }
   }

@@ -19,10 +19,13 @@ input[type=text], input[type=number] , textarea, select {
       cursor: pointer;
     }
     
-    div {
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      padding: 20px;
+    .error-message {
+      color: red;
+      font-size: 0.875em; /* optional: makes the error text a bit smaller */
+      margin-top: 0.25em; /* optional: adds a little space above the error text */
     }
   
-  
+    label{
+      display: block;
+      font-weight: bold;
+     }
