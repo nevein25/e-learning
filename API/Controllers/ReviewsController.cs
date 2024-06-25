@@ -18,6 +18,27 @@ namespace API.Controllers
             _unitOfWork = unitOfWork;
         }
         /// If Std pay the Course
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Review>>> GetAll()
+        {
+
+            try
+            {
+                var reviews = await _unitOfWork.ReviewRepository.GetAllReviews();
+                //if (reviews == null || !reviews.Any())
+                //{
+                //    return NotFound("No reviews found.");
+                //}
+                return Ok(reviews);
+            }
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, "Internal server error");
+            }
+
+        }
+
         [HttpPost]
         public async Task<ActionResult<Review>> AddReview(ReviewAddDto review)
         {
