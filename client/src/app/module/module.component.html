@@ -4,14 +4,8 @@
     <label for="mName">Module Name</label>
     <input type="text" id="mName" placeholder="Module Name.." formControlName="mName">
 
-    <label for="mNumber">Course Duration</label>
-    <input type="number" id="mNumber" placeholder="Module Number.." formControlName="mNumber">
-
-    <label for="mCourse">Select Instructor</label>
-    <select id="mCourse" formControlName="mCourse">
-        <option *ngFor="let c of courses" [value]="c.id">{{ c.name }}</option>
-    </select>
-
-    <button type="submit" [disabled]="!moduleForm.valid" id="mybtn">Submit</button>
+    <a routerLink="/lesson" id="mybtn">Go To Lesson</a>
+    
+    <button  type="submit" [disabled]="!moduleForm.valid" id="mybtn">Add Another Module</button>
 
 </form>

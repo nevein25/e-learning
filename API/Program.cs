@@ -50,7 +50,7 @@ builder.Services.AddScoped<Cloudinary>(sp =>
         settings.ApiSecret
     ));
 });
-builder.Services.AddScoped<IUploadService, UploadVideoToCloudinary>();
+builder.Services.AddScoped<IVideoService, VideoOnCloudinary>();
 
 
 var app = builder.Build();
@@ -67,6 +67,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
 
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
     .WithOrigins("http://localhost:4200", "https://localhost:4200"));

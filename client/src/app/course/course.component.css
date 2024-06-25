@@ -1,27 +1,40 @@
-input[type=text], input[type=number] , textarea, select {
-  width: 500px;
+form {
+  display: flex;
+  flex-direction: column;
+  
+  width: 100%;
+  max-width: 600px; /* Adjust max-width as per your design */
+  margin: 5% auto; /* Centers the form horizontally */
+}
+
+form label {
+  display: block;
+  font-weight: bold;
+  font-size: 1.2em; /* Increases label text size */
+  margin-bottom: 5px;
+}
+
+form input[type=text],
+form input[type=number],
+form textarea,
+form select {
+  width: 100%;
   padding: 10px 20px;
   margin: 8px 0;
   display: block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  }
-  
- #mybtn {
-    width: 200px;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  div {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-  }
+}
 
+#mybtn {
+  width: 200px;
+  background-color: #4CAF50;
+  align-content: center;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 30%;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

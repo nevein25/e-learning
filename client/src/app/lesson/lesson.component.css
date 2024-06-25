@@ -1,3 +1,13 @@
+
+form {
+  display: flex;
+  flex-direction: column;
+  
+  width: 100%;
+  max-width: 600px; /* Adjust max-width as per your design */
+  margin: 7% auto; /* Centers the form horizontally */
+}
+
 input[type=text], input[type=number] , textarea, select {
     width: 500px;
     padding: 10px 20px;
@@ -13,16 +23,19 @@ input[type=text], input[type=number] , textarea, select {
       background-color: #4CAF50;
       color: white;
       padding: 14px 20px;
-      margin: 8px 0;
+      margin: 8px 20%;
       border: none;
       border-radius: 4px;
       cursor: pointer;
     }
     
-    div {
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      padding: 20px;
+    .error-message {
+      color: red;
+      font-size: 0.875em; /* optional: makes the error text a bit smaller */
+      margin-top: 0.25em; /* optional: adds a little space above the error text */
     }
   
-  
+    label{
+      display: block;
+      font-weight: bold;
+     }

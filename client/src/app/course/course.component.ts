@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InstructorService } from '../_services/instructor.service';
 import { CategoryService } from '../_services/category.service';
@@ -6,6 +6,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { CourseService } from '../_services/course.service';
 import { Router, RouterModule } from '@angular/router';
+import { CourseDataService } from '../shared/course-data.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-course',
@@ -24,13 +27,16 @@ export class CourseComponent implements OnInit {
   courseForm: FormGroup;
   instructors: any[] = [];
   categories: any[] = [];
+  selectedFile: File | null = null;
+  private toastr = inject(ToastrService);
 
   constructor(
     private fb: FormBuilder,
     private instructorService: InstructorService,
     private categoryService: CategoryService,
     private courseService: CourseService,
-    private route: Router
+    private route: Router,
+    private courseDataService: CourseDataService
   ) {
     this.courseForm = this.fb.group({
       cName: ['', Validators.required],
@@ -61,29 +67,44 @@ export class CourseComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    if (this.courseForm.valid) {
-      const course = {
-        name: this.courseForm.value.cName,
-        duration: this.courseForm.value.cDuration,
-        description: this.courseForm.value.cDescription,
-        price: this.courseForm.value.cPrice,
-        language: this.courseForm.value.cLanguage,
-        thumbnail: this.courseForm.value.cThumbnail,
-        instructorId: this.courseForm.value.cInstructor,
-        categoryId: this.courseForm.value.cCategory
-      };
+  onFileChange(event: any): void {
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
 
-      this.courseService.addCourse(course).subscribe({
-        next: () => {
-          // Navigate to another route if needed, e.g., course list
-           this.route.navigate(['/module']);
+  onSubmit(): void {
+    if (this.courseForm.valid && this.selectedFile) {
+      const formData = new FormData();
+      formData.append('name', this.courseForm.get('cName')?.value);
+      formData.append('duration', this.courseForm.get('cDuration')?.value);
+      formData.append('description', this.courseForm.get('cDescription')?.value);
+      formData.append('price', this.courseForm.get('cPrice')?.value);
+      formData.append('language', this.courseForm.get('cLanguage')?.value);
+      formData.append('instructorId', this.courseForm.get('cInstructor')?.value);
+      formData.append('categoryId', this.courseForm.get('cCategory')?.value);
+      formData.append('thumbnail', this.selectedFile);
+  
+      console.log('Form Data:');
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+  
+      this.courseService.addCourse(formData).subscribe({
+        next: (response) => {
           console.log('Course added successfully');
+          this.toastr.success("Course added successfully")
+          const courseId = response.id;
+          console.log(courseId)
+          this.courseDataService.setCourseId(courseId);
+          this.route.navigate(['/module']);
         },
         error: (err) => {
+          this.toastr.error(err.error)
           console.error('Error adding course:', err);
         }
       });
     }
   }
+
 }

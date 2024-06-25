@@ -15,12 +15,12 @@ namespace API.Controllers
     public class CourseController : ControllerBase
     {
         private EcommerceContext _context { get; }
-        private readonly IUploadService _uploadService;
+        private readonly IVideoService _videoService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CourseController(IUploadService uploadService , EcommerceContext context , IUnitOfWork unitOfWork) 
+        public CourseController(IVideoService videoService , EcommerceContext context , IUnitOfWork unitOfWork) 
         { 
-            _uploadService = uploadService;
+            _videoService = videoService;
             _context = context;
              _unitOfWork = unitOfWork;
         }
@@ -40,6 +40,19 @@ namespace API.Controllers
                 return NotFound("Category not found");
             }
 
+            // Get the file name and extension
+            var fileName = Path.GetFileName(courseDto.Thumbnail.FileName);
+
+            // Set the file path where the file will be saved
+            string filePath = Path.Combine("uploads", fileName);
+
+            // Save the file
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await courseDto.Thumbnail.CopyToAsync(stream);
+            }
+
+            // Store only the file name and extension in the database
             var course = new Course
             {
                 Name = courseDto.Name,
@@ -47,9 +60,10 @@ namespace API.Controllers
                 Description = courseDto.Description,
                 Price = courseDto.Price,
                 Language = courseDto.Language,
-                Thumbnail = courseDto.Thumbnail,
+                Thumbnail = fileName, // Save only the file name and extension
                 InstructorId = courseDto.InstructorId,
                 CategoryId = courseDto.CategoryId,
+                UploadDate = DateTime.UtcNow
             };
 
             _context.Courses.Add(course);
@@ -57,6 +71,7 @@ namespace API.Controllers
 
             return Ok(course);
         }
+
         [HttpGet("Course/{id}")]
         public async Task<IActionResult> SearchCourseById(int id)
         {
@@ -107,22 +122,26 @@ namespace API.Controllers
                 return NotFound("Module not found");
             }
 
+            var highestLessonNumber = _context.Lessons
+            .OrderByDescending(l => l.LessonNumber)
+            .FirstOrDefault()?.LessonNumber ?? 0;
+
             //For Test Only
-            var filePath = $"{module.Course.Name}/Chapter_{lessonDto.ModuleId}/Lesson_{lessonDto.LessonNumber}";
+            var filePath = $"{module.Course.Name}/Chapter_{lessonDto.ModuleId}/Lesson_{highestLessonNumber}";
             //string videoFilePath = "C:\\Users\\pc\\Downloads\\SQL.mp4";
 
             //Here Upload the Video to the Cloudinary.
             //IFormFile mockVideoFile = MoqIFormFile.CreateMockFormFile(videoFilePath);
-            var uploadResult = await _uploadService.Upload(lessonDto.VideoContent, filePath);
+            var uploadResult = await _videoService.Upload(lessonDto.VideoContent, filePath);
             if (uploadResult == null) return BadRequest("File upload failed");
 
             var newLesson = new Lesson
             {
                 Name = lessonDto.Name,
-                Type = lessonDto.Type,     
+                Type = lessonDto.Type,
                 Content = lessonDto.Content,
-                LessonNumber = lessonDto.LessonNumber,
-                ModuleId = lessonDto.ModuleId
+                LessonNumber = highestLessonNumber + 1,
+                ModuleId = lessonDto.ModuleId,
             };
 
             _context.Lessons.Add(newLesson);
@@ -157,7 +176,7 @@ namespace API.Controllers
                     Description = course.Description,
                     Price = course.Price,
                     Language = course.Language,
-                    Thumbnail = course.Thumbnail,
+                    img = course.Thumbnail,
                     InstructorId = course.InstructorId,
                     CategoryId = course.CategoryId,
                 })
@@ -197,5 +216,7 @@ namespace API.Controllers
 
             return Ok(new { Courses = courses, TotalCourses = totalCourses });
         }
+
+        
     }
 }
