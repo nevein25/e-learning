@@ -12,6 +12,7 @@ import { RateandreviewComponent } from './rateandreview/rateandreview.component'
 import { RegisterComponent } from "./register/register.component";
 import { NavComponent } from "./nav/nav.component";
 import { MembershipService } from './_services/membership.service';
+import { FooterComponent } from "./footer/footer.component";
 
 @Component({
     selector: 'app-root',
@@ -34,7 +35,8 @@ import { MembershipService } from './_services/membership.service';
         LoginComponent,
         RegisterComponent,
         NavComponent,
-        RouterLink
+        RouterLink,
+        FooterComponent
     ]
 })
 export class AppComponent implements OnInit {

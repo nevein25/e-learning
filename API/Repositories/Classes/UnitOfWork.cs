@@ -24,6 +24,7 @@ namespace API.Repositories.Classes
         public IRateRepo RateRepository => new RateRepo(_context);
         public ISubscriptionRepository SubscriptionRepository => new SubscriptionRepository(_context);
 
+        public ICoursePurchaseRepository CoursePurchaseRepository => new CoursePurchaseRepository(_context, _mapper);
 
         public async Task<bool> SaveChanges()
         {
