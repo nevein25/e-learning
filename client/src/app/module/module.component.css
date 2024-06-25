@@ -1,3 +1,11 @@
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px; /* Adjust max-width as per your design */
+  margin: 10% auto; /* Centers the form horizontally */
+}
+
 input[type=text], input[type=number] , textarea, select {
     width: 500px;
     padding: 10px 20px;
@@ -11,9 +19,10 @@ input[type=text], input[type=number] , textarea, select {
    #mybtn {
       width: 200px;
       background-color: #4CAF50;
+      text-align: center;
       color: white;
       padding: 14px 20px;
-      margin: 8px 0;
+      margin: 9px 20%;
       border: none;
       border-radius: 4px;
       cursor: pointer;

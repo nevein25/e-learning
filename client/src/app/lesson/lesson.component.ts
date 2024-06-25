@@ -77,6 +77,7 @@ export class LessonComponent implements OnInit {
           console.log('Lesson added successfully');
           this.lessonForm.reset();
           this.selectedFile = null;
+          
         },
         error: (err) => {
           this.toastr.error(err.error)
