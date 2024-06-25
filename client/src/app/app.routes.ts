@@ -13,9 +13,17 @@ import { MembershipOptionsComponent } from './payments/membership-options/member
 import { CourseCheckoutComponent } from './payments/course-checkout/course-checkout.component';
 import { SuccessPaymentComponent } from './payments/success-payment/success-payment.component';
 import { HomeComponent } from './home/home.component';
+import { BoughtCoursesListComponent } from './bought-courses-list/bought-courses-list.component';
+import { studentGuard } from './_guards/student.guard';
 
 
 export const routes: Routes = [
+    // {
+    //     path: '',
+    //     runGuardsAndResolvers: 'always',
+    //     canActivate: [AuthGuard], // AuthGuard: only loggedin users
+    //     children: []
+    // },
     { path: "", component: HomeComponent },
     { path: "course", component: CourseComponent },
     { path: "module", component: ModuleComponent },
@@ -29,5 +37,6 @@ export const routes: Routes = [
     { path: 'membership-options', component: MembershipOptionsComponent },
     { path: 'course-payment/:id', component: CourseCheckoutComponent },
     { path: 'success-payment', component: SuccessPaymentComponent },
+    { path: 'bought-courses-list', component: BoughtCoursesListComponent, canActivate: [studentGuard] },
     {path: '**', component: HomeComponent, pathMatch: 'full'}
 ];

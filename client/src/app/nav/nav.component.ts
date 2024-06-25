@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AccountService } from '../_services/account.service';
 import { HasRoleDirective } from '../_directives/has-role.directive';
 
@@ -13,11 +13,14 @@ import { HasRoleDirective } from '../_directives/has-role.directive';
 export class NavComponent implements OnInit {
 
   accountService = inject(AccountService);
+  router = inject(Router);
+
   ngOnInit(): void {
     this.accountService.setCurrentUserOnOpenApp();
   }
 
   logout() {
     this.accountService.logout();
+    this.router.navigate(['/', 'home']);
   }
 }

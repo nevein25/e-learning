@@ -35,7 +35,8 @@ namespace API.Repositories.Classes
                 {
                     CourseId = c.Id,
                     CourseName = c.Name,
-                    Thumbnail = c.Thumbnail
+                    Thumbnail = c.Thumbnail,
+                    Description = c.Description
                 })
                 .ToListAsync();
 
