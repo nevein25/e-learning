@@ -14,10 +14,10 @@ namespace API.Repositories.Classes
         {
             _context = context;
         }
-        //public async Task<IEnumerable<ReviewAddDto>> GetAllReviews()
-        //{
-        //    return (IEnumerable<ReviewAddDto>)await _context.Reviews.ToListAsync();
-        //}
+        public async Task<IEnumerable<Review>> GetAllReviews()
+        {
+            return (IEnumerable<Review>)await _context.Reviews.ToListAsync();
+        }
 
         public async Task<Review> GetReviewById(int id)
         {

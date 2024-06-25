@@ -5,7 +5,7 @@ namespace API.Repositories.Interfaces
 {
     public interface IReviewRepo
     {
-        //Task<IEnumerable<ReviewAddDto>> GetAllReviews();
+        Task<IEnumerable<Review>> GetAllReviews();
         Task<Review> GetReviewById(int id);
         void AddReview(Review review);
         void UpdateReview(Review review);
