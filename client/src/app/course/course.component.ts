@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { CourseService } from '../_services/course.service';
 import { Router, RouterModule } from '@angular/router';
+import { CourseDataService } from '../shared/course-data.service';
+
 
 @Component({
   selector: 'app-course',
@@ -30,7 +32,8 @@ export class CourseComponent implements OnInit {
     private instructorService: InstructorService,
     private categoryService: CategoryService,
     private courseService: CourseService,
-    private route: Router
+    private route: Router,
+    private courseDataService: CourseDataService
   ) {
     this.courseForm = this.fb.group({
       cName: ['', Validators.required],
@@ -85,8 +88,11 @@ export class CourseComponent implements OnInit {
       });
   
       this.courseService.addCourse(formData).subscribe({
-        next: () => {
+        next: (response) => {
           console.log('Course added successfully');
+          const courseId = response.id;
+          console.log(courseId)
+          this.courseDataService.setCourseId(courseId);
           this.route.navigate(['/module']);
         },
         error: (err) => {
