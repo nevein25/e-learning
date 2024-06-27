@@ -102,7 +102,7 @@ namespace API.Controllers
             var module = new Module
             {
                 Name = moduleDto.Name,
-                ModuleNumber = moduleDto.ModuleNumber,
+                ModuleNumber = moduleDto.Id,
                 CourseId = moduleDto.CourseId
             };
 
@@ -126,14 +126,7 @@ namespace API.Controllers
             .OrderByDescending(l => l.LessonNumber)
             .FirstOrDefault()?.LessonNumber ?? 0;
 
-            //For Test Only
-            var filePath = $"{module.Course.Name}/Chapter_{lessonDto.ModuleId}/Lesson_{highestLessonNumber}";
-            //string videoFilePath = "C:\\Users\\pc\\Downloads\\SQL.mp4";
-
-            //Here Upload the Video to the Cloudinary.
-            //IFormFile mockVideoFile = MoqIFormFile.CreateMockFormFile(videoFilePath);
-            var uploadResult = await _videoService.Upload(lessonDto.VideoContent, filePath);
-            if (uploadResult == null) return BadRequest("File upload failed");
+       
 
             var newLesson = new Lesson
             {
@@ -146,6 +139,13 @@ namespace API.Controllers
 
             _context.Lessons.Add(newLesson);
             await _context.SaveChangesAsync();
+            var filePath = $"{module.Course.Name}/Chapter_{lessonDto.ModuleId}/Lesson_{highestLessonNumber+1}";
+            //string videoFilePath = "C:\\Users\\pc\\Downloads\\SQL.mp4";
+
+            //Here Upload the Video to the Cloudinary.
+            //IFormFile mockVideoFile = MoqIFormFile.CreateMockFormFile(videoFilePath);
+            var uploadResult = await _videoService.Upload(lessonDto.VideoContent, filePath);
+            if (uploadResult == null) return BadRequest("File upload failed");
 
             return Ok(new { message = "Added Successfully", videoPath = uploadResult });
         }
