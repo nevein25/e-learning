@@ -31,25 +31,32 @@ namespace API.Seed
 
         }
 
-        public static void SeedCoursesWithDependencies(EcommerceContext context)
+        public static async Task SeedCoursesWithDependenciesAsync(EcommerceContext context,
+          UserManager<AppUser> userManager)
         {
             if (!context.Instructors.Any())
             {
                 var instructors = new List<Instructor>
-        {
-            new Instructor { Name = "John Doe", Biography = "Expert in programming." },
-            new Instructor { Name = "Jane Smith", Biography = "Database specialist." },
-            new Instructor { Name = "Alice Johnson", Biography = "Web development guru." },
-            new Instructor { Name = "Robert Brown", Biography = "Machine learning enthusiast." },
-            new Instructor { Name = "Emily Davis", Biography = "Cybersecurity expert." },
-            new Instructor { Name = "Michael Wilson", Biography = "Network engineering professional." },
-            new Instructor { Name = "Emma Clark", Biography = "Mobile app development specialist." },
-            new Instructor { Name = "James Lewis", Biography = "Cloud computing advocate." },
-            new Instructor { Name = "Olivia Walker", Biography = "Data science expert." },
-            new Instructor { Name = "David Hall", Biography = "Software architecture wizard." }
-        };
-                context.Instructors.AddRange(instructors);
-                context.SaveChanges();
+                {
+                    new Instructor {UserName="JohnDoe",  Name = "John Doe", Picture="team-1.jpg", Biography = "Expert in programming." },
+                    new Instructor {UserName="JaneSmith", Name = "Jane Smith", Picture="team-2.jpg", Biography = "Database specialist." },
+                    new Instructor {UserName="AliceJohnson", Name = "Alice Johnson", Picture="team-4.jpg", Biography = "Web development guru." },
+                    new Instructor {UserName="RobertBrown", Name = "Robert Brown", Picture="team-3.jpg", Biography = "Machine learning enthusiast." },
+                    new Instructor {UserName="EmilyDavis", Name = "Emily Davis", Biography = "Cybersecurity expert." },
+                    new Instructor {UserName="MichaelWilson", Name = "Michael Wilson", Biography = "Network engineering professional." },
+                    new Instructor {UserName="EmmaClark", Name = "Emma Clark", Biography = "Mobile app development specialist." },
+                    new Instructor {UserName="JamesLewis", Name = "James Lewis", Biography = "Cloud computing advocate." },
+                    new Instructor {UserName="OliviaWalker", Name = "Olivia Walker", Biography = "Data science expert." },
+                    new Instructor {UserName="DavidHall", Name = "David Hall", Biography = "Software architecture wizard." }
+                };
+
+                foreach (var instructor in instructors)
+                {
+                    await userManager.CreateAsync(instructor, "TEST@test123");
+                    await userManager.AddToRoleAsync(instructor, "Instructor");
+
+                }
+
             }
 
             if (!context.Categories.Any())

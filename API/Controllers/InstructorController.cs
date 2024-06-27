@@ -77,6 +77,15 @@ namespace API.Controllers
 
             return NoContent();
         }
+
+        // GET: api/instructors/5
+        [HttpGet("top-instructor/{number}")]
+        public async Task<ActionResult<IEnumerable<InstructorDto>>> GetNumberOfInstructor(int number)
+        {
+            var instructorsDto = await _repository.GetTopFourInstructorAsync(number);
+
+            return Ok(instructorsDto);
+        }
     }
 
 }

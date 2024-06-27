@@ -12,6 +12,14 @@ namespace API.Helpers
             CreateMap<Instructor, InstructorDto>();
             CreateMap<Wishlist, WishlistDto>();
 
+          
+                    
+            CreateMap<Course, CourseWithInstructorDto>()
+                .ForMember(
+                    dest => dest.InstructorName,
+                    opt => opt.MapFrom(src => src.Instructor.Name)
+                );
+            
 
         }
     }
