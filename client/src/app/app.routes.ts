@@ -17,6 +17,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { BoughtCoursesListComponent } from './bought-courses-list/bought-courses-list.component';
 import { studentGuard } from './_guards/student.guard';
 import { SuccessPaymentComponent } from './payments/success-payment/success-payment.component';
+import { StudentCourseComponent } from './student-course/student-course.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent },
@@ -32,6 +33,7 @@ export const routes: Routes = [
     { path: 'checkout', component: MembershipCheckoutComponent },
     { path: 'membership-options', component: MembershipOptionsComponent },
     { path: 'course-payment/:id', component: CourseCheckoutComponent },
+    { path: 'student-course', component: StudentCourseComponent },
     { path: 'success-payment', component: SuccessPaymentComponent },
     { path: 'wishlist', component: WishlistComponent },
     { path: 'bought-courses-list', component: BoughtCoursesListComponent, canActivate: [studentGuard] },
