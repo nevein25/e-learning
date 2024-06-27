@@ -21,7 +21,8 @@
       @if (accountService.currentUser()) {
       <a *appHasRole="['Student']" routerLink="/bought-courses-list" routerLinkActive="active"
         class="nav-item nav-link">My Learning</a>
-        <a routerLink="/course" class="nav-item nav-link" *appHasRole="['Instructor']">Dashboard</a>
+      <a routerLink="/course" class="nav-item nav-link" *appHasRole="['Instructor']">Dashboard</a>
+      <a routerLink="/wishlist" class="nav-item nav-link" *appHasRole="['Student']">wishlist</a>
       <a class="nav-item nav-link">Hello {{accountService.currentUser()?.username}}!</a>
       <!-- <a class="nav-item nav-link" *appHasRole="['Student']">Students only</a> -->
 

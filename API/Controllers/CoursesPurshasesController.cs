@@ -25,12 +25,6 @@ namespace API.Controllers
         public async Task<ActionResult<IList<CoursesPurshasedDto>>> GetCoursesBoughtByStudent()
         {
             var courses = await _unitOfWork.CoursePurchaseRepository.CoursesBoughtByStudentId(User.GetUserId());
-
-            if (courses == null || courses.Count == 0)
-            {
-                return NotFound();
-            }
-
             return Ok(courses);
         }
     }
