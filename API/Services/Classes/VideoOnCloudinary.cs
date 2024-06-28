@@ -10,10 +10,12 @@ namespace API.Services.Classes
         private readonly Cloudinary cloudinary;
         public VideoOnCloudinary(Cloudinary _clodinary) => cloudinary = _clodinary;
 
-        public string GetVideo(string publicId)
+        public async Task<string?> GetVideo(string publicId)
         {
-            return  cloudinary.Api.UrlVideoUp.BuildUrl($"{publicId}.mp4");
+            string url = cloudinary.Api.UrlVideoUp.BuildUrl($"{publicId}.mp4");
+            return (await HttpClinetService.UrlExists(url))?url:null;
         }
+
         public async Task<UploadResult> Upload(IFormFile file, string filePath)
         {
             using (var stream = file.OpenReadStream())

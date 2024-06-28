@@ -23,7 +23,8 @@ export class StudentCourseComponent implements OnInit {
   ngOnInit(): void {  
 
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getCourseContent(this.id);
+   // this.getCourseContent(90);
+   this.getCourseContent(this.id);
   }
 
   getCourseContent(id: number): void {
@@ -31,7 +32,7 @@ export class StudentCourseComponent implements OnInit {
       (response) => {
         this.courseContent = response;
         if (this.courseContent.modules.length > 0 && this.courseContent.modules[0].lessons.length > 0) {
-          this.setVideoUrl(this.courseContent.name, this.courseContent.modules[0].id, this.courseContent.modules[0].lessons[0].lessonNumber);
+          this.setVideoUrl(this.courseContent.name, this.courseContent.modules[0].moduleNumber, this.courseContent.modules[0].lessons[0].lessonNumber);
         }
       },
       (error) => {
@@ -45,8 +46,8 @@ export class StudentCourseComponent implements OnInit {
     return this.studentCourseService.GetPathLesson(path);
   }
 
-  setVideoUrl(courseName: string, moduleId: number, lessonNumber: number): void {
-    this.getPathLesson(courseName, moduleId, lessonNumber).subscribe(
+  setVideoUrl(courseName: string, moduleNumber: number, lessonNumber: number): void {
+    this.getPathLesson(courseName, moduleNumber, lessonNumber).subscribe(
       (response) => {
         this.videoUrl = response.link;
         if (this.videoPlayer) {

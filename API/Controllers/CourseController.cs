@@ -89,20 +89,23 @@ namespace API.Controllers
         [HttpPost("create-new-module")]
         public async Task<IActionResult> CreateModuleAsync(ModuleDto moduleDto)
         {
+            //Check if Course Exist 
             var courseExists = await _context.Courses.AnyAsync(c=>c.Id==moduleDto.CourseId);
             if (!courseExists)
             {
                 return NotFound("Course not found");
             }
-            // in module 
-            var ModuleNameExists = await _context.Modules.AnyAsync(l => l.Name == moduleDto.Name);
+
+
+            //Check the ModuleName Exist Already in that Course
+            var ModuleNameExists = await _context.Modules.AnyAsync(l => l.CourseId == moduleDto.CourseId && l.Name == moduleDto.Name);
             if (ModuleNameExists)
             {
                 return BadRequest("Module name already exists!");
             }
 
+            //New ModuleNumber Logic
             var newModuleNumber =1+ _context.Modules.Where(module => module.CourseId == moduleDto.CourseId)?.Count() ?? 0;
-
             var module = new Module
             {
                 Name = moduleDto.Name,
@@ -110,6 +113,7 @@ namespace API.Controllers
                 CourseId = moduleDto.CourseId
             };
 
+            //Add To DB
             _context.Modules.Add(module);
             await _context.SaveChangesAsync();
             return Ok(module);
@@ -118,6 +122,7 @@ namespace API.Controllers
         [HttpPost("create-new-Lesson")]
         public async Task<IActionResult> CreateLessonAsync(LessonDto lessonDto)
         {
+            //Check Module Found Or Not
             var module = await _context.Modules.Include(m => m.Course).FirstOrDefaultAsync(m => m.Id == lessonDto.ModuleId);
 
             if (module == null)
@@ -125,6 +130,7 @@ namespace API.Controllers
                 return NotFound("Module not found");
             }
 
+            //New Lesson Number Logic
             var newLessonNumber =1+ _context.Lessons.Where(lesson => lesson.ModuleId== module.Id)?.Count() ?? 0;
             var filePath = $"{module.Course.Name}/Chapter_{module.ModuleNumber}/Lesson_{newLessonNumber}";
             var uploadResult = await _videoService.Upload(lessonDto.VideoContent, filePath);
@@ -139,6 +145,7 @@ namespace API.Controllers
                 ModuleId = lessonDto.ModuleId,
             };
 
+            //Save To DB.
             _context.Lessons.Add(newLesson);
             await _context.SaveChangesAsync();
             return Ok(new { message = "Added Successfully", videoPath = uploadResult });
