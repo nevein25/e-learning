@@ -11,7 +11,7 @@
         public IFormFile Thumbnail { get; set; }
          public string?img  { get; set; }
         public DateTime UploadDate { get; set; }
-        public int InstructorId { get; set; }
+       // public int InstructorId { get; set; }
         public int CategoryId { get; set; }
     }
 }

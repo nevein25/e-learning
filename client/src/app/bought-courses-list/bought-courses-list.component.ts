@@ -3,6 +3,7 @@ import { BoughtCourseService } from '../_services/bought-course.service';
 import { CoursePurshased } from '../_models/coursesBought';
 import { CommonModule } from '@angular/common';
 import { EnrollComponent } from "../payments/enroll/enroll.component";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-bought-courses-list',
@@ -15,7 +16,7 @@ export class BoughtCoursesListComponent implements OnInit {
 
   courses: CoursePurshased[] = [];
   boughtCourses = inject(BoughtCourseService);
-
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.getCourses();
@@ -34,5 +35,8 @@ export class BoughtCoursesListComponent implements OnInit {
     });
   }
 
-
+  navigateToCourse(courseId: number): void {
+    // Navigate to the course main page URL
+    this.router.navigateByUrl(`/student-course/${courseId}`);
+  }
 }

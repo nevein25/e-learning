@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Repositories.Interfaces;
+using API.Extensions;
 
 namespace API.Controllers
 {
@@ -25,15 +26,15 @@ namespace API.Controllers
              _unitOfWork = unitOfWork;
         }
 
-
+       
         [HttpPost("create-new-course")]
         public async Task<IActionResult> CreateCourseAsync(CourseImgDto courseDto)
         {
-            var instructorExists = await _context.Instructors.AnyAsync(i => i.Id == courseDto.InstructorId);
-            if (!instructorExists)
-            {
-                return NotFound("Instructor not found");
-            }
+            //var instructorExists = await _context.Instructors.AnyAsync(i => i.Id == courseDto.InstructorId);
+            //if (!instructorExists)
+            //{
+            //    return NotFound("Instructor not found");
+            //}
             var categoryExists = await _context.Categories.AnyAsync(c => c.Id == courseDto.CategoryId);
             if (!categoryExists)
             {
@@ -61,7 +62,7 @@ namespace API.Controllers
                 Price = courseDto.Price,
                 Language = courseDto.Language,
                 Thumbnail = fileName, // Save only the file name and extension
-                InstructorId = courseDto.InstructorId,
+                InstructorId = User.GetUserId(),
                 CategoryId = courseDto.CategoryId,
                 UploadDate = DateTime.UtcNow
             };
@@ -88,7 +89,7 @@ namespace API.Controllers
         [HttpPost("create-new-module")]
         public async Task<IActionResult> CreateModuleAsync(ModuleDto moduleDto)
         {
-            var courseExists = await _context.Courses.AnyAsync(c => c.Id == moduleDto.CourseId);
+            var courseExists = await _context.Courses.AnyAsync(c=>c.Id==moduleDto.CourseId);
             if (!courseExists)
             {
                 return NotFound("Course not found");
@@ -99,16 +100,18 @@ namespace API.Controllers
             {
                 return BadRequest("Module name already exists!");
             }
+
+            var newModuleNumber =1+ _context.Modules.Where(module => module.CourseId == moduleDto.CourseId)?.Count() ?? 0;
+
             var module = new Module
             {
                 Name = moduleDto.Name,
-                ModuleNumber = moduleDto.Id,
+                ModuleNumber = newModuleNumber,
                 CourseId = moduleDto.CourseId
             };
 
             _context.Modules.Add(module);
             await _context.SaveChangesAsync();
-
             return Ok(module);
         }
 
@@ -122,31 +125,22 @@ namespace API.Controllers
                 return NotFound("Module not found");
             }
 
-            var highestLessonNumber = _context.Lessons
-            .OrderByDescending(l => l.LessonNumber)
-            .FirstOrDefault()?.LessonNumber ?? 0;
-
-       
+            var newLessonNumber =1+ _context.Lessons.Where(lesson => lesson.ModuleId== module.Id)?.Count() ?? 0;
+            var filePath = $"{module.Course.Name}/Chapter_{module.ModuleNumber}/Lesson_{newLessonNumber}";
+            var uploadResult = await _videoService.Upload(lessonDto.VideoContent, filePath);
+            if (uploadResult == null) return BadRequest("File upload failed");
 
             var newLesson = new Lesson
             {
                 Name = lessonDto.Name,
                 Type = lessonDto.Type,
                 Content = lessonDto.Content,
-                LessonNumber = highestLessonNumber + 1,
+                LessonNumber = newLessonNumber,
                 ModuleId = lessonDto.ModuleId,
             };
 
             _context.Lessons.Add(newLesson);
             await _context.SaveChangesAsync();
-            var filePath = $"{module.Course.Name}/Chapter_{lessonDto.ModuleId}/Lesson_{highestLessonNumber+1}";
-            //string videoFilePath = "C:\\Users\\pc\\Downloads\\SQL.mp4";
-
-            //Here Upload the Video to the Cloudinary.
-            //IFormFile mockVideoFile = MoqIFormFile.CreateMockFormFile(videoFilePath);
-            var uploadResult = await _videoService.Upload(lessonDto.VideoContent, filePath);
-            if (uploadResult == null) return BadRequest("File upload failed");
-
             return Ok(new { message = "Added Successfully", videoPath = uploadResult });
         }
 
@@ -168,7 +162,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetAllCourses()
         {
             var courses = await _context.Courses
-                .Select(course => new CourseImgDto
+                .Select(course => new CourseDto
                 {
                     Id = course.Id,
                     Name = course.Name,
@@ -176,7 +170,7 @@ namespace API.Controllers
                     Description = course.Description,
                     Price = course.Price,
                     Language = course.Language,
-                    img = course.Thumbnail,
+                    Thumbnail = course.Thumbnail,
                     InstructorId = course.InstructorId,
                     CategoryId = course.CategoryId,
                 })
@@ -185,8 +179,26 @@ namespace API.Controllers
             return Ok(courses);
         }
 
+
+        [HttpPost("GetModulesByCourseId")]
+        public async Task<IActionResult> GetModulesByCourseId(CourseInfoDto  courseInfo)
+        {
+
+            Console.WriteLine($"COURSE ID\n {courseInfo.courseId}");
+            //courseInfo.courseId = 2;
+            var modules = await _context.Modules.Where(m=>m.CourseId== courseInfo.courseId)
+                                                .Select(m=> new
+                                                {
+                                                    Id = m.Id,
+                                                    Name = m.Name,
+                                                    ModuleNumber = m.ModuleNumber,
+                                                }).ToListAsync();
+            return Ok(modules);
+        }
+
+
         [HttpGet("GetAllModules")]
-            public async Task<IActionResult> GetAllModules()
+        public async Task<IActionResult> GetAllModules()
             {
                 var modules = await _context.Modules
                     .Select(m => new ModuleDto

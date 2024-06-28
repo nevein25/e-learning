@@ -11,7 +11,7 @@ export class StudentCourseService {
   baseUrl = environment.apiUrl;
 
   GetModulesAndLessons(courseid: number): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}Video/GetModulesAndLessonCourse`, courseid );
+    return this.http.post<any>(`${this.baseUrl}Video/GetModulesAndLessonCourse`, courseid ,{ headers: { 'Content-Type': 'application/json' } });
   }
 
   GetPathLesson(publicId: string): Observable<any> {
