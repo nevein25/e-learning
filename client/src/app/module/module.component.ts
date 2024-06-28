@@ -19,7 +19,6 @@ import { RouterModule } from '@angular/router';
   
 })
 export class ModuleComponent implements OnInit {
-
   moduleForm: FormGroup;
   courseId: string | null = null;
   courses: any[] = [];

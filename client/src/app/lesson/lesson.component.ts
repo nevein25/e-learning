@@ -6,6 +6,8 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { CourseDataService } from '../shared/course-data.service';
+
 
 
 @Component({
@@ -25,12 +27,14 @@ export class LessonComponent implements OnInit {
   Modules: any[] = [];
   LessonType = LessonType;  // Reference the enum here
   selectedFile: File | null = null;
+  courseId: string | null = null;
   private toastr = inject(ToastrService);
 
   constructor(
     private fb: FormBuilder, 
     private courseService: CourseService,
-    private router: Router
+    private router: Router,
+    private courseDataService: CourseDataService
   ) {
     this.lessonForm = this.fb.group({
       lName: ['',Validators.required],
@@ -46,19 +50,41 @@ export class LessonComponent implements OnInit {
   ngOnInit(): void {
     this.getModules();
   }
-
-  getModules(): void {
-    this.courseService.getModules().subscribe(data => {
-      this.Modules = data;
+ 
+  getCourseId()
+  {
+    this.courseDataService.currentCourseId.subscribe(courseId => {
+      this.courseId = courseId;
     });
   }
+
+  getModules(): void {
+    this.getCourseId();
+    this.courseService.getModules(this.courseId).subscribe(
+      (data: any[]) => 
+      {
+        this.Modules = data;
+      },
+      (error) => 
+      {
+        console.error('Error fetching modules:', error);
+      }
+    );
+    console.log("Modles: ",this.Modules);
+  }
+
+  /*getModules(): void {
+    this.courseService.getModules("2").subscribe(data => {
+      this.Modules = data;
+      console.log("DATATTTTTTTTTT",data);
+    });
+  }*/
 
   onFileChange(event: any): void {
     
     if (event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
     }
-    
   }
   
   onSubmit(): void {
