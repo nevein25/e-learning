@@ -17,10 +17,20 @@
             <li class="list-group-item"><strong>Uploaded:</strong> {{ course.uploadDate }}</li>
           </ul>
           <div class="d-flex flex-column align-items-start mt-4">
+            @if (!isInWishlist) {
+
             <button class="btn btn-outline-primary mb-3 btn-lg" (click)="addToWishlist(course.id)">Add to
               Wishlist</button>
+            }
+            @else{
+
+            <button class="btn btn-outline-danger mb-3 btn-lg" (click)="removeFromWishlist(course.id)">Remove From Wishlist</button>
+            }
+
             <app-enroll [id]="courseId" class="mb-3"></app-enroll>
-            <app-rateandreview [id]="courseId"></app-rateandreview>
+            <!-- <app-rateandreview [id]="courseId"></app-rateandreview> -->
+            <app-rate [id]="courseId"></app-rate>
+
           </div>
         </div>
       </div>

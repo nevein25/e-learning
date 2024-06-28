@@ -22,11 +22,25 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult> SetRate(RateDto rateDto)
         {
+            var userId = User.GetUserId();
+            var isCourseBought = await _unitOfWork.CoursePurchaseRepository.IsCourseBoughtAsync(rateDto.CourseId, userId);
+            if (!isCourseBought) return BadRequest("You Can not rate course you did not buy");
+
             if (!_unitOfWork.RateRepository.CourseExist(rateDto.CourseId)) return NotFound();
 
-            await _unitOfWork.RateRepository.RateAsync(rateDto.CourseId, User.GetUserId(), rateDto.Stars);
+            await _unitOfWork.RateRepository.RateAsync(rateDto.CourseId, userId, rateDto.Stars);
 
             return NoContent();
+        }
+
+        [HttpGet("{courseId}")]
+        public async Task<ActionResult<RateByUserDto>> GetRateForLogedinStudent(int courseId)
+        {
+            if (!_unitOfWork.RateRepository.CourseExist(courseId)) return NotFound();
+
+            var rate = await _unitOfWork.RateRepository.GetRateForStudentAsync(courseId, User.GetUserId());
+
+            return Ok(rate);
         }
     }
 }

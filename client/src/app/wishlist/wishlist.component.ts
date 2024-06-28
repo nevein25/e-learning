@@ -66,6 +66,8 @@ export class WishlistComponent implements OnInit {
         () => {
           // Remove the course from the local wishlist array
           this.wishlist = this.wishlist.filter(course => course.id !== courseId);
+          this.loadWishlist();
+
         },
         (error) => {
           console.error('Error removing course from wishlist:', error);

@@ -98,6 +98,6 @@ namespace API.Repositories.Classes
 
             return coursesToReturn;
 
-        }
+        }  
     }
 }

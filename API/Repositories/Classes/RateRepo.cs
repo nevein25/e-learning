@@ -1,4 +1,5 @@
 ﻿using API.Context;
+using API.DTOs;
 using API.Entities;
 using API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -41,16 +42,21 @@ namespace API.Repositories.Classes
                     Stars = NumOfStars
                 };
 
-                 _context.Rates.Add(rate);
+                _context.Rates.Add(rate);
                 await _context.SaveChangesAsync();
 
 
             }
         }
 
-        public int GetRateForUser(int courseId, int studentId)
+        public async Task<RateByUserDto> GetRateForStudentAsync(int courseId, int studentId)
         {
-            return _context.Rates.Where(r => r.CourseId == courseId && r.StudentId == studentId).Select(r => r.Stars).FirstOrDefault();
+            var stars = await _context.Rates.Where(r => r.CourseId == courseId && r.StudentId == studentId).Select(r => r.Stars).FirstOrDefaultAsync();
+            RateByUserDto rateByUser = new()
+            {
+                Stars = stars
+            };
+            return rateByUser;
         }
 
         public int GetAvgRateForCourse(int studentId)
@@ -75,5 +81,7 @@ namespace API.Repositories.Classes
         {
             return _context.Rates.Where(r => r.StudentId == studentId).ToList();
         }
+
+        
     }
 }

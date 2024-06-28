@@ -181,6 +181,18 @@ namespace API.Controllers
             }
         }
 
+        [HttpGet("course-bought/{courseId}")]
+        public async Task<ActionResult<CourseBoughtDto>> IsCourseBought(int courseId)
+        {
+
+            CourseBoughtDto courseBoughtDto = new()
+            {
+                IsBought = await _unitOfWork.CoursePurchaseRepository.IsCourseBoughtAsync(courseId,
+                User.GetUserId())
+            };
+
+            return Ok(courseBoughtDto);
+        }
         private async Task updateSubscription(Subscription subscription)
         {
             try
