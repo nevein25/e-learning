@@ -23,7 +23,7 @@
       <ul>
         <li class="lessonName" *ngFor="let lesson of module.lessons;">
           {{ lesson.lessonNumber }}) {{ lesson.name }}
-          <a href="#" (click)="onLinkClick($event, courseContent.name, module.id, lesson.lessonNumber)">Go To Lesson</a>
+          <a href="#" (click)="onLinkClick($event, courseContent.name, module.moduleNumber, lesson.lessonNumber)">Go To Lesson</a>
         </li>
       </ul>
     </section>
