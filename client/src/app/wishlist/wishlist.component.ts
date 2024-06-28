@@ -3,13 +3,14 @@ import { Course } from '../_models/course';
 import { WishlistService } from '../_services/wishlist.service';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { EnrollComponent } from "../payments/enroll/enroll.component";
 
 @Component({
-  selector: 'app-wishlist',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './wishlist.component.html',
-  styleUrl: './wishlist.component.css'
+    selector: 'app-wishlist',
+    standalone: true,
+    templateUrl: './wishlist.component.html',
+    styleUrl: './wishlist.component.css',
+    imports: [CommonModule, EnrollComponent]
 })
 export class WishlistComponent implements OnInit {
   wishlist: any[] = []; // Assuming Course model is defined
@@ -66,6 +67,8 @@ export class WishlistComponent implements OnInit {
         () => {
           // Remove the course from the local wishlist array
           this.wishlist = this.wishlist.filter(course => course.id !== courseId);
+          this.loadWishlist();
+
         },
         (error) => {
           console.error('Error removing course from wishlist:', error);

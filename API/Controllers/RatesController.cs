@@ -1,5 +1,7 @@
 ﻿using API.DTOs;
 using API.Entities;
+using API.Extensions;
+using API.Repositories.Classes;
 using API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,19 +22,25 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult> SetRate(RateDto rateDto)
         {
-            Rate rate = new();
-            if (rateDto.Stars <= 0 || rateDto.Stars >= 5)
-            {
-                if (rateDto.Stars != rate.Stars)
-                {
-                    rate.StudentId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                    rate.CourseId = rateDto.CourseId;
-                    rate.Stars = rateDto.Stars;
-                    _unitOfWork.RateRepository.Rate(rate.StudentId, rate.CourseId, rate.Stars);
-                    return Ok(rate);
-                }
-            }
-            return BadRequest();
+            var userId = User.GetUserId();
+            var isCourseBought = await _unitOfWork.CoursePurchaseRepository.IsCourseBoughtAsync(rateDto.CourseId, userId);
+        //    if (!isCourseBought) return BadRequest("You Can not rate course you did not buy");
+
+            if (!_unitOfWork.RateRepository.CourseExist(rateDto.CourseId)) return NotFound();
+
+            await _unitOfWork.RateRepository.RateAsync(rateDto.CourseId, userId, rateDto.Stars);
+
+            return NoContent();
+        }
+
+        [HttpGet("{courseId}")]
+        public async Task<ActionResult<RateByUserDto>> GetRateForLogedinStudent(int courseId)
+        {
+            if (!_unitOfWork.RateRepository.CourseExist(courseId)) return NotFound();
+
+            var rate = await _unitOfWork.RateRepository.GetRateForStudentAsync(courseId, User.GetUserId());
+
+            return Ok(rate);
         }
     }
 }

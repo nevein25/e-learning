@@ -54,5 +54,13 @@ namespace API.Repositories.Classes
             _context.Instructors.Remove(instructorToDelete);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<InstructorDto>> GetTopFourInstructorAsync(int number)
+        {
+            var instructors = await _context.Instructors.Take(number).ToListAsync();
+            var instructorDto = _mapper.Map<IEnumerable<InstructorDto>>(instructors);
+            return instructorDto;
+
+        }
     }
 }

@@ -5,10 +5,13 @@ namespace API.Repositories.Interfaces
 {
     public interface IReviewRepo
     {
-        Task<IEnumerable<Review>> GetAllReviews();
+        Task<Review> AddReviewAsync(ReviewAddDto reviewDto, int studentId);
+        Task<IEnumerable<ReviewsWithRateingDto>> GetAllReviewsByCourseId(int courseId);
+
+        /*
         Task<Review> GetReviewById(int id);
-        void AddReview(Review review);
         void UpdateReview(Review review);
         void DeleteReview(int id);
+        */
     }
 }

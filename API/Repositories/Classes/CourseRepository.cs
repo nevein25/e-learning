@@ -12,7 +12,7 @@ namespace API.Repositories.Classes
         private readonly EcommerceContext _context;
         private readonly IMapper _mapper;
 
-        public CourseRepository(EcommerceContext context , IMapper mapper)
+        public CourseRepository(EcommerceContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -68,7 +68,7 @@ namespace API.Repositories.Classes
                 var skip = (searchParams.PageNumber - 1) * searchParams.PageSize;
                 var pagedCourses = await query.Skip(skip).Take(searchParams.PageSize).ToListAsync();
                 var coursesDto = _mapper.Map<IEnumerable<CourseDto>>(pagedCourses);
-                foreach(var courseDto in coursesDto)
+                foreach (var courseDto in coursesDto)
                 {
                     var course = pagedCourses.FirstOrDefault(c => c.Id == courseDto.Id);
                     if (course != null)
@@ -89,5 +89,15 @@ namespace API.Repositories.Classes
                 return (Enumerable.Empty<CourseDto>(), 0);
             }
         }
+
+        public async Task<IEnumerable<CourseWithInstructorDto>> GetTopCourses(int number)
+        {
+            var courses = await _context.Courses.Include(c => c.Instructor).Take(number).ToListAsync();
+
+            var coursesToReturn = _mapper.Map<IEnumerable<CourseWithInstructorDto>>(courses);
+
+            return coursesToReturn;
+
+        }  
     }
 }

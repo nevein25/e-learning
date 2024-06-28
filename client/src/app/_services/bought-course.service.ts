@@ -14,4 +14,8 @@ export class BoughtCourseService {
   coursesBoughtList() {
     return this.http.get<CoursePurshased[]>(`${this.baseUrl}CoursesPurshases`);
   }
+
+  isCourseBought(courseId: number){
+    return this.http.get<any>(`${this.baseUrl}CoursesPurshases/${courseId}`);
+  }
 }

@@ -22,3 +22,11 @@
 .btn-primary {
   flex-grow: 1;      /* Allow the enroll button to grow */
 }
+
+.alert{
+  margin-top: 60px;
+  margin-bottom: 50px  !important;
+}
+.for-height{
+  height: 12px;
+}

@@ -1,26 +1,41 @@
-<!-- src/app/course-main-page/course-main-page.component.html -->
-
 <div *ngIf="course" class="container mt-5">
-  <div class="row">
+  <div class="row d-flex justify-content-center align-items-center">
     <div class="col-lg-8">
       <div class="card shadow-sm">
-        <img class="card-img-top img-fluid" [src]="'assets/Courses/' + course.thumbnail" alt="Course Thumbnail">
+        <img class="card-img-top" [src]="'assets/Courses/' + course.thumbnail" alt="Course Thumbnail">
         <div class="card-body">
-          <h2 class="card-title display-5">{{ course.name }}</h2>
-          <p class="card-text lead">{{ course.description }}</p>
+          <div class="d-flex align-items-center justify-content-between">
+            <h2 class="card-title display-5 mb-0">{{ course.name }}</h2>
+            <div class="d-flex align-items-center ml-2">
+              @if (isCourseBought) {
+                <app-rate [id]="courseId"></app-rate>
+              }
+              <div *ngIf="!isCourseBought" class="mr-2 me-5">
+                <app-enroll [id]="courseId"></app-enroll>
+              </div>
+              <ng-container *ngIf="!isInWishlist">
+                <button class="btn btn-outline-primary mb-0" (click)="addToWishlist(course.id)">Add to Wishlist</button>
+              </ng-container>
+              <ng-container *ngIf="isInWishlist">
+                <button class="btn btn-outline-danger mb-0 " (click)="removeFromWishlist(course.id)">Remove From Wishlist</button>
+              </ng-container> 
+            </div>
+          </div>
+          <p class="card-text lead mt-3">{{ course.description }}</p>
           <ul class="list-group list-group-flush mb-3">
             <li class="list-group-item"><strong>Category:</strong> {{ course.category }}</li>
             <li class="list-group-item"><strong>Language:</strong> {{ course.language }}</li>
             <li class="list-group-item"><strong>Duration:</strong> {{ course.duration }} hours</li>
-            <li class="list-group-item"><strong>Price:</strong> ${{ course.price }}</li>
+            <li class="list-group-item"><strong>Price:</strong> {{ course.price | currency }}</li>
             <li class="list-group-item"><strong>Instructor:</strong> {{ course.instructor }}</li>
-            <li class="list-group-item"><strong>Uploaded:</strong> {{ course.uploadDate }}</li>
+            <li class="list-group-item"><strong>Uploaded:</strong> {{ course.uploadDate | date }}</li>
           </ul>
           <div class="d-flex flex-column align-items-start mt-4">
-            <button class="btn btn-outline-primary mb-3 btn-lg" (click)="addToWishlist(course.id)">Add to
-              Wishlist</button>
-            <app-enroll [id]="courseId" class="mb-3"></app-enroll>
-            <app-rateandreview [id]="courseId"></app-rateandreview>
+           @if (!isCourseBought) {
+               <!-- <app-rate [id]="courseId"></app-rate> -->
+               <app-review [id]="courseId"></app-review>
+                
+            }
           </div>
         </div>
       </div>
