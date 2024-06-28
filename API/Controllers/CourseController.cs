@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Repositories.Interfaces;
+using API.Extensions;
 
 namespace API.Controllers
 {
@@ -29,11 +30,11 @@ namespace API.Controllers
         [HttpPost("create-new-course")]
         public async Task<IActionResult> CreateCourseAsync(CourseImgDto courseDto)
         {
-            var instructorExists = await _context.Instructors.AnyAsync(i => i.Id == courseDto.InstructorId);
-            if (!instructorExists)
-            {
-                return NotFound("Instructor not found");
-            }
+            //var instructorExists = await _context.Instructors.AnyAsync(i => i.Id == courseDto.InstructorId);
+            //if (!instructorExists)
+            //{
+            //    return NotFound("Instructor not found");
+            //}
             var categoryExists = await _context.Categories.AnyAsync(c => c.Id == courseDto.CategoryId);
             if (!categoryExists)
             {
@@ -61,7 +62,7 @@ namespace API.Controllers
                 Price = courseDto.Price,
                 Language = courseDto.Language,
                 Thumbnail = fileName, // Save only the file name and extension
-                InstructorId = courseDto.InstructorId,
+                InstructorId = User.GetUserId(),
                 CategoryId = courseDto.CategoryId,
                 UploadDate = DateTime.UtcNow
             };
@@ -168,7 +169,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetAllCourses()
         {
             var courses = await _context.Courses
-                .Select(course => new CourseImgDto
+                .Select(course => new CourseDto
                 {
                     Id = course.Id,
                     Name = course.Name,
@@ -176,7 +177,7 @@ namespace API.Controllers
                     Description = course.Description,
                     Price = course.Price,
                     Language = course.Language,
-                    img = course.Thumbnail,
+                    Thumbnail = course.Thumbnail,
                     InstructorId = course.InstructorId,
                     CategoryId = course.CategoryId,
                 })

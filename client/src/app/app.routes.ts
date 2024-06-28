@@ -33,7 +33,7 @@ export const routes: Routes = [
     { path: 'checkout', component: MembershipCheckoutComponent },
     { path: 'membership-options', component: MembershipOptionsComponent },
     { path: 'course-payment/:id', component: CourseCheckoutComponent },
-    { path: 'student-course', component: StudentCourseComponent },
+    { path: 'student-course/:id', component: StudentCourseComponent },
     { path: 'success-payment', component: SuccessPaymentComponent },
     { path: 'wishlist', component: WishlistComponent },
     { path: 'bought-courses-list', component: BoughtCoursesListComponent, canActivate: [studentGuard] },
