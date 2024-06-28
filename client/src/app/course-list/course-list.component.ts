@@ -5,14 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
 import { Category } from '../_models/Category';
 import { Router } from '@angular/router';
+import { EnrollComponent } from "../payments/enroll/enroll.component";
 
 
 @Component({
-  selector: 'app-course-list',
-  standalone: true,
-  imports: [FormsModule, NgFor],
-  templateUrl: './course-list.component.html',
-  styleUrls: ['./course-list.component.css']
+    selector: 'app-course-list',
+    standalone: true,
+    templateUrl: './course-list.component.html',
+    styleUrls: ['./course-list.component.css'],
+    imports: [FormsModule, NgFor, EnrollComponent]
 })
 export class CourseListComponent implements OnInit {
   courses: Course[] = [];

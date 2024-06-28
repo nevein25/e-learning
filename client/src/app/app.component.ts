@@ -12,6 +12,7 @@ import { RateandreviewComponent } from './rateandreview/rateandreview.component'
 import { RegisterComponent } from "./register/register.component";
 import { NavComponent } from "./nav/nav.component";
 import { MembershipService } from './_services/membership.service';
+import { StudentCourseComponent } from './student-course/student-course.component';
 import { FooterComponent } from "./footer/footer.component";
 
 @Component({
@@ -32,6 +33,7 @@ import { FooterComponent } from "./footer/footer.component";
     RateandreviewComponent,
     RegisterComponent,
     NavComponent,
+    StudentCourseComponent,
     HttpClientModule,
     FooterComponent
   ]

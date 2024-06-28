@@ -140,7 +140,6 @@ namespace API.Controllers
 
             _context.Lessons.Add(newLesson);
             await _context.SaveChangesAsync();
-
             return Ok(new { message = "Added Successfully", videoPath = uploadResult });
         }
 

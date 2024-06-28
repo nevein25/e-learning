@@ -2,6 +2,7 @@
 {
     public class ModuleContentDTO
     {
+        public int id { get; set; }
         public string Name { get; set; }
         public int ModuleNumber { get; set; }
 

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Course } from '../_models/course';
 import { WishlistService } from '../_services/wishlist.service';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-wishlist',
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
 export class WishlistComponent implements OnInit {
   wishlist: any[] = []; // Assuming Course model is defined
 
+  toastr = inject(ToastrService);
   constructor(private wishlistService: WishlistService) { }
 
   ngOnInit(): void {
