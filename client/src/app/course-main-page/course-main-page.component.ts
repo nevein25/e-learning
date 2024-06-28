@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CourseService } from '../_services/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../_models/course';
@@ -7,6 +7,7 @@ import { EnrollComponent } from "../payments/enroll/enroll.component";
 import { FormsModule } from '@angular/forms';
 import { WishlistService } from '../_services/wishlist.service';
 import { RateandreviewComponent } from '../rateandreview/rateandreview.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-course-main-page',
@@ -18,6 +19,14 @@ import { RateandreviewComponent } from '../rateandreview/rateandreview.component
 export class CourseMainPageComponent implements OnInit {
   courseId: any;
   course: Course | undefined;
+  private _toastr = inject(ToastrService);
+  
+  public get toastr() {
+    return this._toastr;
+  }
+  public set toastr(value) {
+    this._toastr = value;
+  }
 
   constructor(
     private courseService: CourseService,
@@ -64,6 +73,8 @@ export class CourseMainPageComponent implements OnInit {
         () => {
           // Handle success (e.g., show a success message)
           console.log('Course added to wishlist successfully');
+          this.toastr.success("Course Added To WishList");
+
         },
         (error) => {
           console.error('Error adding course to wishlist:', error);

@@ -1,135 +1,19 @@
-<!-- <div class="container py-5">
-
-  <div class="row">
-    <div class="col-lg-8 mx-auto">
-
-      <ul class="list-group shadow">
-
-        <li class="list-group-item">
-          <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-            <div class="media-body order-2 order-lg-1">
-              <h5 class="mt-0 font-weight-bold mb-2">Awesome product</h5>
-              <p class="font-italic text-muted mb-0 small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Suscipit fuga autem maiores necessitatibus.</p>
-              <div class="d-flex align-items-center justify-content-between mt-1">
-                <h6 class="font-weight-bold my-2">$120.00</h6>
-                <ul class="list-inline small">
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>
-                </ul>
-              </div>
-            </div><img src="https://bootstrapious.com/i/snippets/sn-cards/shoes-1_gthops.jpg"
-              alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+<div class="container mt-4">
+  <div *ngIf="courses.length > 0" class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let course of courses">
+      <div class="card h-100">
+        <img class="card-img-top" [src]="'assets/Courses/' + course.thumbnail" alt="Course Thumbnail">
+        <div class="card-body">
+          <h5 class="card-title text-truncate" title="{{ course.courseName }}">{{ course.courseName }}</h5>
+          <p class="card-text">{{ course.description }}</p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <!-- <app-enroll [id]="course.courseId"></app-enroll> -->
+            <button class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:  30px 0 0 30px ;" (click)="navigateToCourse(course.courseId)">Watch Course</button>
           </div>
-        </li>
-
-        <li class="list-group-item">
-          <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-            <div class="media-body order-2 order-lg-1">
-              <h5 class="mt-0 font-weight-bold mb-2">Awesome product</h5>
-              <p class="font-italic text-muted mb-0 small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Suscipit fuga autem maiores necessitatibus.</p>
-              <div class="d-flex align-items-center justify-content-between mt-1">
-                <h6 class="font-weight-bold my-2">$99.00</h6>
-                <ul class="list-inline small">
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                </ul>
-              </div>
-            </div><img src="https://bootstrapious.com/i/snippets/sn-cards/shoes-2_g4qame.jpg"
-              alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
-          </div>
-
-        </li>
-
-
-        <li class="list-group-item">
-          <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-            <div class="media-body order-2 order-lg-1">
-              <h5 class="mt-0 font-weight-bold mb-2">Awesome product</h5>
-              <p class="font-italic text-muted mb-0 small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Suscipit fuga autem maiores necessitatibus.</p>
-              <div class="d-flex align-items-center justify-content-between mt-1">
-                <h6 class="font-weight-bold my-2">$140.00</h6>
-                <ul class="list-inline small">
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>
-                </ul>
-              </div>
-            </div><img src="https://bootstrapious.com/i/snippets/sn-cards/shoes-3_rk25rt.jpg"
-              alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
-          </div>
-
-        </li>
-
-
-        <li class="list-group-item">
-          <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-            <div class="media-body order-2 order-lg-1">
-              <h5 class="mt-0 font-weight-bold mb-2">Awesome product</h5>
-              <p class="font-italic text-muted mb-0 small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Suscipit fuga autem maiores necessitatibus.</p>
-              <div class="d-flex align-items-center justify-content-between mt-1">
-                <h6 class="font-weight-bold my-2">$220.00</h6>
-                <ul class="list-inline small">
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                </ul>
-              </div>
-            </div><img src="https://bootstrapious.com/i/snippets/sn-cards/shoes-4_vgfjy9.jpg"
-              alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
-          </div>
-
-        </li>
-
-
-      </ul>
-
+        </div>
+      </div>
     </div>
   </div>
-</div> -->
-
-
-<div class="container py-5">
-  <div class="row">
-    <div class="col-lg-8 mx-auto">
-      <!-- List group-->
-      <ul class="list-group shadow">
-        <li *ngFor="let course of courses" class="list-group-item">
-          <!-- Custom content-->
-          <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-            <div class="media-body order-2 order-lg-1">
-              <h5 class="mt-0 font-weight-bold mb-2">{{ course.courseName }}</h5>
-              <p class="font-italic text-muted mb-0 small">{{course.description}}</p>
-              <div class="d-flex align-items-center justify-content-between mt-1">
-                <h6 class="font-weight-bold my-2">$0.00</h6> <!-- Placeholder for price -->
-                <!-- <ul class="list-inline small">
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                  <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>
-                </ul> -->
-              </div>
-            </div>
-            <img [src]="course.thumbnail" alt="Course image" width="200" class="ml-lg-5 order-1 order-lg-2">
-          </div>
-          <!-- End -->
-        </li>
-      </ul>
-      <!-- End -->
-    </div>
-  </div>
+  <div *ngIf="courses.length === 0" class="alert alert-info mt-3">No Courses Found.</div>
 </div>
+

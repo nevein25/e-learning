@@ -22,10 +22,10 @@
     <label for="img">Upload Thumbnail</label>
     <input type="file" id="img" (change)="onFileChange($event)" placeholder="Upload Thumbnail.." formControlName="cThumbnail">    
 
-    <label for="cInstructor">Select Instructor</label>
+    <!-- <label for="cInstructor">Select Instructor</label>
     <select id="cInstructor" formControlName="cInstructor">
         <option *ngFor="let instructor of instructors" [value]="instructor.id">{{ instructor.name }}</option>
-    </select>
+    </select> -->
 
     <label for="cCategory">Select Category</label>
     <select id="cCategory" formControlName="cCategory">

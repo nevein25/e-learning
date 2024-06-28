@@ -26,8 +26,10 @@ export class CourseService {
     return this.http.post<any>(`${this.baseUrl}Course/create-new-module` , moduleObj)
   }
 
-  getModules(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl + 'Course/GetAllModules');
+  getModules( courseId: any):Observable<any[]>
+  {
+    console.log("Inside",courseId);
+    return this.http.post<any[]>(`${this.baseUrl}Course/GetModulesByCourseId`,{ courseId: Number(courseId) })
   }
 
   addLesson(LessonObj: FormData){

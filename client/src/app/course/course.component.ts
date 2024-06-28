@@ -45,7 +45,7 @@ export class CourseComponent implements OnInit {
       cPrice: ['', Validators.required],
       cLanguage: ['', Validators.required],
       cThumbnail: ['', Validators.required],
-      cInstructor: ['', Validators.required],
+      // cInstructor: ['', Validators.required],
       cCategory: ['', Validators.required]
     });
   }
@@ -81,7 +81,7 @@ export class CourseComponent implements OnInit {
       formData.append('description', this.courseForm.get('cDescription')?.value);
       formData.append('price', this.courseForm.get('cPrice')?.value);
       formData.append('language', this.courseForm.get('cLanguage')?.value);
-      formData.append('instructorId', this.courseForm.get('cInstructor')?.value);
+      // formData.append('instructorId', this.courseForm.get('cInstructor')?.value);
       formData.append('categoryId', this.courseForm.get('cCategory')?.value);
       formData.append('thumbnail', this.selectedFile);
   
