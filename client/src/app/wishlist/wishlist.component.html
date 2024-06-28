@@ -10,7 +10,9 @@
           <p class="card-text">{{ course.courseDescription }}</p>
           <div class="d-flex justify-content-between align-items-center mt-3">
             <button class="btn btn-outline-danger" (click)="removeFromWishlist(course.courseId)">Remove</button>
-            <button class="btn btn-primary px-3">Enroll now</button>
+            <!-- <button class="btn btn-primary px-3">Enroll now</button> -->
+            <app-enroll [id]="course.id" class="btn-primary text-center"></app-enroll>
+
           </div>
         </div>
       </div>

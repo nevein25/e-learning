@@ -6,6 +6,7 @@ import { ReviewInput } from '../_models/Review';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReviewWithRates } from '../_models/reviewWithRates';
+import { BoughtCourseService } from '../_services/bought-course.service';
 
 @Component({
   selector: 'app-review',
@@ -19,7 +20,10 @@ export class ReviewComponent implements OnInit{
   id = input.required<any>(); //courseId
   reviewService = inject(ReviewService);
   toastr = inject(ToastrService);
+  boughtCourseService = inject(BoughtCourseService);
+
   allReviews: ReviewWithRates[] = [];
+  isCourseBought = false;
 
   review: ReviewInput = {
     courseId: 0,
@@ -54,4 +58,16 @@ export class ReviewComponent implements OnInit{
   }
 
 
+  checkIfCourseBought() {
+    this.boughtCourseService.isCourseBought(this.id()).subscribe({
+      next: res => {
+        this.isCourseBought = res.isBought;
+        console.log(res.isBought);
+
+      },
+      error: error => console.log(error)
+
+
+    });
+  }
 }

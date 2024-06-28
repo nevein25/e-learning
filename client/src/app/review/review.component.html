@@ -1,4 +1,4 @@
-@if (allReviews.length > 0) {
+<!-- @if (allReviews.length > 0) {
 <div>
   <h3>Reviews:</h3>
   <ul>
@@ -25,4 +25,36 @@
     <input id="text" [(ngModel)]="review.text" name="text" class="form-control" required #text="ngModel">
     <button (click)="addReview()" [disabled]="!text.valid || !review.text.trim()">Add Review</button>
   </div>
-</form>
+</form> -->
+
+
+@if (allReviews.length > 0) {
+
+<div class="mb-5">
+  <h2 class="mb-4">Reviews</h2>
+
+  @for (review of allReviews; track $index) {
+  <a class="d-flex align-items-center text-decoration-none mb-4" href="">
+
+    <img class="rounded" [src]="'assets/img/' + review.picture" alt="" style="width: 50px; height: 50px;">
+    <div class="pl-3">
+      <h6>{{review.text}}</h6>
+      <div class="d-flex">
+        <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>{{review.username}}</small>
+        <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>{{review.stars}}</small>
+      </div>
+    </div>
+  </a>
+  }
+</div>
+}
+
+@if (isCourseBought) {
+  <form #reviewForm="ngForm" class="mt-4">
+    <div class="form-group">
+      <label for="text">Review</label>
+      <textarea id="text" [(ngModel)]="review.text" name="text" class="form-control" rows="3" required #text="ngModel"></textarea>
+    </div>
+    <button (click)="addReview()" class="btn btn-primary mt-2" [disabled]="!text.valid || !review.text.trim()">Add Review</button>
+  </form>
+}
