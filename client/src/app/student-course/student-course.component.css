@@ -1,121 +1,70 @@
-/* student-course.component.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 1200px;
+}
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-    line-height: 1.6;
-    margin: 20px;
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: auto;
-    overflow: hidden;
-  }
-  
-  .course-header {
-    background: #007bff;
-    color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-  }
-  
-  .course-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-  }
-  
-  .course-content {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    gap: 20px;
-  }
-  
-  .video-player {
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
-  .course-progress {
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
-  .video-player iframe {
-    width: 100%;
-    height: 400px;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .progress-bar {
-    width: 100%;
-    height: 20px;
-    background-color: #ddd;
-    border-radius: 10px;
-    margin-top: 10px;
-  }
-  
-  .progress {
-    height: 100%;
-    background-color: #007bff;
-    border-radius: 10px;
-  }
-  
-  .progress-text {
-    margin-top: 5px;
-    text-align: right;
-  }
+.course-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: blue;
+ 
+}
+.course-header h1{
+  padding: 10px;
+  font-weight: bold;
+  color: #fff;
+}
+.course-layout {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 
-  .description{
-    text-align: center;
-    font-size: 20px;
-    width: 700px;
-    margin: 18px;
-    color: #000;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
+.course-video {
+  flex: 1;
+  max-width: 800px;
+}
 
-  .lessonName{
-    font-size: 18px;
-    color: black;
-  }
+.course-details {
+  flex: 1;
+  margin-left: 20px;
+}
 
-  a {
-    box-shadow: inset 0 0 0 0 #54b3d6;
-    color: #54b3d6;
-    padding: 0 .25rem;
-    margin: 0 -.25rem;
-    transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  a:hover {
-    color: #fff;
-    box-shadow: inset 200px 0 0 0 #4564f0;
-    padding: 5px;
-  }
-  
-  a {
-    color: blue;
-    font-family: 'Poppins', sans-serif;
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 1.5;
-    text-decoration: underline;
-    margin-left: 30px;
-  }
+.video-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.description {
+  margin-top: 40px;
+  font-size: 18px;
+  color: black;
+}
 
+.module-title {
+  color: red;
+  font-weight: bold;
+}
 
+.lesson-name {
+  list-style: none;
+  margin-bottom: 10px;
+  font-size: 17px;
+  color: black;
+}
+
+.lesson-name a {
+  margin-left: 10px;
+  text-decoration: none;
+  color: blue;
+}
+
+.lesson-name a:hover {
+  text-decoration: underline;
+}

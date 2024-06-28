@@ -20,20 +20,14 @@ namespace API.Controllers
             _videoService = videoService;
             _context = context;
         }
+
         [HttpPost("GetLessonVideo")]
-        public async Task<IActionResult> GetLessonVideo([FromBody]string publicId)
+        public  IActionResult GetLessonVideo([FromBody]string publicId)
         {
-            try
-            {
                 var videoUrl = _videoService.GetVideo(publicId);
-                return Ok(new { link = videoUrl});
-                //return Ok(new{link = publicId});
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Failed to retrieve video: {ex.Message}");
-            }
+                return (videoUrl.Result!=null)?Ok(new { link = videoUrl.Result}):NotFound("Video Not Found");
         }
+       
 
         [HttpPost("GetModulesAndLessonCourse")]
         public async Task<IActionResult> GetModulesAndLessonCourse([FromBody]int courseid)

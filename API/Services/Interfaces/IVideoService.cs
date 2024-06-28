@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface IVideoService
     {
-        Task<UploadResult> Upload(IFormFile file, string filePath);
-        string GetVideo(string path);
+        public Task<UploadResult> Upload(IFormFile file, string filePath);
+        public Task<string?> GetVideo(string publicId);
     }
 }

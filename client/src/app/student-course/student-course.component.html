@@ -1,31 +1,32 @@
 <div class="container" *ngIf="courseContent">
   <header class="course-header">
-    <h1>Studying: {{ courseContent.name }}</h1>
+    <h1>Studying: {{ courseContent.name }} Course</h1>
   </header>
 
-  <section class="course-content">
-    <div class="video-player">
-      <h2>{{ courseContent.name }} Course</h2>
-      <video #videoPlayer width="800" controls>
-        <source [src]="videoUrl" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
-  </section>
-
-  <div>
-    <p class="description">{{ courseContent.description }}</p>
-  </div>
-
-  <div *ngIf="courseContent">
-    <section *ngFor="let module of courseContent.modules;">
-      <h2 style="color: red; font-weight: bold;">Chapter{{module.moduleNumber}}: {{ module.name }}</h2>
-      <ul>
-        <li class="lessonName" *ngFor="let lesson of module.lessons;">
-          {{ lesson.lessonNumber }}) {{ lesson.name }}
-          <a href="#" (click)="onLinkClick($event, courseContent.name, module.moduleNumber, lesson.lessonNumber)">Go To Lesson</a>
-        </li>
-      </ul>
+  <div class="course-layout">
+    <section class="course-video">
+      <div class="video-player">
+        <video #videoPlayer width="800" controls>
+          <source [src]="videoUrl" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="description">{{ courseContent.description }}</p>
+      </div>
+    </section>
+    
+    <section class="course-details">
+     
+      <div *ngIf="courseContent">
+        <section *ngFor="let module of courseContent.modules;">
+          <h2 class="module-title">Chapter {{ module.moduleNumber }}: {{ module.name }}</h2>
+          <ul>
+            <li class="lesson-name" *ngFor="let lesson of module.lessons;">
+              {{ lesson.lessonNumber }}) {{ lesson.name }}
+              <a href="#" (click)="onLinkClick($event, courseContent.name, module.moduleNumber, lesson.lessonNumber)">Go To Lesson</a>
+            </li>
+          </ul>
+        </section>
+      </div>
     </section>
   </div>
 </div>
