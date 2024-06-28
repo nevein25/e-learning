@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { AddReview, Review } from '../_models/Review';
+import { ReviewInput, Review } from '../_models/Review';
 import { Rate } from '../_models/rate';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class RateReviewService {
   GetAll() {
     return this.http.get<Review[]>(`${this.baseUrl}reviews`);
   }
-  AddReview(review: AddReview) {
+  AddReview(review: ReviewInput) {
     return this.http.post(`${this.baseUrl}reviews`, review);
   }
   UpdateReview(review: Review) {

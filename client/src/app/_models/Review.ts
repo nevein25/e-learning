@@ -1,13 +1,11 @@
-export interface AddReview{
-    //id: number;
-    text:string;
-    courseId:number;
-    // studentId:number;
+export interface ReviewInput {
+    text: string;
+    courseId: number;
 }
 
-export interface Review{
+export interface Review {
     id: number;
-    text:string;
-    courseId:number;
+    text: string;
+    courseId: number;
     // studentId:number;
 }

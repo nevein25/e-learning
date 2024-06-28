@@ -9,17 +9,31 @@ namespace API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<Course, CourseDto>();
+
             CreateMap<Instructor, InstructorDto>();
             CreateMap<Wishlist, WishlistDto>();
 
-          
-                    
+
+
             CreateMap<Course, CourseWithInstructorDto>()
                 .ForMember(
                     dest => dest.InstructorName,
                     opt => opt.MapFrom(src => src.Instructor.Name)
                 );
-            
+
+            CreateMap<ReviewAddDto, Review>();
+            CreateMap<Review, ReviewsWithRateingDto>()
+                .ForMember(dest => dest.Username,
+                           opt => opt.MapFrom(src => src.Student.UserName))
+                
+                .ForMember(dest => dest.StudentId,
+                           opt => opt.MapFrom(src => src.Student.Id))
+
+                .ForMember(dest => dest.Picture,
+                           opt => opt.MapFrom(src => src.Student.Picture));
+
+
+
 
         }
     }

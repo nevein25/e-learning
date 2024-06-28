@@ -9,18 +9,21 @@ import { WishlistService } from '../_services/wishlist.service';
 import { RateandreviewComponent } from '../rateandreview/rateandreview.component';
 import { ToastrService } from 'ngx-toastr';
 import { RateComponent } from "../rate/rate.component";
+import { ReviewComponent } from "../review/review.component";
+import { BoughtCourseService } from '../_services/bought-course.service';
 
 @Component({
   selector: 'app-course-main-page',
   standalone: true,
   templateUrl: './course-main-page.component.html',
   styleUrls: ['./course-main-page.component.css'],
-  imports: [CommonModule, RateandreviewComponent, CommonModule, EnrollComponent, FormsModule, RateandreviewComponent, RateComponent]
+  imports: [CommonModule, RateandreviewComponent, CommonModule, EnrollComponent, FormsModule, RateandreviewComponent, RateComponent, ReviewComponent]
 })
 export class CourseMainPageComponent implements OnInit {
   courseId: any;
   course: Course | undefined;
   isInWishlist = false;
+  isCourseBought = false;
 
   private _toastr = inject(ToastrService);
 
@@ -34,7 +37,8 @@ export class CourseMainPageComponent implements OnInit {
   constructor(
     private courseService: CourseService,
     private activatedRoute: ActivatedRoute,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private boughtCourseService: BoughtCourseService
 
   ) { }
 
@@ -42,6 +46,8 @@ export class CourseMainPageComponent implements OnInit {
     this.courseId = this.activatedRoute.snapshot.paramMap.get('id');
     this.getCourseById();
     this.checkWishlist();
+    this.checkIfCourseBought();
+
   }
 
   getCourseById(): void {
@@ -112,6 +118,19 @@ export class CourseMainPageComponent implements OnInit {
         this.isInWishlist = exist;
       },
       error: _ => this.toastr.error("Something went wrong while checking the wishlist")
+    });
+  }
+
+  checkIfCourseBought() {
+    this.boughtCourseService.isCourseBought(this.courseId).subscribe({
+      next: res => {
+        this.isCourseBought = res.isBought;
+        console.log(res.isBought);
+
+      },
+      error: error => console.log(error)
+
+
     });
   }
 }

@@ -22,7 +22,6 @@ export class RateComponent implements OnInit {
   id = input.required<any>(); //courseId
   rateService = inject(RateService);
   toastr = inject(ToastrService);
-  activatedRoute = inject(ActivatedRoute);
 
   max = 5;
   rate = 5;

@@ -24,12 +24,18 @@
             }
             @else{
 
-            <button class="btn btn-outline-danger mb-3 btn-lg" (click)="removeFromWishlist(course.id)">Remove From Wishlist</button>
+            <button class="btn btn-outline-danger mb-3 btn-lg" (click)="removeFromWishlist(course.id)">Remove From
+              Wishlist</button>
             }
 
+            @if(!isCourseBought){
             <app-enroll [id]="courseId" class="mb-3"></app-enroll>
+            }
             <!-- <app-rateandreview [id]="courseId"></app-rateandreview> -->
-            <app-rate [id]="courseId"></app-rate>
+            @if(isCourseBought){
+              <app-rate [id]="courseId"></app-rate>
+              <app-review [id]="courseId"></app-review>
+            }
 
           </div>
         </div>

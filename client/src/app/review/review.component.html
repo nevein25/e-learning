@@ -1,0 +1,28 @@
+@if (allReviews.length > 0) {
+<div>
+  <h3>Reviews:</h3>
+  <ul>
+    @for (review of allReviews; track $index) {
+
+    <li>
+      <div class="review-item">
+        <p><strong>User:</strong> {{ review.username }}</p>
+        <p><strong>Date:</strong> {{ review.date | date:'medium' }}</p>
+        <p><strong>Text:</strong> {{ review.text }}</p>
+        <p><strong>Stars:</strong> {{ review.stars }}</p>
+      </div>
+      <hr>
+    </li>
+
+    }
+  </ul>
+</div>
+}
+
+<form #reviewForm="ngForm">
+  <div class="form-group">
+    <label for="text">Review</label>
+    <input id="text" [(ngModel)]="review.text" name="text" class="form-control" required #text="ngModel">
+    <button (click)="addReview()" [disabled]="!text.valid || !review.text.trim()">Add Review</button>
+  </div>
+</form>

@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,51 +18,31 @@ namespace API.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-        /// If Std pay the Course
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Review>>> GetAll()
-        {
 
-            try
-            {
-                var reviews = await _unitOfWork.ReviewRepository.GetAllReviews();
-                //if (reviews == null || !reviews.Any())
-                //{
-                //    return NotFound("No reviews found.");
-                //}
-                return Ok(reviews);
-            }
-            catch (Exception ex)
-            {
-                
-                return StatusCode(500, "Internal server error");
-            }
+
+        [HttpGet("{courseId}")]
+        public async Task<ActionResult<IEnumerable<ReviewsWithRateingDto>>> GetReviewsByCourseId(int courseId)
+        {
+            var reviews = await _unitOfWork.ReviewRepository.GetAllReviewsByCourseId(courseId);
+            return Ok(reviews);
 
         }
+
 
         [HttpPost]
-        public async Task<ActionResult<Review>> AddReview(ReviewAddDto review)
+        public async Task<ActionResult<Review>> AddReview(ReviewAddDto reviewDto)
         {
-
-            Review AddReview = new();
-            if (review != null)
-            {
-                AddReview.StudentId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                AddReview.CourseId = review.CourseId;
-                AddReview.Text = review.Text;
-
-                _unitOfWork.ReviewRepository.AddReview(AddReview);
-                return Ok(review);
-
-            }
-            return BadRequest();
-
+            var isCourseBought = await _unitOfWork.CoursePurchaseRepository.IsCourseBoughtAsync(reviewDto.CourseId, User.GetUserId());
+          //  if (!isCourseBought) return BadRequest("You Can not review course you did not buy");
+            var createdReview = await _unitOfWork.ReviewRepository.AddReviewAsync(reviewDto, User.GetUserId());
+            return Ok();
         }
+        /*
         [HttpPut]
         public async Task<ActionResult<Review>> UpdateReview(ReviewUpdateDto review)
         {
-            
-            Review UpdateReview = new ();
+
+            Review UpdateReview = new();
             if (review != null)
             {
                 UpdateReview.StudentId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -80,9 +61,10 @@ namespace API.Controllers
             {
                 _unitOfWork.ReviewRepository.DeleteReview(review.Id);
                 return NoContent();
-                
+
             }
             return BadRequest();
         }
+        */
     }
 }

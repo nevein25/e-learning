@@ -24,7 +24,7 @@ namespace API.Controllers
         {
             var userId = User.GetUserId();
             var isCourseBought = await _unitOfWork.CoursePurchaseRepository.IsCourseBoughtAsync(rateDto.CourseId, userId);
-            if (!isCourseBought) return BadRequest("You Can not rate course you did not buy");
+        //    if (!isCourseBought) return BadRequest("You Can not rate course you did not buy");
 
             if (!_unitOfWork.RateRepository.CourseExist(rateDto.CourseId)) return NotFound();
 
