@@ -31,7 +31,7 @@ export class RegisterComponent {
     this.accountService.register(this.model).subscribe({
       next: response => {
         this.toaster.success("Registration Successful!");
-         this.router.navigate(['/', 'home']);
+         this.router.navigate(['/', 'login']);
       },
       error: error => {
         let returnedError = error;

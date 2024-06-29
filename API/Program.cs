@@ -87,14 +87,15 @@ var services = scope.ServiceProvider;
 try
 {
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+
     var context = services.GetRequiredService<EcommerceContext>();
 
     // making the db from migrations if the db does not exsist
     await context.Database.MigrateAsync();
 
     await Seed.SeedRoles(roleManager);
-
-    Seed.SeedCoursesWithDependencies(context);
+    await Seed.SeedCoursesWithDependenciesAsync(context, userManager);
 
 }
 catch (Exception ex)

@@ -96,5 +96,12 @@ namespace API.Controllers
             return Ok(new { message = "Course removed from wishlist" });
         }
 
+        [HttpGet("exit-wishlist/{courseId}")]
+        public async Task<ActionResult<bool>> CheckCourseExsistanceInWishlist(int courseId)
+        {
+            var exist = _context.Wishlists.Where(w => w.CourseId == courseId && w.StudentId == User.GetUserId()).Any();
+
+            return Ok(exist);
+        }
     }
 }

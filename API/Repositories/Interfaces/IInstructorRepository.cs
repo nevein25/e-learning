@@ -12,5 +12,7 @@ namespace API.Repositories.Interfaces
         Task<IEnumerable<InstructorDto>> GetInstructorsAsync();
         Task<InstructorDto> GetInstructorByIdAsync(int id);
         Task UpdateInstructorAsync(Instructor instructor);
+
+        Task<IEnumerable<InstructorDto>> GetTopFourInstructorAsync(int number);
     }
 }

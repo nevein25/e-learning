@@ -1,0 +1,46 @@
+[
+    {
+      "UserName": "nevein",
+      "Email": "nevein@gmail.com"
+    },
+    {
+      "UserName": "reader3",
+      "Gender": "female",
+      "DateOfBirth": "1968-12-19"
+    },
+    {
+      "UserName": "reader4",
+      "Gender": "female",
+      "DateOfBirth": "1960-09-05"
+    },
+    {
+      "UserName": "book1",
+      "Gender": "female",
+      "DateOfBirth": "1990-05-23"
+    },
+    {
+      "UserName": "book2",
+      "Gender": "male",
+      "DateOfBirth": "1997-11-02"
+    },
+    {
+      "UserName": "book3",
+      "Gender": "male",
+      "DateOfBirth": "1983-05-13"
+    },
+    {
+      "UserName": "book4",
+      "Gender": "male",
+      "DateOfBirth": "1954-04-23"
+    },
+    {
+      "UserName": "admin1",
+      "Gender": "male",
+      "DateOfBirth": "1993-11-09"
+    },
+    {
+      "UserName": "admin2",
+      "Gender": "male",
+      "DateOfBirth": "1962-05-11"
+    }
+  ]

@@ -21,7 +21,7 @@ namespace API.Repositories.Classes
         public IInstructorRepository InstructorRepository => new InstructorRepository(_context , _mapper);
 
 
-        public IReviewRepo ReviewRepository => new ReviewRepo(_context);
+        public IReviewRepo ReviewRepository => new ReviewRepo(_context, _mapper);
         public IRateRepo RateRepository => new RateRepo(_context);
         public ISubscriptionRepository SubscriptionRepository => new SubscriptionRepository(_context);
 

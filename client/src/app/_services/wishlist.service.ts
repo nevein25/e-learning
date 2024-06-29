@@ -25,4 +25,8 @@ export class WishlistService {
   removeFromWishlist(courseId: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}wishlist/${courseId}`);
   }
+
+  checkCourseExistenceInWishlist(courseId: number) {
+    return this.http.get<boolean>(`${this.baseUrl}wishlist/exit-wishlist/${courseId}`);
+  }
 }

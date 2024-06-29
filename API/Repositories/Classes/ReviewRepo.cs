@@ -2,6 +2,7 @@
 using API.DTOs;
 using API.Entities;
 using API.Repositories.Interfaces;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories.Classes
@@ -9,24 +10,44 @@ namespace API.Repositories.Classes
     public class ReviewRepo : IReviewRepo
     {
         private readonly EcommerceContext _context;
+        private readonly IMapper _mapper;
 
-        public ReviewRepo(EcommerceContext context)
+        public ReviewRepo(EcommerceContext context, IMapper mapper)
         {
             _context = context;
-        }
-        public async Task<IEnumerable<Review>> GetAllReviews()
-        {
-            return (IEnumerable<Review>)await _context.Reviews.ToListAsync();
+            _mapper = mapper;
         }
 
-        public async Task<Review> GetReviewById(int id)
+
+        public async Task<IEnumerable<ReviewsWithRateingDto>> GetAllReviewsByCourseId(int courseId)
+        {
+            var reviews = await _context.Reviews
+                .Where(r => r.CourseId == courseId)
+                .Include(r => r.Student)
+                .ThenInclude(r=> r.Rates)
+                .ToListAsync();
+            var mappedReviews = _mapper.Map<IEnumerable<ReviewsWithRateingDto>>(reviews);
+
+            foreach (var mappedReview in mappedReviews)
+            {
+                mappedReview.Stars = await _context.Rates.Where(r=>r.CourseId == courseId && r.StudentId == mappedReview.StudentId).Select(r => r.Stars).FirstOrDefaultAsync();   
+            }
+            return mappedReviews;
+        }
+
+        public async Task<Review> AddReviewAsync(ReviewAddDto reviewDto, int studentId) //done
+        {
+            var review = _mapper.Map<Review>(reviewDto);
+            review.StudentId = studentId;
+
+            _context.Reviews.Add(review);
+            await _context.SaveChangesAsync();
+            return review;
+        }
+        /*
+        public async Task<Review> GetReviewById(int id) 
         {
             return await _context.Reviews.FindAsync(id);
-        }
-        public void AddReview(Review review)
-        {
-            _context.Reviews.Add(review);
-            _context.SaveChangesAsync();
         }
 
         public void UpdateReview(Review review)
@@ -52,5 +73,6 @@ namespace API.Repositories.Classes
                  _context.SaveChangesAsync();
             }
         }
+        */
     }
 }

@@ -1,9 +1,13 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 
 namespace API.Repositories.Interfaces
 {
     public interface IRateRepo
     {
-        void Rate(int StdId,int CourseId,int Stars);
+        public Task RateAsync(int CourseId, int UserId, int NumOfStars);
+        public bool CourseExist(int courseId);
+        Task<RateByUserDto> GetRateForStudentAsync(int courseId, int studentId);
+
     }
 }

@@ -92,5 +92,13 @@ namespace API.Controllers
 
             return Ok(new { Courses = courses, TotalCourses = totalCourses });
         }
+
+        [HttpGet("top-courses/{number}")]
+        public async Task<IActionResult> TopThreeCourses(int number)
+        {
+
+            var courses = await _unitOfWork.CourseRepository.GetTopCourses(number);
+            return Ok(courses);
+        }
     }
 }
