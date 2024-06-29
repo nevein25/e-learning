@@ -9,10 +9,13 @@
 
                 IReviewRepo ReviewRepository { get; }
                 IRateRepo RateRepository { get; }
-
+                
+                ILessonRepositry LessonRepositry { get; }
+                IModuleRepositry ModuleRepositry {  get; }
                 ISubscriptionRepository SubscriptionRepository { get; }
                 ICoursePurchaseRepository CoursePurchaseRepository { get; }
 
+                ICatgoryRepository CatgoryRepository { get; }
                 Task<bool> SaveChanges(); // for rollback if something filled in one of the transactions
 
 

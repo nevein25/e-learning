@@ -51,6 +51,7 @@ builder.Services.AddScoped<Cloudinary>(sp =>
     ));
 });
 builder.Services.AddScoped<IVideoService, VideoOnCloudinary>();
+builder.Services.AddScoped<IFileService, API.Services.Classes.FileService>();
 
 
 var app = builder.Build();

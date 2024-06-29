@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Repositories.Interfaces;
 using API.Extensions;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace API.Controllers
 {
@@ -16,62 +17,41 @@ namespace API.Controllers
     public class CourseController : ControllerBase
     {
         private EcommerceContext _context { get; }
-        private readonly IVideoService _videoService;
+        private readonly IFileService _fileService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CourseController(IVideoService videoService , EcommerceContext context , IUnitOfWork unitOfWork) 
+
+        public CourseController(IFileService fileService, EcommerceContext context , IUnitOfWork unitOfWork) 
         { 
-            _videoService = videoService;
+            _fileService = fileService;
             _context = context;
-             _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
-       
+
         [HttpPost("create-new-course")]
         public async Task<IActionResult> CreateCourseAsync(CourseImgDto courseDto)
         {
-            //var instructorExists = await _context.Instructors.AnyAsync(i => i.Id == courseDto.InstructorId);
-            //if (!instructorExists)
-            //{
-            //    return NotFound("Instructor not found");
-            //}
-            var categoryExists = await _context.Categories.AnyAsync(c => c.Id == courseDto.CategoryId);
-            if (!categoryExists)
-            {
-                return NotFound("Category not found");
-            }
+            //Check Catgory Exist.....
+            var categoryExists = await _unitOfWork.CatgoryRepository.IfCatgoryExist(courseDto.CategoryId);
+            if (!categoryExists) return Ok(ApiResponse<int>.Failure("Catgory Not Exist"));
 
-            // Get the file name and extension
-            var fileName = Path.GetFileName(courseDto.Thumbnail.FileName);
 
-            // Set the file path where the file will be saved
-            string filePath = Path.Combine("uploads", fileName);
+            //Check Course Name Exist Or NOt....
+            var courseExists = await _unitOfWork.CourseRepository.IfExist(c=>c.Name==courseDto.Name);
+            if (courseExists) return Ok(ApiResponse<int>.Failure("Course Name Already Exist"));
 
-            // Save the file
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await courseDto.Thumbnail.CopyToAsync(stream);
-            }
 
-            // Store only the file name and extension in the database
-            var course = new Course
-            {
-                Name = courseDto.Name,
-                Duration = courseDto.Duration,
-                Description = courseDto.Description,
-                Price = courseDto.Price,
-                Language = courseDto.Language,
-                Thumbnail = fileName, // Save only the file name and extension
-                InstructorId = User.GetUserId(),
-                CategoryId = courseDto.CategoryId,
-                UploadDate = DateTime.UtcNow
-            };
-
-            _context.Courses.Add(course);
-            await _context.SaveChangesAsync();
-
-            return Ok(course);
+            //Using Mapper......
+            var course = _unitOfWork.CourseRepository.MapToCourse(courseDto);
+            course.Thumbnail = (await _fileService.SaveFileAsync(courseDto.Thumbnail));
+            course.InstructorId = User.GetUserId();
+            course.UploadDate = DateTime.UtcNow;
+            
+            return   (await _unitOfWork.CourseRepository.Add(course)?Ok(ApiResponse<object>.Success(new { course.Id }))
+                                                                     :Ok(ApiResponse<int>.Failure("Cant Add Course")));
         }
+
 
         [HttpGet("Course/{id}")]
         public async Task<IActionResult> SearchCourseById(int id)
@@ -86,78 +66,8 @@ namespace API.Controllers
             return Ok(course);
         }
 
-        [HttpPost("create-new-module")]
-        public async Task<IActionResult> CreateModuleAsync(ModuleDto moduleDto)
-        {
-            //Check if Course Exist 
-            var courseExists = await _context.Courses.AnyAsync(c=>c.Id==moduleDto.CourseId);
-            if (!courseExists)
-            {
-                return NotFound("Course not found");
-            }
 
-
-            //Check the ModuleName Exist Already in that Course
-            var ModuleNameExists = await _context.Modules.AnyAsync(l => l.CourseId == moduleDto.CourseId && l.Name == moduleDto.Name);
-            if (ModuleNameExists)
-            {
-                return BadRequest("Module name already exists!");
-            }
-
-            //New ModuleNumber Logic
-            var newModuleNumber =1+ _context.Modules.Where(module => module.CourseId == moduleDto.CourseId)?.Count() ?? 0;
-            var module = new Module
-            {
-                Name = moduleDto.Name,
-                ModuleNumber = newModuleNumber,
-                CourseId = moduleDto.CourseId
-            };
-
-            //Add To DB
-            _context.Modules.Add(module);
-            await _context.SaveChangesAsync();
-            return Ok(module);
-        }
-
-        [HttpPost("create-new-Lesson")]
-        public async Task<IActionResult> CreateLessonAsync(LessonDto lessonDto)
-        {
-            //Check Module Found Or Not
-            var module = await _context.Modules.Include(m => m.Course).FirstOrDefaultAsync(m => m.Id == lessonDto.ModuleId);
-
-            if (module == null)
-            {
-                return NotFound("Module not found");
-            }
-
-            //New Lesson Number Logic
-            var newLessonNumber =1+ _context.Lessons.Where(lesson => lesson.ModuleId== module.Id)?.Count() ?? 0;
-            var filePath = $"{module.Course.Name}/Chapter_{module.ModuleNumber}/Lesson_{newLessonNumber}";
-            var uploadResult = await _videoService.Upload(lessonDto.VideoContent, filePath);
-            if (uploadResult == null) return BadRequest("File upload failed");
-
-            var newLesson = new Lesson
-            {
-                Name = lessonDto.Name,
-                Type = lessonDto.Type,
-                Content = lessonDto.Content,
-                LessonNumber = newLessonNumber,
-                ModuleId = lessonDto.ModuleId,
-            };
-
-            //Save To DB.
-            _context.Lessons.Add(newLesson);
-            await _context.SaveChangesAsync();
-            return Ok(new { message = "Added Successfully", videoPath = uploadResult });
-        }
-
-        [HttpGet("GetAllInstructors")]
-        public async Task<IActionResult> GetAllInstructors()
-        {
-            var instructors = await _context.Instructors.ToListAsync();
-            return Ok(instructors);
-        }
-
+        //NEED HOW Update in Front??
         [HttpGet("GetAllCategories")]
         public async Task<IActionResult> GetAllCategories()
         {
@@ -165,60 +75,7 @@ namespace API.Controllers
             return Ok(categories);
         }
 
-        [HttpGet("GetAllCourses")]
-        public async Task<IActionResult> GetAllCourses()
-        {
-            var courses = await _context.Courses
-                .Select(course => new CourseDto
-                {
-                    Id = course.Id,
-                    Name = course.Name,
-                    Duration = course.Duration,
-                    Description = course.Description,
-                    Price = course.Price,
-                    Language = course.Language,
-                    Thumbnail = course.Thumbnail,
-                    InstructorId = course.InstructorId,
-                    CategoryId = course.CategoryId,
-                })
-                .ToListAsync();
 
-            return Ok(courses);
-        }
-
-
-        [HttpPost("GetModulesByCourseId")]
-        public async Task<IActionResult> GetModulesByCourseId(CourseInfoDto  courseInfo)
-        {
-
-            Console.WriteLine($"COURSE ID\n {courseInfo.courseId}");
-            //courseInfo.courseId = 2;
-            var modules = await _context.Modules.Where(m=>m.CourseId== courseInfo.courseId)
-                                                .Select(m=> new
-                                                {
-                                                    Id = m.Id,
-                                                    Name = m.Name,
-                                                    ModuleNumber = m.ModuleNumber,
-                                                }).ToListAsync();
-            return Ok(modules);
-        }
-
-
-        [HttpGet("GetAllModules")]
-        public async Task<IActionResult> GetAllModules()
-            {
-                var modules = await _context.Modules
-                    .Select(m => new ModuleDto
-                    {
-                        Id = m.Id,
-                        Name = m.Name,
-                        ModuleNumber = m.ModuleNumber,
-                        CourseId = m.CourseId
-                    })
-                    .ToListAsync();
-
-                return Ok(modules);
-            }
 
         [HttpGet("search")]
         public async Task<IActionResult> SearchCourses([FromQuery] CourseSearchDto searchParams)
@@ -235,7 +92,5 @@ namespace API.Controllers
 
             return Ok(new { Courses = courses, TotalCourses = totalCourses });
         }
-
-        
     }
 }

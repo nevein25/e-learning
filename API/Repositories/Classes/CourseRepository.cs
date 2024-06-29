@@ -4,6 +4,8 @@ using API.Entities;
 using API.Repositories.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq.Expressions;
 
 namespace API.Repositories.Classes
 {
@@ -12,11 +14,17 @@ namespace API.Repositories.Classes
         private readonly EcommerceContext _context;
         private readonly IMapper _mapper;
 
+
         public CourseRepository(EcommerceContext context , IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
+
+
+        public Course MapToCourse<T>(T courseDto) where T : class=> _mapper.Map<Course>(courseDto);
+        public async Task<bool> IfExist(Expression<Func<Course, bool>>predicate) => await _context.Courses.AnyAsync(predicate);
+
 
         public async Task<CourseDto> GetCourseById(int Id)
         {
@@ -89,5 +97,21 @@ namespace API.Repositories.Classes
                 return (Enumerable.Empty<CourseDto>(), 0);
             }
         }
+
+        public async Task<bool> Add(Course course)
+        {
+            try
+            {
+                _context.Courses.Add(course);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public async Task<IEnumerable<Course>> GetAllWithInclude()=>await _context.Courses?.Include(c => c.Modules)?.ThenInclude(m => m.Lessons).ToListAsync();
     }
 }

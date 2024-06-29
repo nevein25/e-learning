@@ -36,18 +36,18 @@ export class ModuleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCourses();
+    //this.getCourses();
     this.courseDataService.currentCourseId.subscribe(courseId => {
       console.log('Received courseId:', courseId);
       this.courseId = courseId;
     });
   }
 
-  getCourses(): void {
+  /*getCourses(): void {
     this.courseService.getCourses().subscribe(data => {
       this.courses = data;
     });
-  }
+  }*/
 
   onSubmit(): void {
     
@@ -55,14 +55,20 @@ export class ModuleComponent implements OnInit {
     {
       const module = {
         name: this.moduleForm.value.mName,
-        courseId: this.courseId,
+        courseId: this.courseId
       };
       this.courseService.addModule(module).subscribe({
-
-        next: () => {
-          this.moduleForm.reset();
-          console.log('Module added successfully');
-          this.toastr.success("Module added successfully");
+        
+        next: (response) => {
+            if(!response.isSuccess)
+            {
+              this.toastr.error(response.message);
+            }
+            else 
+            {
+              this.toastr.success("Module added successfully");
+              this.moduleForm.reset();
+            }
         },
         error: (err) => {
           console.error('Error adding module:', err);

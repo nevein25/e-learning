@@ -25,14 +25,13 @@ import { ToastrService } from 'ngx-toastr';
 export class CourseComponent implements OnInit {
 
   courseForm: FormGroup;
-  instructors: any[] = [];
+ 
   categories: any[] = [];
   selectedFile: File | null = null;
   private toastr = inject(ToastrService);
 
   constructor(
     private fb: FormBuilder,
-    private instructorService: InstructorService,
     private categoryService: CategoryService,
     private courseService: CourseService,
     private route: Router,
@@ -45,25 +44,30 @@ export class CourseComponent implements OnInit {
       cPrice: ['', Validators.required],
       cLanguage: ['', Validators.required],
       cThumbnail: ['', Validators.required],
-      // cInstructor: ['', Validators.required],
       cCategory: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.getInstructors();
+  
     this.getCategories();
   }
 
-  getInstructors(): void {
-    this.instructorService.getInstructors().subscribe(data => {
-      this.instructors = data;
-    });
-  }
 
   getCategories(): void {
-    this.categoryService.getCategories().subscribe(data => {
-      this.categories = data;
+    this.categoryService.getCategories().subscribe({
+      next: (response) => 
+      {
+          if(!response.isSuccess)
+          {
+            this.toastr.error(response.message);
+          }
+          else 
+          {
+            this.categories = response.data;
+          }
+      },
+      error: (err) => {}
     });
   }
 
@@ -81,7 +85,6 @@ export class CourseComponent implements OnInit {
       formData.append('description', this.courseForm.get('cDescription')?.value);
       formData.append('price', this.courseForm.get('cPrice')?.value);
       formData.append('language', this.courseForm.get('cLanguage')?.value);
-      // formData.append('instructorId', this.courseForm.get('cInstructor')?.value);
       formData.append('categoryId', this.courseForm.get('cCategory')?.value);
       formData.append('thumbnail', this.selectedFile);
   
@@ -91,17 +94,24 @@ export class CourseComponent implements OnInit {
       });
   
       this.courseService.addCourse(formData).subscribe({
-        next: (response) => {
-          console.log('Course added successfully');
-          this.toastr.success("Course added successfully")
-          const courseId = response.id;
-          console.log(courseId)
-          this.courseDataService.setCourseId(courseId);
-          this.route.navigate(['/module']);
+        next: (response) => 
+        {
+            if(!response.isSuccess)
+            {
+              this.toastr.error(response.message);
+            }
+            else 
+            {
+              this.toastr.success("Course added successfully");
+              //console.log("CourseID", response.data.id);
+              this.courseDataService.setCourseId(response.data.id);
+              this.route.navigate(['/module']);
+            }
         },
-        error: (err) => {
-          this.toastr.error(err.error)
-          console.error('Error adding course:', err);
+        error: (err) => 
+        {
+          //this.toastr.remove(err.error);
+          //console.log('Error adding course:', err.error);
         }
       });
     }

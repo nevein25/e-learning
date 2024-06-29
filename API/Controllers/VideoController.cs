@@ -1,11 +1,14 @@
 ﻿using API.Context;
 using API.DTOs;
+using API.Helpers;
+using API.Repositories.Interfaces;
 using API.Services.Interfaces;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 
 namespace API.Controllers
 {
@@ -13,35 +16,32 @@ namespace API.Controllers
     [ApiController]
     public class VideoController : ControllerBase
     {
-        private EcommerceContext _context { get; }
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IVideoService _videoService;
-        public VideoController(IVideoService videoService , EcommerceContext context)
+
+        public VideoController(IUnitOfWork unitOfWork,IVideoService videoService)
         {
             _videoService = videoService;
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
+
 
         [HttpPost("GetLessonVideo")]
         public  IActionResult GetLessonVideo([FromBody]string publicId)
         {
                 var videoUrl = _videoService.GetVideo(publicId);
-                return (videoUrl.Result!=null)?Ok(new { link = videoUrl.Result}):NotFound("Video Not Found");
+                return (videoUrl.Result!=null)?Ok(ApiResponse<String>.Success(videoUrl.Result))
+                                              :Ok(ApiResponse<int>.Failure("Not Found Video....."));
         }
        
-
         [HttpPost("GetModulesAndLessonCourse")]
         public async Task<IActionResult> GetModulesAndLessonCourse([FromBody]int courseid)
         {
-            var courseContent = await _context.Courses
-                .Include(c => c.Modules)
-                .ThenInclude(m => m.Lessons)
-                .FirstOrDefaultAsync(c => c.Id == courseid);
+            var courses= await _unitOfWork.CourseRepository.GetAllWithInclude();
+            var courseContent = courses.FirstOrDefault(c => c.Id == courseid);
 
-            if (courseContent == null)
-            {
-                return NotFound();
-            }
-
+            if (courseContent == null) return Ok(ApiResponse<int>.Failure("Course Not Found"));
+               
             var courseContentDto = new CourseContentDto
             {
                 Name = courseContent.Name,
@@ -63,9 +63,7 @@ namespace API.Controllers
                     }).ToList()
                 }).ToList()
             };
-
-            return Ok(courseContentDto);
+            return Ok(ApiResponse<object>.Success(courseContentDto));
         }
-
     }
 }

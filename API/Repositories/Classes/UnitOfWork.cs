@@ -15,6 +15,7 @@ namespace API.Repositories.Classes
         }
 
         public IUserRepo UserRepository => new UserRepo(_context);
+        public ICatgoryRepository CatgoryRepository => new CatgoryRepository(_context);
 
         public ICourseRepository CourseRepository => new CourseRepository(_context , _mapper);
         public IInstructorRepository InstructorRepository => new InstructorRepository(_context , _mapper);
@@ -25,6 +26,10 @@ namespace API.Repositories.Classes
         public ISubscriptionRepository SubscriptionRepository => new SubscriptionRepository(_context);
 
         public ICoursePurchaseRepository CoursePurchaseRepository => new CoursePurchaseRepository(_context, _mapper);
+
+        public IModuleRepositry ModuleRepositry => new ModuleRepository(_context, _mapper);
+
+        public ILessonRepositry LessonRepositry => new LessonRepositry(_context, _mapper);
 
         public async Task<bool> SaveChanges()
         {

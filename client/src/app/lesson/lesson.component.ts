@@ -56,29 +56,29 @@ export class LessonComponent implements OnInit {
     this.courseDataService.currentCourseId.subscribe(courseId => {
       this.courseId = courseId;
     });
+    
   }
 
   getModules(): void {
     this.getCourseId();
-    this.courseService.getModules(this.courseId).subscribe(
-      (data: any[]) => 
-      {
-        this.Modules = data;
-      },
-      (error) => 
-      {
-        console.error('Error fetching modules:', error);
-      }
-    );
-    console.log("Modles: ",this.Modules);
+    this.courseService.getModules(this.courseId).subscribe({
+        next: (response) => {
+            if(!response.isSuccess)
+            {
+              this.toastr.error(response.message);
+            }
+            else 
+            {
+              this.Modules = response.data;
+              this.toastr.success("Module added successfully");
+            }
+        },
+        error: (err) => {
+          this.toastr.error(err.error)
+        }
+      });
+      console.log("Modles: ",this.Modules);
   }
-
-  /*getModules(): void {
-    this.courseService.getModules("2").subscribe(data => {
-      this.Modules = data;
-      console.log("DATATTTTTTTTTT",data);
-    });
-  }*/
 
   onFileChange(event: any): void {
     
@@ -93,23 +93,24 @@ export class LessonComponent implements OnInit {
       formData.append('name', this.lessonForm.get('lName')?.value);
       formData.append('type', this.lessonForm.get('lType')?.value);
       formData.append('content', this.lessonForm.get('lContent')?.value);
-      // formData.append('lessonNumber', this.lessonForm.get('lLessonNumber')?.value);
       formData.append('moduleId', this.lessonForm.get('cModules')?.value);
       formData.append('videoContent', this.selectedFile);
 
       this.courseService.addLesson(formData).subscribe({
-        next: () => {
-           this.toastr.success("Lesson added successfully")
-          console.log('Lesson added successfully');
-          this.lessonForm.reset();
-          this.selectedFile = null;
-          
+        next: (response) => {
+          if(!response.isSuccess)
+          {
+            this.toastr.error(response.message);
+          }
+          else 
+          {
+            this.toastr.success("Lesson added successfully");
+            this.lessonForm.reset();
+            this.selectedFile = null;
+          }
         },
         error: (err) => {
-          this.toastr.error(err.error)
-          console.error('Error adding Lesson:', err);
-          console.error('Detailed error:', err.error);
-      
+          this.toastr.error(err.error);
         }
 
       });

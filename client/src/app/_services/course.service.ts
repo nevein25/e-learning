@@ -18,22 +18,22 @@ export class CourseService {
     return this.http.post<any>(`${this.baseUrl}Course/create-new-course` , courseObj)
   }
 
-  getCourses(): Observable<any[]> {
+  /*getCourses(): Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl + 'Course/GetAllCourses');
-  }
+  }*/
 
-  addModule(moduleObj : any){
-    return this.http.post<any>(`${this.baseUrl}Course/create-new-module` , moduleObj)
-  }
-
-  getModules( courseId: any):Observable<any[]>
+  addModule(moduleObj : any)
   {
-    console.log("Inside",courseId);
-    return this.http.post<any[]>(`${this.baseUrl}Course/GetModulesByCourseId`,{ courseId: Number(courseId) })
+    return this.http.post<any>(`${this.baseUrl}Module/create-new-module` , moduleObj)
+  }
+
+  getModules(courseId: any):Observable<any>
+  {
+    return this.http.post<any>(`${this.baseUrl}Module/GetModulesByCourseId`,courseId?Number(courseId):0,{ headers: { 'Content-Type': 'application/json' } });
   }
 
   addLesson(LessonObj: FormData){
-    return this.http.post<any>(`${this.baseUrl}Course/create-new-Lesson` , LessonObj)
+    return this.http.post<any>(`${this.baseUrl}Lesson/create-new-Lesson` , LessonObj)
   }
 
   getCoursesForSearch(): Observable<Course[]> {
