@@ -14,30 +14,31 @@ import { NavComponent } from "./nav/nav.component";
 import { MembershipService } from './_services/membership.service';
 import { StudentCourseComponent } from './student-course/student-course.component';
 import { FooterComponent } from "./footer/footer.component";
+import { LoaderComponent } from "./loader/loader.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
-  imports: [
-    RouterOutlet,
-    BsDropdownModule,
-    LoginComponent,
-    CourseComponent,
-    ModuleComponent,
-    LessonComponent,
-    RouterModule,
-    CourseListComponent,
-    RouterLink,
-    RateandreviewComponent,
-    RegisterComponent,
-    NavComponent,
-    StudentCourseComponent,
-    HttpClientModule,
-    FooterComponent
-  ]
-
+    selector: 'app-root',
+    standalone: true,
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    imports: [
+        RouterOutlet,
+        BsDropdownModule,
+        LoginComponent,
+        CourseComponent,
+        ModuleComponent,
+        LessonComponent,
+        RouterModule,
+        CourseListComponent,
+        RouterLink,
+        RateandreviewComponent,
+        RegisterComponent,
+        NavComponent,
+        StudentCourseComponent,
+        HttpClientModule,
+        FooterComponent,
+        LoaderComponent
+    ]
 })
 export class AppComponent implements OnInit {
 
