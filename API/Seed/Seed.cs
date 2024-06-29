@@ -1,4 +1,5 @@
-﻿using API.Context;
+﻿using API.Common;
+using API.Context;
 using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -330,24 +331,31 @@ namespace API.Seed
                 context.Courses.AddRange(courses);
                 context.SaveChanges();
             }
+
+            Seed.buildModules(context);
+            Seed.buildLessons(context);
         }
 
 
-        private void buildModules(EcommerceContext context)
+        private static void buildModules(EcommerceContext context)
         {
             if (!context.Modules.Any())
             {
+                var courses = context.Courses.Take(10).ToList();
+
                 var Modules = new List<Module>
                 {
                     new Module
                     {
                         Name="Variables and Data Types",
                         CourseId=1,
+                        Course=courses[0],
                         ModuleNumber=1
                     },
                     new Module
                     {
                         Name="Operators",
+                        Course=courses[0],
                         CourseId=1,
                         ModuleNumber=2
                     },
@@ -356,12 +364,14 @@ namespace API.Seed
                     {
                         Name="Query Optimization",
                         CourseId=2,
+                        Course=courses[1],
                         ModuleNumber=1
                     },
                     new Module
                     {
                         Name="Performance Tuning",
                         CourseId=2,
+                        Course=courses[1],
                         ModuleNumber=2
                     },
 
@@ -369,12 +379,14 @@ namespace API.Seed
                     {
                         Name="Web APIs",
                         CourseId=3,
+                        Course=courses[2],
                         ModuleNumber=1
                     },
                     new Module
                     {
                         Name="Razor Pages",
                         CourseId=3,
+                        Course=courses[2],
                         ModuleNumber=2
                     },
 
@@ -382,30 +394,185 @@ namespace API.Seed
                     {
                         Name="Supervised Learning",
                         CourseId=4,
+                        Course=courses[3],
                         ModuleNumber=1
                     },
                     new Module
                     {
                         Name="UnSupervised Learning",
                         CourseId=4,
+                        Course=courses[3],
                         ModuleNumber=2
                     },
                     new Module
                     {
                         Name="Cryptography",
                         CourseId=5,
+                        Course=courses[4],
                         ModuleNumber=1
                     },
                     new Module
                     {
                         Name="Introduction to Cybersecurity",
                         CourseId=5,
+                        Course=courses[4],
+                        ModuleNumber=2
+                    },
+
+                    new Module
+                    {
+                        Name="Network Topologies",
+                        CourseId=6,
+                        Course=courses[5],
+                        ModuleNumber=1
+                    },
+                    new Module
+                    {
+                        Name="Networking Devices",
+                        CourseId=6,
+                        Course=courses[5],
                         ModuleNumber=2
                     }
                 };
-
+                context.Modules.AddRange(Modules);
+                context.SaveChanges();
             }
+        }
 
+        private static void buildLessons(EcommerceContext context)
+        {
+            if (!context.Lessons.Any())
+            {
+                var Modules = context.Modules.Take(12).ToList();
+                var Lessons = new List<Lesson>
+                {
+                    new Lesson
+                    {
+                        Name="Primitive Data Types",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-1",
+                        Module=Modules[0],
+                        ModuleId=1,
+                        LessonNumber=1
+                    },
+
+                    new Lesson
+                    {
+                        Name="Arithmetic Operators",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-2",
+                        Module=Modules[1],
+                        ModuleId=2,
+                        LessonNumber=1
+                    },
+                    new Lesson
+                    {
+                        Name="Execution Plans",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-3",
+                        Module=Modules[2],
+                        ModuleId=3,
+                        LessonNumber=1
+                    },
+                    new Lesson
+                    {
+                        Name="Monitoring",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-4",
+                        Module=Modules[3],
+                        ModuleId=4,
+                        LessonNumber=1
+                    },
+                    new Lesson
+                    {
+                        Name="HTTP Methods",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-5",
+                        Module=Modules[4],
+                        ModuleId=5,
+                        LessonNumber=1
+                    },
+                    new Lesson
+                    {
+                        Name="Page Models",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-6",
+                        Module=Modules[5],
+                        ModuleId=6,
+                        LessonNumber=1
+                    },
+                    new Lesson
+                    {
+                        Name="Evaluation Metrics",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-7",
+                        Module=Modules[6],
+                        ModuleId=7,
+                        LessonNumber=1
+                    },
+                    new Lesson
+                    {
+                        Name="Clustering Algorithms",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-8",
+                        Module=Modules[7],
+                        ModuleId=8,
+                        LessonNumber=1
+                    },
+                    new Lesson
+                    {
+                        Name="Hashing",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-9",
+                        Module=Modules[8],
+                        ModuleId=9,
+                        LessonNumber=1
+                    },
+                    new Lesson
+                    {
+                        Name="Endpoint Security",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-10",
+                        Module=Modules[9],
+                        ModuleId=10,
+                        LessonNumber=1
+                    },
+                    new Lesson
+                    {
+                        Name="Ring Topology",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-11",
+                        Module=Modules[10],
+                        ModuleId=11,
+                        LessonNumber=1
+                    },
+                    new Lesson
+                    {
+                        Name="Router",
+                        Type=LessonType.Video,
+                        IsDeleted=false,
+                        Content="Lesson Content-12",
+                        Module=Modules[11],
+                        ModuleId=12,
+                        LessonNumber=1
+                    }
+
+
+                };
+                context.Lessons.AddRange(Lessons);
+                context.SaveChanges();
+            }
         }
 
     }
