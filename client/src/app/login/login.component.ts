@@ -13,9 +13,10 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  accountService = inject(AccountService); 
+  accountService = inject(AccountService);
   private toastr = inject(ToastrService);
   router = inject(Router);
+  private toaster = inject(ToastrService);
 
 
   model: UserLogin = {
@@ -30,7 +31,11 @@ export class LoginComponent {
     }
 
     this.accountService.login(this.model).subscribe({
-      next: _ => this.router.navigate(['/', 'home']),
+      next: _ => {
+        this.toaster.success("Registration Successful!");
+
+        this.router.navigate(['/', 'home'])
+      },
       error: error => this.toastr.error(error.error)
 
     });

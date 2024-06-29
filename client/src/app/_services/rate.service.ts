@@ -21,4 +21,8 @@ export class RateService {
     return this.http.get<RateByUser>(`${this.baseUrl}rates/${courseId}`);
   }
 
+  getAvgCourseRate(courseId: number) {
+    return this.http.get<any>(`${this.baseUrl}course/avg-rate-courses/${courseId}`);
+  }
+
 }
