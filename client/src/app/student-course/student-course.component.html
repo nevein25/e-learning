@@ -6,7 +6,7 @@
   <div class="course-layout">
     <section class="course-video">
       <div class="video-player">
-        <video #videoPlayer width="800" controls>
+        <video #videoPlayer controls>
           <source [src]="videoUrl" type="video/mp4">
           Your browser does not support the video tag.
         </video>
@@ -15,7 +15,6 @@
     </section>
     
     <section class="course-details">
-     
       <div *ngIf="courseContent">
         <section *ngFor="let module of courseContent.modules;">
           <h2 class="module-title">Chapter {{ module.moduleNumber }}: {{ module.name }}</h2>

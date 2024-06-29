@@ -1,0 +1,29 @@
+.bookstore-card {
+    margin: 60px auto;
+
+}
+
+.card {
+    padding: 10px;
+}
+
+button {
+    /* background-color: rgb(113, 44, 249); */
+    /* color: white; */
+    height: 100%;
+}
+
+button:hover {
+    /* background-color: #b196e2; */
+    /* color: white; */
+    /* background-color: rgb(113, 44, 249); */
+}
+
+.pagination::ng-deep .page-item.active .page-link {
+    /* color: #FFFFFF; */
+    /* background-color: #712CF9; */
+}
+
+.pagination::ng-deep .page-item .page-link {
+    /* color: #712CF9; */
+}

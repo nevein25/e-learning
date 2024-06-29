@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { InstructorService } from '../_services/instructor.service';
 
 @Component({
   selector: 'app-register',
@@ -16,22 +17,30 @@ import { NgIf } from '@angular/common';
 })
 export class RegisterComponent {
   private accountService = inject(AccountService);
+  private instructorService = inject(InstructorService);
   private toaster = inject(ToastrService);
   router = inject(Router);
+
 
   model: UserRegister = {
     email: '',
     name: '',
     password: '',
     username: '',
-    role: Role.Student
+    role: Role.Student,
+    paper: ''
+
   }
+  file: File | undefined;
+
   roles = Object.values(Role);
   register() {
     this.accountService.register(this.model).subscribe({
       next: response => {
         this.toaster.success("Registration Successful!");
-         this.router.navigate(['/', 'login']);
+        this.UploadPaper();
+        this.router.navigate(['/', 'login']);
+
       },
       error: error => {
         let returnedError = error;
@@ -61,5 +70,23 @@ export class RegisterComponent {
 
     return !passwordValid ? { passwordStrength: true } : null;
   }
+
+  // OnClick of button Upload
+  UploadPaper() {
+    console.log(this.file);
+    this.instructorService.uploadPaper(this.file, this.model.username).subscribe({
+      next: _ => {
+        //this.router.navigate(['/', 'course']);
+
+      },
+      error: error => console.log(error)
+
+    })
+  }
+  onChangePaper(event: any) {
+    this.file = event.target.files[0];
+  }
+
+
 
 }

@@ -63,7 +63,8 @@ namespace API.Controllers
             {
                 Username = user.UserName!,
                 Email = user.Email!,
-                Token = await _tokenService.CreateToken(user, DateTime.Now, false)
+                Token = await _tokenService.CreateToken(user, DateTime.Now, false, false),
+                IsInstructorVerified = false
             };
 
             return userDto;
@@ -72,6 +73,7 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
+            bool isInstructorVerified = false;
             AppUser user = await _userManager.Users.SingleOrDefaultAsync(
                 x => x.Email == loginDto.EmailOrUsername || x.UserName == loginDto.EmailOrUsername
             );
@@ -105,12 +107,18 @@ namespace API.Controllers
                     expDate = DateTime.Now.AddDays(7);
                 }
             }
+            else if (userRole == Roles.Instructor.ToString())
+            {
+                var instructorId = await _unitOfWork.InstructorRepository.GetInstructorIdByUsernameOrEmailAsync(user.UserName);
+                isInstructorVerified = await _unitOfWork.InstructorRepository.IsVerified(instructorId);
+            }
             ///
             return new UserDto
             {
                 Email = user.Email,
                 Username = user.UserName!,
-                Token = await _tokenService.CreateToken(user, expDate, isSubscriber)
+                Token = await _tokenService.CreateToken(user, expDate, isSubscriber, isInstructorVerified),
+                IsInstructorVerified = isInstructorVerified
             };
         }
         private AppUser CreateUser(RegisterDto registerDto)

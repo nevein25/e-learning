@@ -4,6 +4,7 @@ import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserLogin } from '../_models/UserLogin';
 import { Router, RouterLink } from '@angular/router';
+import { InstructorService } from '../_services/instructor.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,8 @@ export class LoginComponent {
   private toastr = inject(ToastrService);
   router = inject(Router);
   private toaster = inject(ToastrService);
+
+  role: any;
 
 
   model: UserLogin = {
@@ -32,12 +35,48 @@ export class LoginComponent {
 
     this.accountService.login(this.model).subscribe({
       next: _ => {
-        this.toaster.success("Registration Successful!");
+        this.role = this.accountService.getLogedInUserRole();
 
-        this.router.navigate(['/', 'home'])
+        if (this.role === "Student")
+          this.router.navigate(['/', 'bought-courses-list']);
+
+        else if (this.role === "Instructor") {
+          if (this.accountService.isInstructorVerfied() === "True") {
+                console.log("trrrrr");
+                console.log(typeof this.accountService.isInstructorVerfied());
+                
+
+            this.router.navigate(['/', 'course']);
+          }
+          else {
+            console.log("ffffffff");
+            
+            this.router.navigate(['/', 'instructor-home']);
+
+          }
+          console.log(this.accountService.isInstructorVerfied());
+
+        }
+
+
+        else
+          this.router.navigate(['/', 'home']); // change it later
+
+        this.toaster.success("Login Successful!");
+
+
       },
       error: error => this.toastr.error(error.error)
 
     });
   }
+
+  // isLoggedInInstructorVerified() {
+  //   this.instructorService.isLoggedInInstructorVerified().subscribe({
+  //     next: res => {
+  //       console.log(res);
+  //       this.isInstructorVerfied = res.isVerified;
+  //     }
+  //   });
+  // }
 }

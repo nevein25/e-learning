@@ -38,7 +38,7 @@ export class StudentCourseComponent implements OnInit {
           }
           else
           {
-            this.toastr.success("Success Show Content....");
+            //this.toastr.success("Success Show Content....");
             this.courseContent = response.data;
             if (this.courseContent.modules.length > 0 && this.courseContent.modules[0].lessons.length > 0) {
               this.setVideoUrl(this.courseContent.name, this.courseContent.modules[0].moduleNumber, this.courseContent.modules[0].lessons[0].lessonNumber);

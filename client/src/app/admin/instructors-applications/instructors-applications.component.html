@@ -1,0 +1,38 @@
+<div class="container bookstore-card">
+    <div class="row row-cols-1 row-cols-sm-3 row-cols-md-2 row-cols-lg-4 g-3">
+        <div class="col " *ngFor="let application of applications">
+            <div class="card shadow-sm">
+                <div class="text-center card-header">
+                    <h6 class="m-2">{{application.username}} 's application</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center card-header">
+                        <div class="d-flex m-2">
+                            <img class="bd-placeholder-img card-img-top" src="{{application.paper}}"
+                                alt="{{application.paper}}">
+                        </div>
+
+                    </div>
+
+                    <div class="text-center">
+                        <div class="btn-group ">
+                            <button type="button" class="btn btn-primary  mt-2"
+                                routerLink="/application-details/{{application.instructorId}}">View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!-- </div> -->
+
+<div *ngIf="applications?.length == 0 " class="text-center">
+    <h2>No Applications Found</h2>
+</div>

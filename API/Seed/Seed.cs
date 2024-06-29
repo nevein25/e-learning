@@ -57,6 +57,18 @@ namespace API.Seed
 
                 }
 
+                var admins = new List<Admin>
+                {
+                    new Admin {UserName="admin1",  Name = "John Doe" },
+                    new Admin {UserName="admin2", Name = "Jane Smith" }
+                };
+
+                foreach (var admin in admins)
+                {
+                    await userManager.CreateAsync(admin, "TEST@test123");
+                    await userManager.AddToRoleAsync(admin, "Admin");
+
+                }
             }
 
             if (!context.Categories.Any())

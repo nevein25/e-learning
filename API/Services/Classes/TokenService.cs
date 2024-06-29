@@ -17,7 +17,7 @@ namespace API.Services.Classes
             _config = config;
             _userManager = userManager;
         }
-        public async Task<string> CreateToken(AppUser user, DateTime? expDateOfSubscription, bool isSubscribed)
+        public async Task<string> CreateToken(AppUser user, DateTime? expDateOfSubscription, bool isSubscribed, bool isInstructorVerified)
         {
             var tokenKey = _config["TokenKey"] ?? throw new Exception("Cannot access tokenKey from appsettings");
             if (tokenKey.Length < 64) throw new Exception("Your tokenKey needs to be longer");
@@ -31,6 +31,8 @@ namespace API.Services.Classes
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
                 new Claim("isSubscribed", isSubscribed.ToString()),
+                new Claim("isInstructorVerified", isInstructorVerified.ToString())
+
 
 
             };

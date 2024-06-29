@@ -1,0 +1,12 @@
+.bookstore-card {
+    margin: 70px auto;
+    width: 500px;
+}
+
+@media (max-width>600px) {
+    .bookstore-card {
+
+        width: 100%;
+    }
+
+}

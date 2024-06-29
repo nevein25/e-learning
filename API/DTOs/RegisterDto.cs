@@ -23,6 +23,8 @@ namespace API.DTOs
 
         // for instructors
         public string? Biography { get; set; }
+        public string? Paper { get; set; }
+
 
     }
 }
