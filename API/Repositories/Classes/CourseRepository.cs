@@ -107,7 +107,6 @@ namespace API.Repositories.Classes
             return coursesToReturn;
 
         }  
-        }
 
         public async Task<bool> Add(Course course)
         {
