@@ -11,19 +11,32 @@ import { ToastrService } from 'ngx-toastr';
 import { RateComponent } from "../rate/rate.component";
 import { ReviewComponent } from "../review/review.component";
 import { BoughtCourseService } from '../_services/bought-course.service';
+import { RateService } from '../_services/rate.service';
+import { RatingModule } from 'ngx-bootstrap/rating';
 
 @Component({
   selector: 'app-course-main-page',
   standalone: true,
   templateUrl: './course-main-page.component.html',
   styleUrls: ['./course-main-page.component.css'],
-  imports: [CommonModule, RateandreviewComponent, CommonModule, EnrollComponent, FormsModule, RateandreviewComponent, RateComponent, ReviewComponent]
+  imports: [
+    CommonModule,
+    RateandreviewComponent,
+    CommonModule, 
+    EnrollComponent, 
+    FormsModule, 
+    RateandreviewComponent, 
+    RateComponent, 
+    ReviewComponent,
+    RatingModule
+  ]
 })
 export class CourseMainPageComponent implements OnInit {
   courseId: any;
   course: Course | undefined;
   isInWishlist = false;
   isCourseBought = false;
+  avgRating = 0;
 
   private _toastr = inject(ToastrService);
 
@@ -38,7 +51,8 @@ export class CourseMainPageComponent implements OnInit {
     private courseService: CourseService,
     private activatedRoute: ActivatedRoute,
     private wishlistService: WishlistService,
-    private boughtCourseService: BoughtCourseService
+    private boughtCourseService: BoughtCourseService,
+    private rateService: RateService
 
   ) { }
 
@@ -47,7 +61,7 @@ export class CourseMainPageComponent implements OnInit {
     this.getCourseById();
     this.checkWishlist();
     this.checkIfCourseBought();
-
+    this.getAvgCourseRate();
   }
 
   getCourseById(): void {
@@ -132,5 +146,16 @@ export class CourseMainPageComponent implements OnInit {
 
 
     });
+  }
+
+  getAvgCourseRate() {
+    this.rateService.getAvgCourseRate(this.courseId).subscribe({
+      next: res => {
+        this.avgRating = res.avgRating;
+        console.log(res);
+
+
+      }
+    })
   }
 }

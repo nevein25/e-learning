@@ -6,9 +6,12 @@
         <div class="card-body">
           <div class="d-flex align-items-center justify-content-between">
             <h2 class="card-title display-5 mb-0">{{ course.name }}</h2>
+            <rating [(ngModel)]="avgRating" [maxlength]="5" [readonly]="true" style="color: #0275d8;font-size: 20px;">
+            </rating>
+
             <div class="d-flex align-items-center ml-2">
               @if (isCourseBought) {
-                <app-rate [id]="courseId"></app-rate>
+              <app-rate [id]="courseId"></app-rate>
               }
               <div *ngIf="!isCourseBought" class="mr-2 me-5">
                 <app-enroll [id]="courseId"></app-enroll>
@@ -17,8 +20,9 @@
                 <button class="btn btn-outline-primary mb-0" (click)="addToWishlist(course.id)">Add to Wishlist</button>
               </ng-container>
               <ng-container *ngIf="isInWishlist">
-                <button class="btn btn-outline-danger mb-0 " (click)="removeFromWishlist(course.id)">Remove From Wishlist</button>
-              </ng-container> 
+                <button class="btn btn-outline-danger mb-0 " (click)="removeFromWishlist(course.id)">Remove From
+                  Wishlist</button>
+              </ng-container>
             </div>
           </div>
           <p class="card-text lead mt-3">{{ course.description }}</p>
@@ -31,11 +35,11 @@
             <li class="list-group-item"><strong>Uploaded:</strong> {{ course.uploadDate | date }}</li>
           </ul>
           <div class="d-flex flex-column align-items-start mt-4">
-           @if (!isCourseBought) {
-               <!-- <app-rate [id]="courseId"></app-rate> -->
-               <app-review [id]="courseId"></app-review>
-                
-            }
+            <!-- @if (!isCourseBought) { -->
+            <!-- <app-rate [id]="courseId"></app-rate> -->
+            <app-review [id]="courseId"></app-review>
+
+            <!-- } -->
           </div>
         </div>
       </div>

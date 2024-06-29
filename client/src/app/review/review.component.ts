@@ -33,6 +33,7 @@ export class ReviewComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAllReviews();
+    this.checkIfCourseBought();
   }
 
   getAllReviews() {

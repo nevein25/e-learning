@@ -109,11 +109,20 @@ namespace API.Controllers
         }
 
         [HttpGet("top-courses/{number}")]
-        public async Task<IActionResult> TopThreeCourses(int number)
+        public async Task<IActionResult> TopCourses(int number)
         {
 
             var courses = await _unitOfWork.CourseRepository.GetTopCourses(number);
             return Ok(courses);
+        }
+
+        
+        [HttpGet("avg-rate-courses/{courseId}")]
+        public async Task<ActionResult<object>> AvgCourseRate(int courseId)
+        {
+
+            var avgRating = await _unitOfWork.RateRepository.GetAvgRateForCourseAsync(courseId);
+            return Ok(new {avgRating});
         }
     }
 }

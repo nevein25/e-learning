@@ -3,14 +3,14 @@ import { BoughtCourseService } from '../_services/bought-course.service';
 import { CoursePurshased } from '../_models/coursesBought';
 import { CommonModule } from '@angular/common';
 import { EnrollComponent } from "../payments/enroll/enroll.component";
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-bought-courses-list',
     standalone: true,
     templateUrl: './bought-courses-list.component.html',
     styleUrl: './bought-courses-list.component.css',
-    imports: [CommonModule, EnrollComponent]
+    imports: [CommonModule, EnrollComponent, RouterLink]
 })
 export class BoughtCoursesListComponent implements OnInit {
 

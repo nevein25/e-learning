@@ -59,12 +59,12 @@ namespace API.Repositories.Classes
             return rateByUser;
         }
 
-        public int GetAvgRateForCourse(int studentId)
+        public async Task<int> GetAvgRateForCourseAsync(int courseId)
         {
-            var ratings = _context.Rates
-                        .Where(r => r.StudentId == studentId)
+            var ratings = await _context.Rates
+                        .Where(r => r.CourseId == courseId)
                         .Select(r => r.Stars)
-                        .ToList();
+                        .ToListAsync();
 
             if (ratings.Any())
             {
