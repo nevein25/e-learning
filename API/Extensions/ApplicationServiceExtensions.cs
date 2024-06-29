@@ -23,6 +23,7 @@ namespace API.Extensions
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IInstructorRepository, InstructorRepository>();
             services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<IEmailService, EmailService>();
 
 
 

@@ -79,7 +79,11 @@ namespace API.Repositories.Classes
                 .Select(i => i.Id).FirstOrDefaultAsync();
         }
 
-
+        public async Task<string> GetInstructorEmailByIdAsync(int instructorId)
+        {
+            return await _context.Instructors.Where(i => i.Id == instructorId)
+                .Select(i => i.Email).FirstOrDefaultAsync();
+        }
         public async Task<IEnumerable<InstructorApplicationDto>> GetInstrctorsApplicationsAsync()
         {
             var instructors = await _context.Instructors.Where(i => i.IsVerified == false).ToListAsync();

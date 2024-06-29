@@ -1,6 +1,7 @@
 ﻿using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Repositories.Interfaces;
 using API.Services.Interfaces;
 using Azure.Identity;
@@ -18,12 +19,17 @@ namespace API.Controllers
         private readonly IInstructorRepository _repository; // Inject repository if using
         private readonly IPhotoService _photoService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailService _emailService;
         private string _username;
-        public InstructorsController(IInstructorRepository repository, IPhotoService photoService, IUnitOfWork unitOfWork)
+        public InstructorsController(IInstructorRepository repository, 
+                                    IPhotoService photoService, 
+                                    IUnitOfWork unitOfWork,
+                                    IEmailService emailService)
         {
             _repository = repository;
             _photoService = photoService;
             _unitOfWork = unitOfWork;
+            _emailService = emailService;
         }
 
         // GET: api/instructors
@@ -166,7 +172,23 @@ namespace API.Controllers
         public async Task<ActionResult> VerifyInstructor(int instuctorId)
         {
             await _unitOfWork.InstructorRepository.VerifyInstructorById(instuctorId);
+            await SendEmailToInstructorByInstructorId(instuctorId);
             return Ok();
+        }
+
+
+        private async Task SendEmailToInstructorByInstructorId(int instructorId)
+        {
+            var instructorEmail = await _unitOfWork.InstructorRepository.GetInstructorEmailByIdAsync(instructorId);
+
+            EmailMessage emailMessage = new EmailMessage
+            {
+                To = instructorEmail,
+                Body = $"<p>Your Application has been verfied! You Can upload Courses Now!</p>\r\n",
+                Subject = "Application Veified"
+            };
+
+            _emailService.SendEmail(emailMessage);
         }
     }
 

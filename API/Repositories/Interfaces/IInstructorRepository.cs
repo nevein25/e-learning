@@ -21,5 +21,6 @@ namespace API.Repositories.Interfaces
         Task<IEnumerable<InstructorApplicationDto>> GetInstrctorsApplicationsAsync();
         Task VerifyInstructorById(int instructorId);
         Task<InstructorApplicationDto> GetInstrctorsApplicationByIdAsync(int instructorId);
+        Task<string> GetInstructorEmailByIdAsync(int instructorId);
     }
 }
