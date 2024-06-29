@@ -84,7 +84,7 @@ namespace API.Seed
                 var categories = context.Categories.Take(10).ToList();
 
                 var courses = new List<Course>
-        {
+            {
             new Course
             {
                 Name = "Introduction to Programming",
@@ -330,6 +330,82 @@ namespace API.Seed
                 context.Courses.AddRange(courses);
                 context.SaveChanges();
             }
+        }
+
+
+        private void buildModules(EcommerceContext context)
+        {
+            if (!context.Modules.Any())
+            {
+                var Modules = new List<Module>
+                {
+                    new Module
+                    {
+                        Name="Variables and Data Types",
+                        CourseId=1,
+                        ModuleNumber=1
+                    },
+                    new Module
+                    {
+                        Name="Operators",
+                        CourseId=1,
+                        ModuleNumber=2
+                    },
+
+                    new Module
+                    {
+                        Name="Query Optimization",
+                        CourseId=2,
+                        ModuleNumber=1
+                    },
+                    new Module
+                    {
+                        Name="Performance Tuning",
+                        CourseId=2,
+                        ModuleNumber=2
+                    },
+
+                    new Module
+                    {
+                        Name="Web APIs",
+                        CourseId=3,
+                        ModuleNumber=1
+                    },
+                    new Module
+                    {
+                        Name="Razor Pages",
+                        CourseId=3,
+                        ModuleNumber=2
+                    },
+
+                    new Module
+                    {
+                        Name="Supervised Learning",
+                        CourseId=4,
+                        ModuleNumber=1
+                    },
+                    new Module
+                    {
+                        Name="UnSupervised Learning",
+                        CourseId=4,
+                        ModuleNumber=2
+                    },
+                    new Module
+                    {
+                        Name="Cryptography",
+                        CourseId=5,
+                        ModuleNumber=1
+                    },
+                    new Module
+                    {
+                        Name="Introduction to Cybersecurity",
+                        CourseId=5,
+                        ModuleNumber=2
+                    }
+                };
+
+            }
+
         }
 
     }

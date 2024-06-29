@@ -76,6 +76,21 @@ namespace API.Controllers
         }
 
 
+        //NOT YET FINISH
+        [HttpGet("GetInstructorCourses")]
+        public async Task<IActionResult> GetInstructorCourses([FromQuery] CourseSearchDto searchParams)
+        {
+            var (courses, totalCourses) = await _unitOfWork.CourseRepository.SearchCoursesAsync(searchParams);
+
+            if (!courses.Any())
+            {
+                Console.WriteLine("No courses found matching the search criteria");
+                return NotFound("No courses found matching the search criteria");
+            }
+            return Ok(new { Courses = courses.Where(c=>c.InstructorId==1), TotalCourses = totalCourses });
+        }
+
+
 
         [HttpGet("search")]
         public async Task<IActionResult> SearchCourses([FromQuery] CourseSearchDto searchParams)
