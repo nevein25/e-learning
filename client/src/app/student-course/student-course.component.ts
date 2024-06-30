@@ -17,15 +17,18 @@ export class StudentCourseComponent implements OnInit {
   lessonLink: string | undefined;
   videoUrl: string | undefined;
   id: any;
+  selectedLesson: any = null;
+  loading: boolean = false;
   private toastr = inject(ToastrService);
+  
+  
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
   constructor(private studentCourseService: StudentCourseService ,  private activatedRoute: ActivatedRoute,) {}
 
   ngOnInit(): void {  
 
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
-   // this.getCourseContent(90);
+   this.id = this.activatedRoute.snapshot.paramMap.get('id');
    this.getCourseContent(this.id);
   }
 
@@ -34,21 +37,20 @@ export class StudentCourseComponent implements OnInit {
       (response) => {
           if(!response.isSuccess)
           {
-            this.toastr.error(response.message);
+            //this.toastr.error(response.message);
           }
           else
           {
-            this.toastr.success("Success Show Content....");
             this.courseContent = response.data;
             if (this.courseContent.modules.length > 0 && this.courseContent.modules[0].lessons.length > 0) {
+              this.toastr.success(`${this.courseContent.name} Course Content`);
+              this.selectedLesson = this.courseContent.modules[0].lessons[0];
               this.setVideoUrl(this.courseContent.name, this.courseContent.modules[0].moduleNumber, this.courseContent.modules[0].lessons[0].lessonNumber);
             }
+            else this.toastr.error(`Course Content Not Exist`);
           }
-        
       },
-      (error) => {
-        console.error('Error fetching course content:', error);
-      }
+      (error) => {}
     );
   }
 
@@ -58,30 +60,34 @@ export class StudentCourseComponent implements OnInit {
   }
 
   setVideoUrl(courseName: string, moduleNumber: number, lessonNumber: number): void {
-    this.getPathLesson(courseName, moduleNumber, lessonNumber).subscribe(
-      (response) => {
-
-         if(!response.isSuccess)
+    this.loading = true; 
+    setTimeout(() => { 
+      this.getPathLesson(courseName, moduleNumber, lessonNumber).subscribe(
+        (response) => {
+          this.loading = false;
+          if (!response.isSuccess) 
           {
-            this.toastr.error(response.message);
-          }
-          else
+            //this.toastr.error(response.message);
+          } 
+          else 
           {
             this.videoUrl = response.data;
-            if (this.videoPlayer) 
-            {
+            if (this.videoPlayer) {
               this.videoPlayer.nativeElement.load(); 
             }
           }
-      },
-      (error) => {
-        console.error('Error fetching lesson link:', error);
-      }
-    );
+        },
+        (error) => {
+          this.loading = false; 
+        }
+      );
+    }, 1000);
   }
 
-  onLinkClick(event: Event, courseName: string, moduleNumber: number, lessonNumber: number): void {
-    event.preventDefault(); // Prevent the default link behavior
+
+  onLinkClick(event: Event, courseName: string, moduleNumber: number, lessonNumber: number,lesson:any): void {
+    this.selectedLesson = lesson; 
+    event.preventDefault();
     this.setVideoUrl(courseName, moduleNumber, lessonNumber);
   }
 }

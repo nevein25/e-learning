@@ -84,13 +84,13 @@ namespace API.Seed
                 var instructors = context.Instructors.Take(10).ToList();
                 var categories = context.Categories.Take(10).ToList();
 
-                var courses = new List<Course>
+            var courses = new List<Course>
             {
             new Course
             {
                 Name = "Introduction to Programming",
                 Duration = 10.5m,
-                Description = "Learn the basics of programming",
+                Description = "Programming introduces learners to the fundamental concepts, principles, and techniques used to write, test, and debug computer programs. It covers essential topics such as variables, data types, control structures (like loops and conditionals), functions, and basic algorithms. Students often start with a high-level programming language like Python or Java, which offer simplicity and versatility for learning key programming concepts. ",
                 Price = 99.99m,
                 Language = "English",
                 UploadDate = DateTime.Now,
@@ -102,7 +102,7 @@ namespace API.Seed
             {
                 Name = "Advanced Databases",
                 Duration = 15.0m,
-                Description = "Learn advanced database concepts",
+                Description = "Advanced databases explore sophisticated topics in database design, optimization, and management. They cover advanced data modeling techniques, such as normalization beyond third normal form, and discuss methods for handling large-scale databases, including distributed databases and sharding techniques. ",
                 Price = 199.99m,
                 Language = "English",
                 UploadDate = DateTime.Now,
@@ -114,7 +114,7 @@ namespace API.Seed
             {
                 Name = "Web Development with .NET",
                 Duration = 20.0m,
-                Description = "Learn web development with .NET",
+                Description = "Web development with .NET leverages the robust features of the .NET framework, including ASP.NET (Active Server Pages), ASP.NET Core, and other tools like C#, Visual Basic, and Entity Framework. Developers use these technologies to build scalable, secure, and high-performance web applications that can run on Windows servers or cross-platform environments.",
                 Price = 149.99m,
                 Language = "English",
                 UploadDate = DateTime.Now,
@@ -126,7 +126,7 @@ namespace API.Seed
             {
                 Name = "Machine Learning Basics",
                 Duration = 12.0m,
-                Description = "Introduction to machine learning concepts",
+                Description = "Machine learning basics encompass algorithms and statistical models that enable computers to improve their performance on tasks through experience (data). Key concepts include supervised learning, unsupervised learning, and reinforcement learning.",
                 Price = 120.00m,
                 Language = "English",
                 UploadDate = DateTime.Now,
@@ -138,7 +138,7 @@ namespace API.Seed
             {
                 Name = "Cybersecurity Fundamentals",
                 Duration = 18.0m,
-                Description = "Learn the fundamentals of cybersecurity",
+                Description = "Cybersecurity fundamentals encompass the foundational principles and practices designed to protect computer systems, networks, and data from unauthorized access, attacks, and damage. ",
                 Price = 180.00m,
                 Language = "English",
                 UploadDate = DateTime.Now,
@@ -150,7 +150,7 @@ namespace API.Seed
             {
                 Name = "Network Engineering 101",
                 Duration = 14.0m,
-                Description = "Basics of network engineering",
+                Description = "Network Engineering 101 equips participants with foundational knowledge and practical skills necessary for pursuing careers in network administration, telecommunications, and IT infrastructure management. It serves as a solid starting point for building expertise in designing and maintaining robust, scalable networks that support modern business operations and technological advancements.",
                 Price = 140.00m,
                 Language = "English",
                 UploadDate = DateTime.Now,
@@ -341,102 +341,89 @@ namespace API.Seed
         {
             if (!context.Modules.Any())
             {
-                var courses = context.Courses.Take(10).ToList();
-
+                var Courses = context.Courses.Take(10).ToList();
                 var Modules = new List<Module>
                 {
                     new Module
                     {
                         Name="Variables and Data Types",
-                        CourseId=1,
-                        Course=courses[0],
+                        CourseId=Courses[0].Id,
                         ModuleNumber=1
                     },
                     new Module
                     {
                         Name="Operators",
-                        Course=courses[0],
-                        CourseId=1,
+                        CourseId=Courses[0].Id,
                         ModuleNumber=2
                     },
 
                     new Module
                     {
                         Name="Query Optimization",
-                        CourseId=2,
-                        Course=courses[1],
+                        CourseId=Courses[1].Id,
                         ModuleNumber=1
                     },
                     new Module
                     {
                         Name="Performance Tuning",
-                        CourseId=2,
-                        Course=courses[1],
+                        CourseId=Courses[1].Id,
                         ModuleNumber=2
                     },
 
                     new Module
                     {
                         Name="Web APIs",
-                        CourseId=3,
-                        Course=courses[2],
+                        CourseId=Courses[2].Id,
                         ModuleNumber=1
                     },
                     new Module
                     {
                         Name="Razor Pages",
-                        CourseId=3,
-                        Course=courses[2],
+                        CourseId=Courses[2].Id,
                         ModuleNumber=2
                     },
 
                     new Module
                     {
                         Name="Supervised Learning",
-                        CourseId=4,
-                        Course=courses[3],
+                        CourseId=Courses[3].Id,
                         ModuleNumber=1
                     },
                     new Module
                     {
                         Name="UnSupervised Learning",
-                        CourseId=4,
-                        Course=courses[3],
+                        CourseId=Courses[3].Id,
                         ModuleNumber=2
                     },
                     new Module
                     {
                         Name="Cryptography",
-                        CourseId=5,
-                        Course=courses[4],
+                        CourseId=Courses[4].Id,
                         ModuleNumber=1
                     },
                     new Module
                     {
                         Name="Introduction to Cybersecurity",
-                        CourseId=5,
-                        Course=courses[4],
+                        CourseId=Courses[4].Id,
                         ModuleNumber=2
                     },
-
                     new Module
                     {
-                        Name="Network Topologies",
-                        CourseId=6,
-                        Course=courses[5],
+                        Name="IP Addressing",
+                        CourseId=Courses[5].Id,
                         ModuleNumber=1
                     },
                     new Module
                     {
-                        Name="Networking Devices",
-                        CourseId=6,
-                        Course=courses[5],
+                        Name="Routing and Switching",
+                        CourseId=Courses[5].Id,
                         ModuleNumber=2
                     }
                 };
                 context.Modules.AddRange(Modules);
                 context.SaveChanges();
             }
+
         }
 
         private static void buildLessons(EcommerceContext context)
@@ -450,130 +437,105 @@ namespace API.Seed
                     {
                         Name="Primitive Data Types",
                         Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-1",
-                        Module=Modules[0],
-                        ModuleId=1,
+                        Content="Primitive data types in programming languages represent the fundamental building blocks for storing and manipulating data. These data types are typically supported directly by the language and are used to define variables, constants, and function parameters.",
+                        ModuleId=Modules[0].Id,
                         LessonNumber=1
                     },
-
                     new Lesson
                     {
                         Name="Arithmetic Operators",
                         Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-2",
-                        Module=Modules[1],
-                        ModuleId=2,
+                        Content="Arithmetic operators in programming languages are fundamental tools for performing mathematical calculations and operations on numerical data types. These operators include addition (+), subtraction (-), multiplication (*), division (/), and modulus (%).",
+                        ModuleId=Modules[1].Id,
                         LessonNumber=1
                     },
                     new Lesson
                     {
-                        Name="Execution Plans",
+                        Name="Query Execution",
                         Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-3",
-                        Module=Modules[2],
-                        ModuleId=3,
+                        Content="Query execution in the context of databases refers to the process by which a database management system (DBMS) processes and executes a query written in a query language like SQL (Structured Query Language).",
+                        ModuleId=Modules[2].Id,
                         LessonNumber=1
                     },
                     new Lesson
                     {
-                        Name="Monitoring",
+                        Name="Query Optimization",
                         Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-4",
-                        Module=Modules[3],
-                        ModuleId=4,
+                        Content="Query optimization in databases is the process of improving the performance of queries to minimize execution time and resource usage while maximizing efficiency. This optimization is crucial for enhancing database performance, especially in systems handling large volumes of data or complex queries",
+                        ModuleId=Modules[3].Id,
+                        LessonNumber=1
+                    },
+                       new Lesson
+                    {
+                        Name="RESTful APIs",
+                        Type=LessonType.Video,
+                        Content="RESTful APIs (Representational State Transfer APIs) are a widely used architectural style for designing networked applications and services. They adhere to a set of principles that promote scalability, simplicity, and interoperability between systems",
+                        ModuleId=Modules[4].Id,
                         LessonNumber=1
                     },
                     new Lesson
                     {
-                        Name="HTTP Methods",
+                        Name="Routing",
                         Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-5",
-                        Module=Modules[4],
-                        ModuleId=5,
+                        Content="Routing in the context of networking and web development refers to the process of determining the path that data packets or requests take from their source to their destination across a network or within a web application.",
+                        ModuleId=Modules[5].Id,
                         LessonNumber=1
                     },
                     new Lesson
                     {
-                        Name="Page Models",
+                        Name="Data Preprocessing",
                         Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-6",
-                        Module=Modules[5],
-                        ModuleId=6,
+                        Content="Data preprocessing is a critical step in data mining and machine learning pipelines, involving the transformation and preparation of raw data before it is fed into a model for analysis. ",
+                        ModuleId=Modules[6].Id,
                         LessonNumber=1
                     },
                     new Lesson
                     {
-                        Name="Evaluation Metrics",
+                        Name="Regression",
                         Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-7",
-                        Module=Modules[6],
-                        ModuleId=7,
+                        Content="Regression analysis is a statistical method used to examine the relationship between one dependent variable (often denoted as \r\n𝑌\r\nY)",
+                        ModuleId=Modules[7].Id,
                         LessonNumber=1
                     },
                     new Lesson
                     {
-                        Name="Clustering Algorithms",
+                        Name="Digital Signatures",
                         Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-8",
-                        Module=Modules[7],
-                        ModuleId=8,
+                        Content="Digital signatures are cryptographic mechanisms used to verify the authenticity, integrity, and non-repudiation of digital messages or documents. ",
+                        ModuleId=Modules[8].Id,
                         LessonNumber=1
                     },
                     new Lesson
                     {
-                        Name="Hashing",
+                        Name="Cybersecurity Threats",
                         Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-9",
-                        Module=Modules[8],
-                        ModuleId=9,
+                        Content="Cybersecurity threats encompass a broad range of malicious activities and risks targeting digital information systems, networks, and data. These threats pose significant challenges to individuals, organizations, and governments worldwide.",
+                        ModuleId=Modules[9].Id,
                         LessonNumber=1
                     },
                     new Lesson
                     {
-                        Name="Endpoint Security",
+                        Name="Bus Topology",
                         Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-10",
-                        Module=Modules[9],
-                        ModuleId=10,
-                        LessonNumber=1
-                    },
-                    new Lesson
-                    {
-                        Name="Ring Topology",
-                        Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-11",
-                        Module=Modules[10],
-                        ModuleId=11,
+                        Content="Bus topology is a type of network architecture in which all devices (nodes) are connected to a single central cable, known as the bus or backbone",
+                        ModuleId=Modules[10].Id,
                         LessonNumber=1
                     },
                     new Lesson
                     {
                         Name="Router",
                         Type=LessonType.Video,
-                        IsDeleted=false,
-                        Content="Lesson Content-12",
-                        Module=Modules[11],
-                        ModuleId=12,
+                        Content="A router is a networking device responsible for forwarding data packets between computer networks. It operates at the network layer (Layer 3) of the OSI model and plays a crucial role in directing traffic efficiently across interconnected networks. ",
+                        ModuleId=Modules[11].Id,
                         LessonNumber=1
-                    }
-
+                    },
+                  
 
                 };
                 context.Lessons.AddRange(Lessons);
                 context.SaveChanges();
             }
-        }
 
+        }
     }
 }

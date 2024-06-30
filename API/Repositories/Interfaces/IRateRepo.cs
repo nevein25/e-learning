@@ -8,6 +8,7 @@ namespace API.Repositories.Interfaces
         public Task RateAsync(int CourseId, int UserId, int NumOfStars);
         public bool CourseExist(int courseId);
         Task<RateByUserDto> GetRateForStudentAsync(int courseId, int studentId);
+       Task<int> GetAvgRateForCourseAsync(int courseId);
 
     }
 }
