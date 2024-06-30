@@ -51,6 +51,7 @@ export class CourseListComponent implements OnInit {
     return Math.ceil(this.totalCourses / this.pageSize);
   }
 
+  
   getCategories(): void {
     this.courseService.getCategories().subscribe(categories => {
       console.log(categories);  // Debugging line

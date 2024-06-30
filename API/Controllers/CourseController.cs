@@ -16,15 +16,13 @@ namespace API.Controllers
     [ApiController]
     public class CourseController : ControllerBase
     {
-        private EcommerceContext _context { get; }
         private readonly IFileService _fileService;
         private readonly IUnitOfWork _unitOfWork;
 
 
-        public CourseController(IFileService fileService, EcommerceContext context , IUnitOfWork unitOfWork) 
+        public CourseController(IFileService fileService,IUnitOfWork unitOfWork) 
         { 
             _fileService = fileService;
-            _context = context;
             _unitOfWork = unitOfWork;
         }
 
@@ -64,30 +62,6 @@ namespace API.Controllers
             }
 
             return Ok(course);
-        }
-
-
-        //NEED HOW Update in Front??
-        [HttpGet("GetAllCategories")]
-        public async Task<IActionResult> GetAllCategories()
-        {
-            var categories = await _context.Categories.ToListAsync();
-            return Ok(categories);
-        }
-
-
-        //NOT YET FINISH
-        [HttpGet("GetInstructorCourses")]
-        public async Task<IActionResult> GetInstructorCourses([FromQuery] CourseSearchDto searchParams)
-        {
-            var (courses, totalCourses) = await _unitOfWork.CourseRepository.SearchCoursesAsync(searchParams);
-
-            if (!courses.Any())
-            {
-                Console.WriteLine("No courses found matching the search criteria");
-                return NotFound("No courses found matching the search criteria");
-            }
-            return Ok(new { Courses = courses.Where(c=>c.InstructorId==1), TotalCourses = totalCourses });
         }
 
 
