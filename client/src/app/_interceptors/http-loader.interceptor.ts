@@ -7,8 +7,16 @@ import { LoaderService } from '../_services/loader.service';
 
 export const httpLoaderInterceptor: HttpInterceptorFn = (req, next) => {
   const loaderService = inject(LoaderService);
-  loaderService.show();
+  //loaderService.show();
 
+  const excludedUrls = ['api/Video/GetLessonVideo'];
+
+  const shouldShowLoader = !excludedUrls.some(url => req.url.includes(url));
+
+  if (shouldShowLoader) 
+  {
+    loaderService.show();
+  }
   return next(req).pipe(
     tap(
       (event: HttpEvent<any>) => {

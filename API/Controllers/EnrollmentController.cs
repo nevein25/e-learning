@@ -86,7 +86,7 @@ namespace API.Controllers
         [HttpGet("enrollment/{courseId}")]
         public async Task<IActionResult> GetEnrollment(int courseId)
         {
-            int studentId = 13;
+            int studentId = User.GetUserId();
             string CourseId = courseId.ToString();
 
             var enrollment = await _unitOfWork.EnrollmentRepository.GetEnrollmentAsync(studentId, CourseId);

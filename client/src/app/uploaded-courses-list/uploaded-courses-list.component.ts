@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 export class UploadedCoursesListComponent implements OnInit {
 
   courses: CourseUploaded[] = [];
-
+  numOfStudents = 7;
   constructor(private uploadedCoursesService: UploadedCoursesService,private router: Router) { }
 
   ngOnInit(): void {
