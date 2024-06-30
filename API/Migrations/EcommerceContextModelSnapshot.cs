@@ -547,6 +547,15 @@ namespace API.Migrations
                     b.Property<string>("Biography")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Paper")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaperPublicId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.ToTable("Instructors", (string)null);
                 });
 

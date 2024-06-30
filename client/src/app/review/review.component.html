@@ -28,7 +28,7 @@
 </form> -->
 
 
-@if (allReviews.length > 0) {
+<!-- @if (allReviews.length > 0) {
 
 <div class="mb-5">
   <h2 class="mb-4">Reviews</h2>
@@ -57,4 +57,39 @@
     </div>
     <button (click)="addReview()" class="btn btn-primary mt-2" [disabled]="!text.valid || !review.text.trim()">Add Review</button>
   </form>
+} -->
+
+<ng-container *ngFor="let review of allReviews">
+  <div class="comment-view-box mb-3 position-relative">
+    <div class="d-flex mb-2 comment-cont shadow-sm p-3  bg-white rounded ">
+      <img src="{{review.picture || '/assets/user.png'}}" alt="mdo" width="40" height="40"
+        class="rounded-circle ms-3 comment-img">
+
+      <div>
+        <h6 class="mb-1">
+          <a class="text-dark username-comment ms-1">{{review.username}}</a>
+          <small class="text-muted ago-text ms-2">{{review.date | date }}</small>
+          <small class="text-muted ago-text ms-2">{{review.stars }} <i class="fa fa-star" style="color:#06BBCC"></i></small>
+        </h6>
+        <p class="mb-1 text-wrap text-break the-comment ms-2" style="font-size: medium;">{{review.text}}</p>
+
+
+      </div>
+    </div>
+  </div>
+
+</ng-container>
+
+@if (isCourseBought) {
+<div  class="input-group mb-3">
+  <form  #reviewForm="ngForm" class="d-flex comment-input-con" 
+    autocomplete="off">
+    <input id="review" class="form-control" type="text" [(ngModel)]="review.text" name="text" #text="ngModel"
+      placeholder="Add your review" />
+    <div class="input-group-append">
+      <button style="background-color: #06BBCC; color: white;" class="btn" type="submit" id="button-addon2" (click)="addReview()"  [disabled]="!text.valid || !review.text.trim()"><i
+          class="fa fa-paper-plane" ></i></button>
+    </div>
+  </form>
+</div>
 }

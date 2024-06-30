@@ -7,5 +7,6 @@ export interface UserRegister {
     password: String;
     biography?: String;
     role: Role;
+    paper:string;
 }
 

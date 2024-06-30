@@ -1,65 +1,75 @@
-import { Component, ElementRef, OnInit, ViewChild,inject} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { EnrollmentDto, StudentCourseService } from '../_services/student-course.service';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { DownloadCertificateComponent } from "../download-certificate/download-certificate.component";
+import { CertificateService } from '../_services/certificate.service';
 
 @Component({
   selector: 'app-student-course',
   templateUrl: './student-course.component.html',
   styleUrls: ['./student-course.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, DownloadCertificateComponent]
 })
 export class StudentCourseComponent implements OnInit {
   courseContent: any;
   lessonLink: string | undefined;
   videoUrl: string | undefined;
-  LessonCount:number = 0
+  LessonCount: number = 0
   lessonPercentage: number = 0;
-  visitedLessons: number[] = [] 
+  visitedLessons: number[] = []
   id: any;
   selectedLesson: any = null;
   loading: boolean = false;
   progress: number = 0;
 
   private toastr = inject(ToastrService);
-  
-  
+
+
+  isStudentFinished = false;
+
+  private certificateService = inject(CertificateService);
+
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
-  constructor(private studentCourseService: StudentCourseService ,  private activatedRoute: ActivatedRoute,) {}
+  constructor(private studentCourseService: StudentCourseService, private activatedRoute: ActivatedRoute,) { }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
 
-   this.id = this.activatedRoute.snapshot.paramMap.get('id');
-   this.getCourseContent(this.id);
-  this.getVisitedLessons();
-  this.loadEnrollment();
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.getCourseContent(this.id);
+    this.getVisitedLessons();
+    this.loadEnrollment();
+
+    // this.getCourseContent(90);
+
+    this.isStudentFinishedCourse();
   }
 
   getCourseContent(id: number): void {
     this.studentCourseService.GetModulesAndLessons(id).subscribe(
       (response) => {
-          if(!response.isSuccess)
-          {
-            //this.toastr.error(response.message);
+        if (!response.isSuccess) {
+          //this.toastr.error(response.message);
+        }
+        else {
+          this.courseContent = response.data;
+          if (this.courseContent.modules.length > 0 && this.courseContent.modules[0].lessons.length > 0) {
+            // this.toastr.success(`${this.courseContent.name} Course Content`);
+            this.selectedLesson = this.courseContent.modules[0].lessons[0];
+            this.setVideoUrl(this.courseContent.name, this.courseContent.modules[0].moduleNumber, this.courseContent.modules[0].lessons[0].lessonNumber);
           }
-          else
-          {
-            this.courseContent = response.data;
-            if (this.courseContent.modules.length > 0 && this.courseContent.modules[0].lessons.length > 0) {
-             // this.toastr.success(`${this.courseContent.name} Course Content`);
-              this.selectedLesson = this.courseContent.modules[0].lessons[0];
-              this.setVideoUrl(this.courseContent.name, this.courseContent.modules[0].moduleNumber, this.courseContent.modules[0].lessons[0].lessonNumber);
-            }
-            else this.toastr.error(`Course Content Not Exist`);
-          }
+          else this.toastr.error(`Course Content Not Exist`);
+        }
       },
-      (error) => {}
+      (error) => { }
     );
   }
+
+  
 
   getPathLesson(courseName: string, moduleNumber: number, lessonNumber: number): Observable<any> {
     const path = `courses_videos/${courseName}/Chapter_${moduleNumber}/Lesson_${lessonNumber}`;
@@ -67,36 +77,35 @@ export class StudentCourseComponent implements OnInit {
   }
 
   setVideoUrl(courseName: string, moduleNumber: number, lessonNumber: number): void {
-    this.loading = true; 
-    setTimeout(() => { 
+    this.loading = true;
+    setTimeout(() => {
       this.getPathLesson(courseName, moduleNumber, lessonNumber).subscribe(
         (response) => {
           this.loading = false;
-          if (!response.isSuccess) 
-          {
+          if (!response.isSuccess) {
             //this.toastr.error(response.message);
-          } 
-          else 
-          {
+          }
+          else {
             this.videoUrl = response.data;
             if (this.videoPlayer) {
-              this.videoPlayer.nativeElement.load(); 
+              this.videoPlayer.nativeElement.load();
             }
           }
         },
         (error) => {
-          this.loading = false; 
+          this.loading = false;
         }
       );
     }, 1000);
   }
 
 
-  onLinkClick(event: Event, courseName: string, moduleNumber: number, lessonNumber: number,lesson:any,id:number): void {
-    this.selectedLesson = lesson; 
+  onLinkClick(event: Event, courseName: string, moduleNumber: number, lessonNumber: number, lesson: any, id: number): void {
+    this.selectedLesson = lesson;
     event.preventDefault();
     this.setVideoUrl(courseName, moduleNumber, lessonNumber);
     this.markLessonAsVisited(id);
+    this.isStudentFinishedCourse();
   }
 
 
@@ -121,30 +130,30 @@ export class StudentCourseComponent implements OnInit {
           progress = 0;
         } else if (lessonsVisited === totalLessons) {
           progress = 100;
-        } else {       
+        } else {
           progress = (lessonsVisited / totalLessons) * 100;
         }
 
         this.progress = progress;
-        
+
         const enrollmentDto: EnrollmentDto = {
           courseId: this.id,
           isFinished: lessonsVisited === totalLessons,
           progress: progress,
           visitedLessons: this.visitedLessons
         };
-    
+
         this.studentCourseService.addOrUpdateEnrollment(enrollmentDto).subscribe(
           (response) => {
             if (response.isSuccess) {
               //this.toastr.success('Enrollment updated successfully.');
             } else {
-             // this.toastr.error('Failed to update enrollment.');
+              // this.toastr.error('Failed to update enrollment.');
             }
           },
           (error) => {
             console.error('Error updating enrollment:', error);
-           // this.toastr.error('Failed to update enrollment.');
+            // this.toastr.error('Failed to update enrollment.');
           }
         );
       },
@@ -167,13 +176,15 @@ export class StudentCourseComponent implements OnInit {
       }
     );
   }
-  
+
+
   loadEnrollment(): void {
     this.studentCourseService.getEnrollment(this.id).subscribe(
       (response) => {
         if (response.isSuccess && response.data) {
           const enrollment = response.data;
           this.progress = enrollment.progress != null ? enrollment.progress : 0;
+          
         } else {
           console.error('Enrollment data is not available:', response.message);
           this.progress = 0;
@@ -184,6 +195,13 @@ export class StudentCourseComponent implements OnInit {
       }
     );
   }
-  
 
+  isStudentFinishedCourse() {
+    this.certificateService.isStudentFinishedCourse(this.id).subscribe({
+      next: res => {
+        console.log(res.isFinished);
+        this.isStudentFinished = res.isFinished;
+      }
+    });
+  }
 }

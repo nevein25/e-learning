@@ -42,7 +42,8 @@
         <p id="CourseDesc">Course Description </p>
 
         <p class="description">{{ courseContent.description }}</p>
- 
+        <app-download-certificate [id]="id" *ngIf="isStudentFinished"></app-download-certificate>
+
       </div>
 
     </section>

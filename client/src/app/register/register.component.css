@@ -1,5 +1,16 @@
 /* mine */
 
+.form-input-placeholder {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;  /* Adjust width as necessary */
+    box-sizing: border-box;  /* Ensures padding and border are included in the width */
+    text-align: center;  /* Center-align the text */
+    color: #999;
+}
 h2{
     color:#06BBCC !important;
 }

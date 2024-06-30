@@ -42,5 +42,11 @@ namespace API.Controllers
             var courses = await _unitOfWork.CoursePurchaseRepository.CoursesUploadedByInstructor(User.GetUserId());
             return Ok(courses);
         }
+        [HttpGet("finished/{courseId}")]
+        public async Task<ActionResult<object>> IsCourseFinishedAsync(int courseId)
+        {
+            var isFinished = await _unitOfWork.CoursePurchaseRepository.IsStudentFinishedCourse(User.GetUserId(), courseId);
+            return Ok(new { isFinished });
+        }
     }
 }

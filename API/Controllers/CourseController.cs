@@ -98,5 +98,7 @@ namespace API.Controllers
             var avgRating = await _unitOfWork.RateRepository.GetAvgRateForCourseAsync(courseId);
             return Ok(new {avgRating});
         }
+
+
     }
 }

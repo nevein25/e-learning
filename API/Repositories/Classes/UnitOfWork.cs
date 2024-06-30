@@ -32,6 +32,8 @@ namespace API.Repositories.Classes
         public ILessonRepositry LessonRepositry => new LessonRepositry(_context, _mapper);
 
         public IEnrollmentRepository EnrollmentRepository => new EnrollmentRepository(_context, _mapper);
+        public ICertifcateRepository CertifcateRepository => new CertifcateRepository(_context, _mapper);
+
 
         public async Task<bool> SaveChanges()
         {

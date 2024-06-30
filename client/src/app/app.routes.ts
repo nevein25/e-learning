@@ -19,6 +19,10 @@ import { studentGuard } from './_guards/student.guard';
 import { SuccessPaymentComponent } from './payments/success-payment/success-payment.component';
 import { StudentCourseComponent } from './student-course/student-course.component';
 import { UploadedCoursesListComponent } from './uploaded-courses-list/uploaded-courses-list.component';
+import { InstructorHomeComponent } from './instructor-home/instructor-home.component';
+import { InstructorsApplicationsComponent } from './admin/instructors-applications/instructors-applications.component';
+import { InstructorApplicationDetailsComponent } from './admin/instructor-application-details/instructor-application-details.component';
+import { DownloadCertificateComponent } from './download-certificate/download-certificate.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent },
@@ -38,7 +42,12 @@ export const routes: Routes = [
     { path: 'student-course/:id', component: StudentCourseComponent },
     { path: 'success-payment', component: SuccessPaymentComponent },
     { path: 'wishlist', component: WishlistComponent },
+    { path: 'instructor-home', component: InstructorHomeComponent },
     { path: 'bought-courses-list', component: BoughtCoursesListComponent, canActivate: [studentGuard] },
+    {path: 'applications', component: InstructorsApplicationsComponent},
+    {path: 'application-details/:id', component: InstructorApplicationDetailsComponent},
+    {path: 'certificate', component: DownloadCertificateComponent},
+
     {path: '**', component: HomeComponent, pathMatch: 'full'}
 
 ];

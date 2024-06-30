@@ -1,0 +1,51 @@
+<div class="container bookstore-card">
+    <div class="row text-center" *ngIf="application">
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="text-center card-header">
+                    <h3 class="m-2">{{application.username}} 's application</h3>
+                    <div class="d-flex m-2">
+                        <img class="bd-placeholder-img card-img-top" src="{{application.paper}}"
+                            alt="{{application.paper}}">
+                    </div>
+
+                </div>
+                <div class="card-body">
+
+                    <!-- <form #verifyForm="ngForm" (ngSubmit)="verifyApplication" id="verifyForm">
+                        <input [(ngModel)]="application.verified" class="form-control" type="radio" name="verified"
+                            class="form-check-input me-2" value="true" >
+                        <label class="form-check-label me-2">
+
+                            Accepted
+                        </label>
+                        <input [(ngModel)]="application.verified" class="form-control" type="radio" name="verified"
+                            class="form-check-input me-2" value="false">
+                        <label class="form-check-label me-2">
+
+                            Rejected
+                        </label>
+                    </form> -->
+                    <div class="text-center">
+                      
+                            <button (click)="verifyApplication()"
+                             type="button" class="btn btn-m btn-primary w-50" 
+                                type="submit" form="verifyForm">Verify</button>
+    
+                
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="col-12 mt-2">
+                <div class="alert alert-info" *ngIf="verifyForm.dirty">
+                    <p><strong>Information: </strong>You have made changes. any unsaved changes will
+                        be lost</p>
+                </div>
+            </div> -->
+
+
+        </div>
+
+    </div>
+</div>

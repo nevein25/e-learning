@@ -64,5 +64,12 @@ namespace API.Repositories.Classes
             return courses;
 
         }
+        public async Task<bool> IsStudentFinishedCourse(int studentId, int courseId)
+        {
+            return await _context.CoursePurchases.Where(pc => pc.UserId == studentId &&
+                                                              pc.CourseId == courseId.ToString())
+                                            .Select(pc => pc.IsFinished)
+                                            .FirstOrDefaultAsync();
+        }
     }
 }

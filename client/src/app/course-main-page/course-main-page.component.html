@@ -1,4 +1,4 @@
-<div *ngIf="course" class="container mt-5">
+<!-- <div *ngIf="course" class="container mt-5">
   <div class="row d-flex justify-content-center align-items-center">
     <div class="col-lg-8">
       <div class="card shadow-sm">
@@ -8,22 +8,22 @@
             <h2 class="card-title display-5 mb-0">{{ course.name }}</h2>
             <rating [(ngModel)]="avgRating" [maxlength]="5" [readonly]="true" style="color: #0275d8;font-size: 20px;">
             </rating>
-          </div>
-          <div class="d-flex align-items-center mt-3">
-            <ng-container *ngIf="!isInstructor()">
-              <div *ngIf="!isCourseBought" class="me-5">
+
+            <div class="d-flex align-items-center ml-2">
+              @if (isCourseBought) {
+              <app-rate [id]="courseId"></app-rate>
+              }
+              <div *ngIf="!isCourseBought" class="mr-2 me-5">
                 <app-enroll [id]="courseId"></app-enroll>
               </div>
               <ng-container *ngIf="!isInWishlist">
-                <button class="btn btn-outline-primary mb-0 me-2" (click)="addToWishlist(course.id)">Add to Wishlist</button>
+                <button class="btn btn-outline-primary mb-0" (click)="addToWishlist(course.id)">Add to Wishlist</button>
               </ng-container>
               <ng-container *ngIf="isInWishlist">
-                <button class="btn btn-outline-danger mb-0 me-2" (click)="removeFromWishlist(course.id)">Remove From Wishlist</button>
+                <button class="btn btn-outline-danger mb-0 " (click)="removeFromWishlist(course.id)">Remove From
+                  Wishlist</button>
               </ng-container>
-            </ng-container>
-            <ng-container *ngIf="isCourseBought">
-              <app-rate [id]="courseId"></app-rate>
-            </ng-container>
+            </div>
           </div>
           <p class="card-text lead mt-3">{{ course.description }}</p>
           <ul class="list-group list-group-flush mb-3">
@@ -41,4 +41,314 @@
       </div>
     </div>
   </div>
+</div> -->
+
+<div *ngIf="course" class="all mb-5">
+
+  <div class="left-part">
+    <img id="book-img" [src]="'assets/Courses/' + course.thumbnail">
+
+    <div class="d-flex  flex-column mt-4 buttons">
+      <!-- <button routerLink="/book/edit/{{bookId}}" style="width: 200%; margin-left: 25%;" class="btn"
+        *appHasRole='["Admin"]'>Edit
+        Book</button> -->
+
+      @if (!isInWishlist) {
+      <button style="width: 100%;" class="btn mt-1" (click)="addToWishlist(course.id)">Add to
+        Wishlist</button>
+      }
+      @if (isInWishlist) {
+      <button style="width: 100%;" class="btn mt-1" (click)="removeFromWishlist(course.id)">Remove From
+        Wishlist</button>
+      }
+      @if (!isCourseBought) {
+      <app-enroll [id]="courseId" style="width: 100%;" class="mt-2"></app-enroll>
+      }
+      <!-- <div style="width: 200%; margin-left: 25%;" *ngIf="bookstore && bookstore.verified != 'true'">
+        <button (click)="openBranchesModal()" class="btn">Add To
+          Branch </button>
+      </div>
+      <div style="width: 50%;">
+        <button style="width: 100%;" (click)="openShelvesModal()" class="btn" *appHasRole='["Reader"]'>Add To
+          Shelf</button>
+
+        <div *ngIf="bookstore && bookstore.verified == 'true'">
+          <button (click)="openBranchesModal()" style="width: 100%;" class="btn">Add To
+            Branch</button>
+        </div> 
+
+      </div>
+-->
+      <!-- <div class="ms-1" style="width: 50%;">
+        <button style="width: 100%;" (click)="openBookPricesModal()" class="btn" *appHasRole='["Reader"]'>Know
+          Price</button>
+
+        <div *ngIf="bookstore && bookstore.verified == 'true'">
+          <button routerLink="/book/edit/{{bookId}}" style="width: 100%;" class="btn">Edit
+            Book</button>
+        </div>
+
+      </div> -->
+
+    </div>
+
+  </div>
+  <div class="right-part">
+    <div class="details ms-5">
+      <h1>{{course.name}}</h1>
+      <div>
+        <div id="rate-text">
+          <rating [(ngModel)]="avgRating" [maxlength]="5" [readonly]="true" style="color: #06BBCC;font-size: 50px;">
+          </rating>
+        </div>
+
+
+        <h3 id="book-desc">{{course.description }}
+        </h3>
+        <hr>
+        <ul class="list-group list-group-flush mb-3">
+          <li class="list-group-item"><strong>Category:</strong> {{ course.category }}</li>
+          <li class="list-group-item"><strong>Language:</strong> {{ course.language }}</li>
+          <li class="list-group-item"><strong>Duration:</strong> {{ course.duration }} hours</li>
+          <li class="list-group-item"><strong>Price:</strong> {{ course.price | currency }}</li>
+          <li class="list-group-item"><strong>Instructor:</strong> {{ course.instructor }}</li>
+          <li class="list-group-item"><strong>Uploaded:</strong> {{ course.uploadDate | date }}</li>
+        </ul>
+        <!-- 
+        <div class="d-flex">
+          <div class="d-flex">
+            <p>
+              <span class="">
+                <span>Instructor: </span>
+                <a>
+                  {{course.instructor}}
+                </a>
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <p class="mt-2"><span class="">Published In: </span>{{course.uploadDate | date}}
+        </p>
+
+        <p class="mt-2"><span class="">Category: </span>{{course.category}}
+        </p>
+
+        <p class="mt-2"><span class="">Language: </span>{{course.language}}
+        </p>
+
+        <p class="mt-2"><span class="">Duration: </span>{{course.duration}} hours
+        </p>
+
+        <p class="mt-2"><span class="">Price: </span>{{course.price | currency }}
+        </p> -->
+
+
+        <!-- <div *ngIf="book.genres" class="d-flex mt-2">
+          <div class="d-flex" *ngFor="let genre of book.genres">
+            <p>
+              <span class="light-purple" *ngIf="genre.id == book.genres[0].id"><span
+                  *ngIf="book.genres.length > 1">Genres: </span>
+                <span *ngIf="book.genres.length == 1">Genre: </span></span>
+              <span *ngIf="genre.id != book.genres[0].id">, </span>
+              <a>
+                {{genre.name}}
+              </a>
+            </p>
+          </div>
+        </div> -->
+
+        <!-- <p><span class="light-purple" *ngIf="book.originalTitle">Original Title:
+          </span><span>{{book.originalTitle}}</span></p>
+        <div class="row">
+          <p class="col-lg-4" *ngIf="book.isbn"><span class="light-purple">ISBN: </span><span>{{book.isbn}}</span></p>
+          <p *ngIf="book.numberOfPages" class="col-lg-4"><span class="light-purple">Number Of Pages:
+            </span><span>{{book.numberOfPages}}</span></p>
+          <p *ngIf="book.edition" class="col-lg-4"><span class="light-purple">Edition:
+            </span><span>{{book.edition}}</span></p>
+        </div> -->
+
+
+      </div>
+    </div>
+    <!-- 
+
+    <div class="similar-books mt-5 p-4">
+      <div class="mb-4 text-center">
+        <h3>Similar Books</h3>
+      </div>
+      <carousel [showIndicators]="false" [interval]="0" [isAnimated]="true" [itemsPerSlide]=2 [singleSlideOffset]="true"
+        [startFromIndex]="0" *ngIf="recommendedBooks">
+        <ng-container *ngFor="let book of recommendedBooks">
+
+
+
+          <slide class="ms-4 me-4">
+
+            <div class="card">
+              <div style="height: 100%; cursor: pointer;" class="d-flex" routerLink="/book/{{book.Id}}">
+                <img src="{{book.Cover}}" alt="cover">
+                <div class="card-body">
+                  <h6 class="mb-0">{{book.Title}}</h6>
+
+                </div>
+              </div>
+            </div>
+
+          </slide>
+        </ng-container>
+      </carousel>
+
+    </div> -->
+
+    @if (isCourseBought) {
+    <div class="mt-5" id="rate">
+      <p style="margin-bottom: 0;" id="rating-p">Rate Course</p>
+      <p style="margin-top: 0;" class="rating checked">
+        <app-rate [id]="courseId"></app-rate>
+      </p>
+    </div>
+    }
+
+    <div>
+      <div class="ms-5 mt-5" id="reviews">
+        <p>Community Reviews</p>
+        <div class="post-block__comments">
+          <app-review [id]="courseId"></app-review>
+          <!-- review content -->
+          <!-- <ng-container *ngFor="let review of reviews">
+            <div *ngIf="review.replyId == 0" class="comment-view-box mb-3 position-relative">
+              <div *ngIf="review.id != reviewId" class="d-flex mb-2 comment-cont shadow-sm p-3  bg-white rounded ">
+                <img src="{{review.readerPicture || './assets/user.png'}}" alt="mdo" width="40" height="40"
+                  class="rounded-circle ms-3 comment-img" routerLink="/reader/{{review.readerUsername}}">
+
+                <div>
+                  <h6 class="mb-1">
+                    <a class="text-dark username-comment"
+                      routerLink="/reader/{{review.readerUsername}}">{{review.readerUsername}}</a>
+                    <small class="text-muted ago-text">{{review.createdAt | timeago }}</small>
+                  </h6>
+                  <p class="mb-1 text-wrap text-break the-comment" style="font-size: medium;">{{review.text}}</p>
+
+                  <div *ngIf="reader" class="d-flex">
+                    <a style="color: black;" *ngIf="liked && !liked.includes(review.id)"
+                      (click)="likeReview(review.id)"><i class="fa fa-heart-o"></i></a>
+                    <a style="color: red;" *ngIf="liked && liked.includes(review.id)" (click)="likeReview(review.id)"><i
+                        class="fa fa-heart"></i></a>
+                    <a *ngIf="!replied || review.id != replyId" class="text-dark ms-2"
+                      (click)="reply(review.id)"><span><small>reply</small></span></a>
+                    <a *ngIf="replied && review.id == replyId" class="text-dark ms-2"
+                      (click)="hideReply()"><span><small>reply</small></span></a>
+                    <div *ngIf="reader">
+                      <div *ngIf="review.readerId == reader.id">
+                        <a class="text-dark ms-2" (click)="edit(review.id)"><small>edit</small></a>
+                        <a class="text-dark ms-2" (click)="deleteReview(review.id)"><small>delete</small></a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div *ngIf="review.id == reviewId && edited" class="input-group">
+                <form class="d-flex comment-input-con" form autocomplete="off" #editReviewForm="ngForm"
+                  (ngSubmit)="editReview(review.id)">
+                  <input class="form-control mb-2" type="text" [(ngModel)]="review.text" name="text"
+                    (input)="onChangeAnyInput()">
+                  <div class="input-group-append">
+                    <button style="background-color: #b196e2; color: white;" class="btn" type="submit"
+                      id="button-addon2"><i class="fa fa-paper-plane"></i></button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+
+            <ng-container *ngFor="let reply of reviews">
+              <div style="margin-left: 10%;" *ngIf="reply.replyId != 0 && reply.replyId == review.id"
+                class="comment-view-box mb-3 position-relative">
+
+                <div *ngIf="reply.id != reviewId" class="d-flex mb-2 comment-cont shadow-sm p-3  bg-white rounded ">
+                  <img src="{{reply.readerPicture || './assets/user.png'}}" alt="mdo" width="40" height="40"
+                    class="rounded-circle ms-3 comment-img" routerLink="/reader/{{reply.readerUsername}}">
+
+                  <div>
+                    <h6 class="mb-1">
+                      <a class="text-dark username-comment"
+                        routerLink="/reader/{{reply.readerUsername}}">{{reply.readerUsername}}</a>
+                      <small class="text-muted ago-text">{{reply.createdAt | timeago }}</small>
+                    </h6>
+                    <p class="mb-1 text-wrap text-break the-comment" style="font-size: medium;">{{reply.text}}</p>
+
+                    <div *ngIf="reader" class="d-flex">
+                      <a style="color: black;" *ngIf="liked && !liked.includes(reply.id)"
+                        (click)="likeReview(reply.id)"><i class="fa fa-heart-o"></i></a>
+                      <a style="color: red;" *ngIf="liked && liked.includes(reply.id)" (click)="likeReview(reply.id)"><i
+                          class="fa fa-heart"></i></a>
+
+                      <div *ngIf="reply.readerId == reader.id">
+                        <a class="text-dark ms-2" (click)="edit(reply.id)"><small>edit</small></a>
+                        <a class="text-dark ms-2" (click)="deleteReview(reply.id)"><small>delete</small></a>
+                      </div>
+
+                    </div>
+
+
+                  </div>
+                </div>
+
+
+                <div *ngIf="reply.id == reviewId && edited" class="input-group">
+                  <form class="d-flex comment-input-con" form autocomplete="off" #editReviewForm="ngForm"
+                    (ngSubmit)="editReview(reply.id)">
+                    <input class="form-control mb-2" type="text" [(ngModel)]="reply.text" name="text"
+                      (input)="onChangeAnyInput()">
+                    <div class="input-group-append">
+                      <button style="background-color: #b196e2; color: white;" class="btn" type="submit"
+                        id="button-addon2"><i class="fa fa-paper-plane"></i></button>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </ng-container>
+
+            <div style="margin-bottom: 2%;" *ngIf="replied && review.id == replyId" class="input-group">
+              <form class="d-flex comment-input-con" [formGroup]="replyForm" (ngSubmit)="replyOnReview(replyId)"
+                autocomplete="off">
+                <input class="form-control" type="text" id="reply" [formControl]="$any(replyForm.controls['text'])"
+                  placeholder="Enter your reply" autofocus />
+                <div class="input-group-append">
+                  <button style="background-color: #b196e2; color: white;" class="btn" type="submit"
+                    id="button-addon2"><i class="fa fa-paper-plane"></i></button>
+                </div>
+              </form>
+            </div>
+
+          </ng-container> -->
+
+
+
+
+          <!-- <div *ngIf="reader && !replied && !edited" class="input-group mb-3">
+            <form class="d-flex comment-input-con" [formGroup]="reviewForm" (ngSubmit)="reviewBook()"
+              autocomplete="off">
+              <input id="review" class="form-control" type="text" [formControl]="$any(reviewForm.controls['text'])"
+                placeholder="Add your review" />
+              <div class="input-group-append">
+                <button style="background-color: #b196e2; color: white;" class="btn" type="submit" id="button-addon2"><i
+                    class="fa fa-paper-plane"></i></button>
+              </div>
+            </form>
+          </div> -->
+
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
 </div>
