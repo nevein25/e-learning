@@ -1,32 +1,59 @@
+<br><br>
 <div class="container" *ngIf="courseContent">
   <header class="course-header">
-    <h1>Studying: {{ courseContent.name }} Course</h1>
+    <h1 class="course-title">{{ courseContent.name }} Course</h1>
   </header>
 
-  <div class="course-layout">
-    <section class="course-video">
+  <div class="course-layout row">
+    <section class="col-lg-8 course-video">
       <div class="video-player">
-        <video #videoPlayer width="800" controls>
+        <div *ngIf="loading" class="loading-overlay">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <video #videoPlayer width="100%" controls *ngIf="!loading">
           <source [src]="videoUrl" type="video/mp4">
           Your browser does not support the video tag.
         </video>
+        <br>
+        <br>
+        <p id="CourseDesc">Course Description </p>
         <p class="description">{{ courseContent.description }}</p>
+
       </div>
     </section>
     
-    <section class="course-details">
-     
+    <section class="col-lg-4 course-details">
       <div *ngIf="courseContent">
-        <section *ngFor="let module of courseContent.modules;">
-          <h2 class="module-title">Chapter {{ module.moduleNumber }}: {{ module.name }}</h2>
-          <ul>
-            <li class="lesson-name" *ngFor="let lesson of module.lessons;">
-              {{ lesson.lessonNumber }}) {{ lesson.name }}
-              <a href="#" (click)="onLinkClick($event, courseContent.name, module.moduleNumber, lesson.lessonNumber)">Go To Lesson</a>
-            </li>
-          </ul>
-        </section>
+        <div class="accordion" id="accordionExample">
+          <div *ngFor="let module of courseContent.modules; let i = index;">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="heading{{ i }}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseModule' + i" aria-expanded="false" [attr.aria-controls]="'collapseModule' + i">
+                  Chapter {{ module.moduleNumber }}: {{ module.name }}
+                </button>
+              </h2>
+              <div [id]="'collapseModule' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + i" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <ul class="list-group lesson-list">
+                    <li class="list-group-item lesson-name" *ngFor="let lesson of module.lessons;">
+                      <a href="#" (click)="onLinkClick($event, courseContent.name, module.moduleNumber, lesson.lessonNumber, lesson)">Lesson-{{ lesson.lessonNumber }}: {{ lesson.name }}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Display selected lesson content -->
+      <br>
+      <div *ngIf="selectedLesson" class="lesson-content mt-4">
+        <h3>Lesson-{{ selectedLesson.lessonNumber }}: {{ selectedLesson.name }}</h3>
+        <p>{{ selectedLesson.content }}</p>
       </div>
     </section>
+    
   </div>
 </div>
