@@ -34,5 +34,13 @@ namespace API.Controllers
             var isBought = await _unitOfWork.CoursePurchaseRepository.IsCourseBoughtAsync(courseId, User.GetUserId());
             return Ok(new { isBought });
         }
+
+        [Authorize]
+        [HttpGet("uploaded")]
+        public async Task<ActionResult<IList<CourseUploadedDto>>> GetCoursesUploadedByInstructor()
+        {
+            var courses = await _unitOfWork.CoursePurchaseRepository.CoursesUploadedByInstructor(User.GetUserId());
+            return Ok(courses);
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace API.Helpers
 
             CreateMap<Instructor, InstructorDto>();
             CreateMap<Wishlist, WishlistDto>();
+            CreateMap<Course, CourseUploadedDto>();
+
 
 
 

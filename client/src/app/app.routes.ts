@@ -19,6 +19,7 @@ import { studentGuard } from './_guards/student.guard';
 import { SuccessPaymentComponent } from './payments/success-payment/success-payment.component';
 import { StudentCourseComponent } from './student-course/student-course.component';
 import {InstructorCoursesComponent} from './instructor-courses/instructor-courses.component';
+import { UploadedCoursesListComponent } from './uploaded-courses-list/uploaded-courses-list.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent },
@@ -26,6 +27,7 @@ export const routes: Routes = [
     { path: "module", component: ModuleComponent },
     { path: "lesson", component: LessonComponent },
     { path: 'course-list', component: CourseListComponent },
+    { path: 'courses-uploaded', component: UploadedCoursesListComponent },
     { path: 'instructor-courses', component: InstructorCoursesComponent },
     { path: 'course-main-page/:id', component: CourseMainPageComponent },
     { path: 'register', component: RegisterComponent },
