@@ -1,5 +1,6 @@
 ﻿using API.Context;
 using API.DTOs;
+using API.Entities;
 using API.Repositories.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +49,20 @@ namespace API.Repositories.Classes
         {
             return await _context.CoursePurchases.Where(cp => cp.CourseId == courseId.ToString()
                                                            && cp.UserId == studentId).AnyAsync();
+        }
+
+        public async Task<IList<CourseUploadedDto>> CoursesUploadedByInstructor(int instructorId)
+        {
+            var coursesUploaded = await _context.Courses
+                .Where(cp => cp.InstructorId == instructorId)
+                .ToListAsync();
+   
+
+            var courses =  _mapper.Map<IList<CourseUploadedDto>>(coursesUploaded);
+
+
+            return courses;
+
         }
     }
 }

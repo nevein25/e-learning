@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, computed, inject } from '@angular/core';
 import { CourseService } from '../_services/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../_models/course';
@@ -13,6 +13,7 @@ import { ReviewComponent } from "../review/review.component";
 import { BoughtCourseService } from '../_services/bought-course.service';
 import { RateService } from '../_services/rate.service';
 import { RatingModule } from 'ngx-bootstrap/rating';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-course-main-page',
@@ -22,10 +23,8 @@ import { RatingModule } from 'ngx-bootstrap/rating';
   imports: [
     CommonModule,
     RateandreviewComponent,
-    CommonModule, 
     EnrollComponent, 
     FormsModule, 
-    RateandreviewComponent, 
     RateComponent, 
     ReviewComponent,
     RatingModule
@@ -37,6 +36,7 @@ export class CourseMainPageComponent implements OnInit {
   isInWishlist = false;
   isCourseBought = false;
   avgRating = 0;
+  isInstructor = computed(() => this.authService.role() === 'Instructor');
 
   private _toastr = inject(ToastrService);
 
@@ -52,12 +52,15 @@ export class CourseMainPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private wishlistService: WishlistService,
     private boughtCourseService: BoughtCourseService,
-    private rateService: RateService
+    private rateService: RateService,
+    private authService: AccountService
 
   ) { }
 
   ngOnInit(): void {
     this.courseId = this.activatedRoute.snapshot.paramMap.get('id');
+    console.log("Is Instructor:", this.isInstructor());
+    console.log("Role from authService:", this.authService.role());
     this.getCourseById();
     this.checkWishlist();
     this.checkIfCourseBought();

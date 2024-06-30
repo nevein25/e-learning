@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed } from '@angular/core';
 import { CourseService } from '../_services/course.service';
 import { Course } from '../_models/course';
 import { FormsModule } from '@angular/forms';
@@ -6,6 +6,7 @@ import { NgFor } from '@angular/common';
 import { Category } from '../_models/Category';
 import { Router } from '@angular/router';
 import { EnrollComponent } from "../payments/enroll/enroll.component";
+import { AccountService } from '../_services/account.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class CourseListComponent implements OnInit {
   categories: Category[] = [];  // Add an array to store categories
   searchName: string = '';
   searchCategoryName: string = '';
-
+  isInstructor = computed(() => this.authService.role() === 'instructor');
   searchMinPrice?: number;
   searchMaxPrice?: number;
   searchCategoryId?: number;
@@ -28,7 +29,7 @@ export class CourseListComponent implements OnInit {
   pageSize: number = 9;
   totalCourses: number = 0;
 
-  constructor(private courseService: CourseService , private router: Router) { }
+  constructor(private courseService: CourseService , private router: Router ,private authService: AccountService) { }
 
   ngOnInit(): void {
     this.searchCourses();
