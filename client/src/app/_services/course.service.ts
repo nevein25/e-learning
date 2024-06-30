@@ -54,9 +54,8 @@ export class CourseService {
     return this.http.get<{ courses: Course[], totalCourses: number }>(this.baseUrl + 'course/search', { params });
   }
 
-  
 
-  getInstructorCourses(name?: string, minPrice?: number, maxPrice?: number, categoryId?: number, pageNumber: number = 1, pageSize: number = 10): Observable<{ courses: Course[], totalCourses: number }> {
+  /*getInstructorCourses(name?: string, minPrice?: number, maxPrice?: number, categoryId?: number, pageNumber: number = 1, pageSize: number = 10): Observable<{ courses: Course[], totalCourses: number }> {
     let params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
       .set('pageSize', pageSize.toString());
@@ -67,16 +66,14 @@ export class CourseService {
     if (categoryId) params = params.append('categoryId', categoryId.toString());
 
     return this.http.get<{ courses: Course[], totalCourses: number }>(this.baseUrl + 'course/getInstructorCourses', { params });
-  }
-
-
+  }*/
 
   getCourseById(id: number): Observable<Course> {
     return this.http.get<Course>(`${this.baseUrl}course/Course/${id}`);
   }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.baseUrl + 'GetAllCategories');
+    return this.http.get<Category[]>(`${this.baseUrl}Category/GetAllCategories/`);
   }
 
   getTopCourses(number: number)
