@@ -49,5 +49,14 @@ namespace API.Repositories.Classes
             return await _context.CoursePurchases.Where(cp => cp.CourseId == courseId.ToString()
                                                            && cp.UserId == studentId).AnyAsync();
         }
+
+
+        public async Task<bool> IsStudentFinishedCourse(int studentId, int courseId)
+        {
+            return await _context.CoursePurchases.Where(pc => pc.UserId == studentId &&
+                                                              pc.CourseId == courseId.ToString())
+                                            .Select(pc => pc.IsFinished)
+                                            .FirstOrDefaultAsync();
+        }
     }
 }

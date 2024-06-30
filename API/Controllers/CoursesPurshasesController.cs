@@ -34,5 +34,12 @@ namespace API.Controllers
             var isBought = await _unitOfWork.CoursePurchaseRepository.IsCourseBoughtAsync(courseId, User.GetUserId());
             return Ok(new { isBought });
         }
+
+        [HttpGet("finished/{courseId}")]
+        public async Task<ActionResult<object>> IsCourseFinishedAsync(int courseId)
+        {
+            var isFinished = await _unitOfWork.CoursePurchaseRepository.IsStudentFinishedCourse(User.GetUserId(), courseId);
+            return Ok(new { isFinished });
+        }
     }
 }

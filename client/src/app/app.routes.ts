@@ -22,6 +22,7 @@ import {InstructorCoursesComponent} from './instructor-courses/instructor-course
 import { InstructorHomeComponent } from './instructor-home/instructor-home.component';
 import { InstructorsApplicationsComponent } from './admin/instructors-applications/instructors-applications.component';
 import { InstructorApplicationDetailsComponent } from './admin/instructor-application-details/instructor-application-details.component';
+import { DownloadCertificateComponent } from './download-certificate/download-certificate.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent },
@@ -45,6 +46,8 @@ export const routes: Routes = [
     { path: 'bought-courses-list', component: BoughtCoursesListComponent, canActivate: [studentGuard] },
     {path: 'applications', component: InstructorsApplicationsComponent},
     {path: 'application-details/:id', component: InstructorApplicationDetailsComponent},
+    {path: 'certificate', component: DownloadCertificateComponent},
+
     {path: '**', component: HomeComponent, pathMatch: 'full'}
 
 ];
