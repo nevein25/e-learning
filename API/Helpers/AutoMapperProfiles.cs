@@ -39,7 +39,7 @@ namespace API.Helpers
                            opt => opt.MapFrom(src => src.Student.Picture));
 
 
-
+            CreateMap<Enrollment, EnrollmentDto>().ReverseMap();
 
         }
     }

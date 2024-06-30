@@ -51,5 +51,12 @@ namespace API.Controllers
             return (await _unitOfWork.LessonRepositry.Add(lesson))?Ok(ApiResponse<object>.Success(new { message = "Added Successfully", videoPath = uploadResult }))
                                                                   :Ok(ApiResponse<int>.Failure("Cant Upload Now Try Again")); ;
         }
+
+        [HttpGet("lesson-count/{id}")]
+        public async Task<IActionResult> GetLessonCountByCourseId(int id)
+        {
+            var lessonCount = await _unitOfWork.LessonRepositry.GetLessonCountByCourseId(id);
+            return Ok(ApiResponse<int>.Success(lessonCount));
+        }
     }
 }

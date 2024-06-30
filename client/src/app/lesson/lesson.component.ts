@@ -25,7 +25,6 @@ import { CourseDataService } from '../shared/course-data.service';
 export class LessonComponent implements OnInit {
   lessonForm: FormGroup;
   Modules: any[] = [];
-  LessonType = LessonType;  // Reference the enum here
   selectedFile: File | null = null;
   courseId: string | null = null;
   private toastr = inject(ToastrService);
@@ -39,8 +38,7 @@ export class LessonComponent implements OnInit {
     this.lessonForm = this.fb.group({
       lName: ['',Validators.required],
       lContent: ['',Validators.required],
-      // lLessonNumber: ['', Validators.required],
-      lType: ['', Validators.required],
+    
       cModules: ['', Validators.required],
       video: ['', Validators.required],
 
@@ -91,7 +89,6 @@ export class LessonComponent implements OnInit {
     if (this.lessonForm.valid && this.selectedFile) {
       const formData = new FormData();
       formData.append('name', this.lessonForm.get('lName')?.value);
-      formData.append('type', this.lessonForm.get('lType')?.value);
       formData.append('content', this.lessonForm.get('lContent')?.value);
       formData.append('moduleId', this.lessonForm.get('cModules')?.value);
       formData.append('videoContent', this.selectedFile);

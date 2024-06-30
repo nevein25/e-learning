@@ -56,6 +56,7 @@ namespace API.Controllers
                     ModuleNumber = m.ModuleNumber,
                     Lessons = m.Lessons.Select(l => new LessonContentDto
                     {
+                        id = l.Id,
                         Name = l.Name,
                         Type = l.Type,
                         Content = l.Content,

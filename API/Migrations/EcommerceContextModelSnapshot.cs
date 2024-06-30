@@ -231,6 +231,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateOnly>("FinishedDate")
+                        .HasColumnType("date");
+
                     b.Property<bool>("IsFinished")
                         .HasColumnType("bit");
 
@@ -242,6 +245,10 @@ namespace API.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("VisitedLessons")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -261,6 +268,10 @@ namespace API.Migrations
 
                     b.Property<double>("Progress")
                         .HasColumnType("float");
+
+                    b.Property<string>("VisitedLessons")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("StudentId", "CourseId");
 

@@ -7,7 +7,10 @@
     <h1 class="course-title">{{ courseContent.name }} Course</h1>
 
   </header>
- 
+  <p style="margin: 0;">Your Progress</p>
+  <div class="progress-bar-container">
+    <div class="progress-bar" [style.width.%]="progress">{{ progress | number: '1.0-0' }}%</div>
+  </div>
   <div class="course-layout row">
 
     <section class="col-lg-8 course-video">
@@ -72,8 +75,8 @@
 
                     <li class="list-group-item lesson-name" *ngFor="let lesson of module.lessons;">
 
-                      <a href="#" (click)="onLinkClick($event, courseContent.name, module.moduleNumber, lesson.lessonNumber, lesson)">Lesson-{{ lesson.lessonNumber }}: {{ lesson.name }}</a>
-
+                      <a href="#" (click)="onLinkClick($event, courseContent.name, module.moduleNumber, lesson.lessonNumber,lesson, lesson.id)">Lesson-{{ lesson.lessonNumber }}: {{ lesson.name }}</a>
+                      <span *ngIf="visitedLessons.includes(lesson.lessonNumber)" class="visited"></span>
                     </li>
 
                   </ul>

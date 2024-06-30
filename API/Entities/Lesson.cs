@@ -6,7 +6,7 @@ namespace API.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public LessonType Type { get; set; } // Video, Text
+        public LessonType Type { get; set; } = LessonType.Video;
         public bool IsDeleted { get; set; }
         public string Content { get; set; }
         public int LessonNumber { get; set; }

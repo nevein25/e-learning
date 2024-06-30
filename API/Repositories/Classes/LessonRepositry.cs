@@ -38,6 +38,12 @@ namespace API.Repositories.Classes
                 return false;
             }
         }
-        
+
+        public async Task<int> GetLessonCountByCourseId(int courseId)
+        {
+            return await _context.Lessons
+                .Include(l => l.Module)
+                .CountAsync(l => l.Module.CourseId == courseId);
+        }
     }
 }
