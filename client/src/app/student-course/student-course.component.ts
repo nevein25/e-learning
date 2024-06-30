@@ -135,7 +135,7 @@ export class StudentCourseComponent implements OnInit {
         }
 
         this.progress = progress;
-
+        if(this.progress == 100) this.isStudentFinished = true;
         const enrollmentDto: EnrollmentDto = {
           courseId: this.id,
           isFinished: lessonsVisited === totalLessons,

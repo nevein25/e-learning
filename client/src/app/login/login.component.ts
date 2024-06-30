@@ -38,19 +38,19 @@ export class LoginComponent {
         this.role = this.accountService.getLogedInUserRole();
 
         if (this.role === "Student")
-          this.router.navigate(['/', 'bought-courses-list']);
+          this.router.navigate(['/', 'course-list']);
 
         else if (this.role === "Instructor") {
           if (this.accountService.isInstructorVerfied() === "True") {
-                console.log("trrrrr");
-                console.log(typeof this.accountService.isInstructorVerfied());
-                
+            console.log("trrrrr");
+            console.log(typeof this.accountService.isInstructorVerfied());
+
 
             this.router.navigate(['/', 'course']);
           }
           else {
             console.log("ffffffff");
-            
+
             this.router.navigate(['/', 'instructor-home']);
 
           }

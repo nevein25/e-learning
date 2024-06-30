@@ -4,14 +4,14 @@
 
     <div class="col" *ngFor="let course of wishlist">
       <div class="card h-100">
-        <img class="card-img-top" [src]="'assets/Courses/' + course.thumbnail" alt="Course Thumbnail">
+        <img class="card-img-top" routerLink="/course-main-page/{{course.courseId}}" routerLinkActive="router-link-active"  [src]="'assets/Courses/' + course.thumbnail" alt="Course Thumbnail" style="cursor:pointer;">
         <div class="card-body">
           <h5 class="card-title text-truncate" title="{{ course.courseName }}">{{ course.courseName }}</h5>
           <p class="card-text">{{ course.courseDescription }}</p>
           <div class="d-flex justify-content-between align-items-center mt-3">
             <button class="btn btn-outline-danger" (click)="removeFromWishlist(course.courseId)">Remove</button>
             <!-- <button class="btn btn-primary px-3">Enroll now</button> -->
-            <app-enroll [id]="course.id" class="btn-primary text-center"></app-enroll>
+            <app-enroll [id]="course.courseId" class="btn-primary text-center"></app-enroll>
 
           </div>
         </div>

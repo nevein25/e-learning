@@ -23,6 +23,8 @@ export class EnrollComponent implements OnInit {
   }
   buy(){
     this.buyCoursesService.requestCourseSession(this.id());
+    console.log("buyyy");
+    
   }
 
 

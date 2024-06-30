@@ -12,8 +12,8 @@
         public bool IsFinished { get; set; } = false; 
         public double? Progress { get; set; }  
         public DateTime PurchaseDate { get; set; }
-        public DateOnly FinishedDate { get; set; }
-        public string VisitedLessons { get; set; }
+        public DateOnly? FinishedDate { get; set; }
+        public string? VisitedLessons { get; set; }
         public List<int> GetVisitedLessons()
         {
             return string.IsNullOrEmpty(VisitedLessons)

@@ -4,13 +4,14 @@ import { WishlistService } from '../_services/wishlist.service';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { EnrollComponent } from "../payments/enroll/enroll.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-wishlist',
     standalone: true,
     templateUrl: './wishlist.component.html',
     styleUrl: './wishlist.component.css',
-    imports: [CommonModule, EnrollComponent]
+    imports: [CommonModule, EnrollComponent, RouterLink]
 })
 export class WishlistComponent implements OnInit {
   wishlist: any[] = []; // Assuming Course model is defined
