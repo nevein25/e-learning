@@ -12,6 +12,19 @@
         public bool IsFinished { get; set; } = false; // better to be calc but why not
         public double? Progress { get; set; }  // better to be calc but why not
         public DateTime PurchaseDate { get; set; }
+        public DateOnly FinishedDate { get; set; }
+        public string VisitedLessons { get; set; }
+        public List<int> GetVisitedLessons()
+        {
+            return string.IsNullOrEmpty(VisitedLessons)
+                ? new List<int>()
+                : VisitedLessons.Split(',').Select(int.Parse).ToList();
+        }
+
+        public void SetVisitedLessons(List<int> lessons)
+        {
+            VisitedLessons = string.Join(",", lessons);
+        }
     }
 
 }

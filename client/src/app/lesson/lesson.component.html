@@ -17,14 +17,14 @@
       <div *ngIf="lessonForm.get('lLessonNumber')?.errors?.['required']">Lesson Number is required.</div>
     </div> -->
   
-    <label for="lType">Lesson Type</label>
+    <!-- <label for="lType">Lesson Type</label>
     <select id="lType" formControlName="lType">
       <option *ngFor="let t of LessonType | keyvalue" [value]="t.value">{{ t.key }}</option>
     </select>
     <div *ngIf="lessonForm.get('lType')?.invalid && (lessonForm.get('lType')?.touched || lessonForm.get('lType')?.dirty)" class="error-message">
       <div *ngIf="lessonForm.get('lType')?.errors?.['required']">Lesson Type is required.</div>
     </div>
-  
+   -->
     <label for="cModules">Select Module</label>
     <select id="cModules" formControlName="cModules">
       <option *ngFor="let m of Modules" [value]="m.id">{{ m.name }}</option>

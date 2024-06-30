@@ -9,5 +9,6 @@ namespace API.Repositories.Interfaces
         public Lesson MapToLesson<T>(T lessonDto) where T : class;
 
         public Task<bool> Add(Lesson lesson);
+        public Task<int> GetLessonCountByCourseId(int courseId);
     }
 }

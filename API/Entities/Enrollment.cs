@@ -1,4 +1,6 @@
-﻿namespace API.Entities
+﻿using Microsoft.IdentityModel.Tokens;
+
+namespace API.Entities
 {
     public class Enrollment
     {
@@ -8,5 +10,17 @@
         public Student Student { get; set; }
         public int CourseId { get; set; }
         public Course Course { get; set; }
+        public string VisitedLessons { get; set; }
+        public List<int> GetVisitedLessons()
+        {
+            return string.IsNullOrEmpty(VisitedLessons)
+                ? new List<int>()
+                : VisitedLessons.Split(',').Select(int.Parse).ToList();
+        }
+
+        public void SetVisitedLessons(List<int> lessons)
+        {
+            VisitedLessons = string.Join(",", lessons);
+        }
     }
 }
