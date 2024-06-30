@@ -18,17 +18,17 @@ export class StudentCourseComponent implements OnInit {
   videoUrl: string | undefined;
   id: any;
   selectedLesson: any = null;
-  private toastr = inject(ToastrService);
   loading: boolean = false;
-  selectedModule:any=null;
+  private toastr = inject(ToastrService);
+  
+  
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
   constructor(private studentCourseService: StudentCourseService ,  private activatedRoute: ActivatedRoute,) {}
 
   ngOnInit(): void {  
 
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
-   // this.getCourseContent(90);
+   this.id = this.activatedRoute.snapshot.paramMap.get('id');
    this.getCourseContent(this.id);
   }
 
@@ -41,36 +41,36 @@ export class StudentCourseComponent implements OnInit {
           }
           else
           {
-            //this.toastr.success("Success Show Content....");
             this.courseContent = response.data;
             if (this.courseContent.modules.length > 0 && this.courseContent.modules[0].lessons.length > 0) {
+              this.toastr.success(`${this.courseContent.name} Course Content`);
               this.selectedLesson = this.courseContent.modules[0].lessons[0];
               this.setVideoUrl(this.courseContent.name, this.courseContent.modules[0].moduleNumber, this.courseContent.modules[0].lessons[0].lessonNumber);
             }
+            else this.toastr.error(`Course Content Not Exist`);
           }
       },
-      (error) => {
-        //console.error('Error fetching course content:', error);
-      }
+      (error) => {}
     );
   }
 
   getPathLesson(courseName: string, moduleNumber: number, lessonNumber: number): Observable<any> {
-    
     const path = `courses_videos/${courseName}/Chapter_${moduleNumber}/Lesson_${lessonNumber}`;
     return this.studentCourseService.GetPathLesson(path);
   }
 
   setVideoUrl(courseName: string, moduleNumber: number, lessonNumber: number): void {
-    this.loading = true; // Set loading to true to show the loader
-
-    setTimeout(() => {  // Simulate loading delay with setTimeout
+    this.loading = true; 
+    setTimeout(() => { 
       this.getPathLesson(courseName, moduleNumber, lessonNumber).subscribe(
         (response) => {
-          this.loading = false; // Set loading to false after response
-          if (!response.isSuccess) {
+          this.loading = false;
+          if (!response.isSuccess) 
+          {
             //this.toastr.error(response.message);
-          } else {
+          } 
+          else 
+          {
             this.videoUrl = response.data;
             if (this.videoPlayer) {
               this.videoPlayer.nativeElement.load(); 
@@ -78,22 +78,16 @@ export class StudentCourseComponent implements OnInit {
           }
         },
         (error) => {
-          this.loading = false; // Set loading to false on error
-          //console.error('Error fetching lesson link:', error);
+          this.loading = false; 
         }
       );
-    }, 1000);  // Adjust timeout duration as needed (in milliseconds)
+    }, 1000);
   }
 
 
   onLinkClick(event: Event, courseName: string, moduleNumber: number, lessonNumber: number,lesson:any): void {
     this.selectedLesson = lesson; 
-    this.selectedModule=moduleNumber;   
-    console.log("Coursename",courseName);
-    console.log("modulenumber",moduleNumber);
-    console.log("lessonnumber",lessonNumber);
-    event.preventDefault(); // Prevent the default link behavior
+    event.preventDefault();
     this.setVideoUrl(courseName, moduleNumber, lessonNumber);
-    
   }
 }

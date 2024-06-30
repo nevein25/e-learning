@@ -12,8 +12,11 @@ namespace API.Services.Classes
 
         public async Task<string?> GetVideo(string publicId)
         {
-            string url_v1 = cloudinary.Api.UrlVideoUp.BuildUrl($"{publicId}.mp4");
-            string url_v2 = $"https://res.cloudinary.com/dp9htwhvu/video/upload/{publicId}.mp4";
+            string mainPath = "https://res.cloudinary.com/dp9htwhvu/video/upload/";
+            //With version
+            string url_v1 =$"{mainPath}/v2/{publicId}.mp4";
+            //Without Version
+            string url_v2 = $"{mainPath}/{publicId}.mp4";
             return (await HttpClinetService.UrlExists(url_v1))? url_v1 : (await HttpClinetService.UrlExists(url_v2))? url_v2:null;
         }
 
