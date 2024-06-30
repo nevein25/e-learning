@@ -40,7 +40,7 @@ export class CertificateService {
 
       // Add logo (optional)
       const logo = new Image();
-      logo.src = '/assets/logo/logo.png'; // Replace with your logo path
+      logo.src = '/assets/logo/logo2.png'; // Replace with your logo path
       doc.addImage(logo, 'PNG', 10, 10, 50, 30);
 
       // Add Certificate Title
