@@ -9,5 +9,7 @@ namespace API.Repositories.Interfaces
         Task<IList<CourseUploadedDto>> CoursesUploadedByInstructor(int instructorId);
 
         Task<bool> IsStudentFinishedCourse(int studentId, int courseId);
+
+        Task<int> NumberOfStudentsEnrolledByCourseIdAsync(int courseId);
     }
 }

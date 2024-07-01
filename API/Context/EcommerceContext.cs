@@ -27,7 +27,7 @@ namespace API.Context
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<Enrollment> Enrollments { get; set; }
+        //public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Rate> Rates { get; set; }
 
         public DbSet<Wishlist> Wishlists { get; set; }
@@ -96,20 +96,20 @@ namespace API.Context
             ///
 
             ///Student and Course Enrollments
-            builder.Entity<Enrollment>()
-          .HasKey(e => new { e.StudentId, e.CourseId });
+          //  builder.Entity<Enrollment>()
+          //.HasKey(e => new { e.StudentId, e.CourseId });
 
-            builder.Entity<Enrollment>()
-                .HasOne(e => e.Student)
-                .WithMany(s => s.Enrollments)
-                .HasForeignKey(e => e.StudentId)
-                .OnDelete(DeleteBehavior.Restrict);
+          //  builder.Entity<Enrollment>()
+          //      .HasOne(e => e.Student)
+          //      .WithMany(s => s.Enrollments)
+          //      .HasForeignKey(e => e.StudentId)
+          //      .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Enrollment>()
-                .HasOne(e => e.Course)
-                .WithMany(c => c.Enrollments)
-                .HasForeignKey(e => e.CourseId)
-                .OnDelete(DeleteBehavior.Restrict);
+          //  builder.Entity<Enrollment>()
+          //      .HasOne(e => e.Course)
+          //      .WithMany(c => c.Enrollments)
+          //      .HasForeignKey(e => e.CourseId)
+          //      .OnDelete(DeleteBehavior.Restrict);
             ///
 
             ///Student and Course Rates

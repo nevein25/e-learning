@@ -4,6 +4,7 @@ export interface Certificate {
         courseName: string;
         completionDate: Date;
         certificateId: string;
+        FinishedDate: Date;
         // courseId: number;
 }
 

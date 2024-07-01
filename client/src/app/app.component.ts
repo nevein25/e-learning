@@ -8,7 +8,6 @@ import { ModuleComponent } from './module/module.component';
 import { LessonComponent } from './lesson/lesson.component';
 import { CourseListComponent } from "./course-list/course-list.component";
 import { RouterLink } from '@angular/router';
-import { RateandreviewComponent } from './rateandreview/rateandreview.component';
 import { RegisterComponent } from "./register/register.component";
 import { NavComponent } from "./nav/nav.component";
 import { MembershipService } from './_services/membership.service';
@@ -31,7 +30,6 @@ import { LoaderComponent } from "./loader/loader.component";
         RouterModule,
         CourseListComponent,
         RouterLink,
-        RateandreviewComponent,
         RegisterComponent,
         NavComponent,
         StudentCourseComponent,

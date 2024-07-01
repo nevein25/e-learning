@@ -6,7 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-import { CourseDataService } from '../shared/course-data.service';
+import { CourseDataService } from '../_services/course-data.service';
 
 
 

@@ -16,17 +16,15 @@ namespace API.Controllers
     [ApiController]
     public class InstructorsController : ControllerBase
     {
-        private readonly IInstructorRepository _repository; // Inject repository if using
         private readonly IPhotoService _photoService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailService _emailService;
         private string _username;
-        public InstructorsController(IInstructorRepository repository, 
+        public InstructorsController(
                                     IPhotoService photoService, 
                                     IUnitOfWork unitOfWork,
                                     IEmailService emailService)
         {
-            _repository = repository;
             _photoService = photoService;
             _unitOfWork = unitOfWork;
             _emailService = emailService;

@@ -123,5 +123,8 @@ namespace API.Repositories.Classes
         }
 
         public async Task<IEnumerable<Course>> GetAllWithInclude()=>await _context.Courses?.Include(c => c.Modules)?.ThenInclude(m => m.Lessons).ToListAsync();
+
+
+
     }
 }

@@ -2,9 +2,7 @@
 using API.DTOs;
 using API.Repositories.Interfaces;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Tls;
 
 namespace API.Repositories.Classes
 {
@@ -32,12 +30,18 @@ namespace API.Repositories.Classes
                 .Select(c => c.Name)
                 .FirstOrDefaultAsync();
 
+            var finishedDate = await _context.CoursePurchases
+                .Where(c => c.Id == courseId && c.UserId == studentId)
+                .Select(c=> c.FinishedDate) 
+                .FirstOrDefaultAsync();
+
             var certificate = new CertificateDto
             {
-                CertificateId = "", //maybe calc or something
-                CompletionDate = DateTime.UtcNow,//should be attrbute in the db
+                CertificateId = "", 
+                CompletionDate = DateTime.UtcNow,
                 StudentName = studentName,
-                CourseName = courseName
+                CourseName = courseName,
+                FinishedDate = finishedDate
             };
             return certificate;
         }

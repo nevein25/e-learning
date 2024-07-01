@@ -1,8 +1,14 @@
 .loader-container {
+  position: fixed; /* Ensure the loader stays in place */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width:100%; */
+  z-index: 9999; /* High z-index to be on top of everything */
+  pointer-events: none;
 }
 
 .loader {
@@ -13,28 +19,10 @@
   width: 200px;
   height: 200px;
   animation: spin 2s linear infinite;
-  margin: 25vh;
-  /* z-index: 50; */
 }
 
-
-/* .loader2 {
-  text-align: center;
-  border: 16px dotted  rgb(224, 221, 221);
-  border-top: 16px dotted blue; 
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin-reverse 2s linear infinite;
-  margin: 0;
-} */
-
+/* Ensure your keyframes are defined */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
-/* @keyframes spin-reverse {
-  0% { transform: rotate(360deg); }
-  100% { transform: rotate(0deg); }
-} */

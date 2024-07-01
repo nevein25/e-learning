@@ -60,9 +60,19 @@ namespace API.Repositories.Classes
 
             var courses =  _mapper.Map<IList<CourseUploadedDto>>(coursesUploaded);
 
+            foreach (var course in courses)
+            {
+                course.NumberOfEnrolledStudents = await NumberOfStudentsEnrolledByCourseIdAsync(course.Id);
+            }
 
             return courses;
 
+        }
+        public async Task<int> NumberOfStudentsEnrolledByCourseIdAsync(int courseId)
+        {
+            int numberOfStudentsEnrolled = 0;
+            numberOfStudentsEnrolled = await _context.CoursePurchases.Where(cp => cp.CourseId == courseId.ToString()).CountAsync();
+            return numberOfStudentsEnrolled;
         }
         public async Task<bool> IsStudentFinishedCourse(int studentId, int courseId)
         {

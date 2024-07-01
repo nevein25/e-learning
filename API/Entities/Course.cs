@@ -15,7 +15,7 @@ namespace API.Entities
 
         public ICollection<Module>? Modules { get; set; }
         public ICollection<Review>? Reviews { get; set; }
-        public ICollection<Enrollment>? Enrollments { get; set; }
+        //public ICollection<Enrollment>? Enrollments { get; set; }
         public ICollection<Rate>? Rates { get; set; }
         public ICollection<Wishlist>? Wishlists { get; set; }
 

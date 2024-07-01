@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { EnrollComponent } from "../payments/enroll/enroll.component";
 import { FormsModule } from '@angular/forms';
 import { WishlistService } from '../_services/wishlist.service';
-import { RateandreviewComponent } from '../rateandreview/rateandreview.component';
 import { ToastrService } from 'ngx-toastr';
 import { RateComponent } from "../rate/rate.component";
 import { ReviewComponent } from "../review/review.component";
@@ -22,7 +21,6 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./course-main-page.component.css'],
   imports: [
     CommonModule,
-    RateandreviewComponent,
     EnrollComponent, 
     FormsModule, 
     RateComponent, 

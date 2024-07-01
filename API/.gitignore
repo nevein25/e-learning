@@ -486,3 +486,6 @@ $RECYCLE.BIN/
 
 uploads
 Videos_Test
+
+appsettings.json
+appsettings.Development.json

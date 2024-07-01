@@ -1,6 +1,7 @@
 export interface CourseUploaded {
-    id: number;
-    name: string;
-    thumbnail: string;
-    description: string;
-  }
+  id: number;
+  name: string;
+  thumbnail: string;
+  description: string;
+  numberOfEnrolledStudents: number;
+}

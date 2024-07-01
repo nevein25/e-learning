@@ -16,5 +16,6 @@ namespace API.Repositories.Interfaces
 
         Task<IEnumerable<Course>> GetAllWithInclude();
         Task<bool> Add(Course course);
+
     }
 }

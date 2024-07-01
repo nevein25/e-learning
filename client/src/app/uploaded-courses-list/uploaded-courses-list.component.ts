@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UploadedCoursesService } from '../_services/uploaded-course.service'; 
-import { CourseUploaded } from '../_models/courseUploaded'; 
+import { UploadedCoursesService } from '../_services/uploaded-course.service';
+import { CourseUploaded } from '../_models/courseUploaded';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -15,7 +15,7 @@ export class UploadedCoursesListComponent implements OnInit {
 
   courses: CourseUploaded[] = [];
   numOfStudents = 7;
-  constructor(private uploadedCoursesService: UploadedCoursesService,private router: Router) { }
+  constructor(private uploadedCoursesService: UploadedCoursesService, private router: Router) { }
 
   ngOnInit(): void {
     this.getUploadedCourses();
