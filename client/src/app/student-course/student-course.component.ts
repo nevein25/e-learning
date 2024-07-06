@@ -199,7 +199,6 @@ export class StudentCourseComponent implements OnInit {
   isStudentFinishedCourse() {
     this.certificateService.isStudentFinishedCourse(this.id).subscribe({
       next: res => {
-        console.log(res.isFinished);
         this.isStudentFinished = res.isFinished;
       }
     });

@@ -23,7 +23,6 @@ export class InstructorsApplicationsComponent implements OnInit{
   getAllApplications() {
     this.instructorService.getApplications().subscribe({
       next: res => {
-        console.log(res);
         this.applications = res
       },
       error: error => console.log(error)

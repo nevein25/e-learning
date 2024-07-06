@@ -2,11 +2,12 @@ import { Component, OnInit, computed } from '@angular/core';
 import { CourseService } from '../_services/course.service';
 import { Course } from '../_models/course';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Category } from '../_models/Category';
 import { Router } from '@angular/router';
 import { EnrollComponent } from "../payments/enroll/enroll.component";
 import { AccountService } from '../_services/account.service';
+import { HasRoleDirective } from '../_directives/has-role.directive';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { AccountService } from '../_services/account.service';
     standalone: true,
     templateUrl: './course-list.component.html',
     styleUrls: ['./course-list.component.css'],
-    imports: [FormsModule, NgFor, EnrollComponent]
+    imports: [FormsModule, NgFor, NgIf, EnrollComponent, HasRoleDirective]
 })
 export class CourseListComponent implements OnInit {
   courses: Course[] = [];

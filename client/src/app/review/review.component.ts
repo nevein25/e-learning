@@ -7,11 +7,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReviewWithRates } from '../_models/reviewWithRates';
 import { BoughtCourseService } from '../_services/bought-course.service';
+import { HasRoleDirective } from '../_directives/has-role.directive';
 
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, HasRoleDirective],
   templateUrl: './review.component.html',
   styleUrl: './review.component.css'
 })
@@ -40,7 +41,6 @@ export class ReviewComponent implements OnInit{
     this.reviewService.getReviews(this.id()).subscribe({
       next: res => {
         this.allReviews = res
-        console.log(res);
       },
       error: error => console.error(error)     
     });
@@ -63,7 +63,7 @@ export class ReviewComponent implements OnInit{
     this.boughtCourseService.isCourseBought(this.id()).subscribe({
       next: res => {
         this.isCourseBought = res.isBought;
-        console.log(res.isBought);
+
 
       },
       error: error => console.log(error)

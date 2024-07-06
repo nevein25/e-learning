@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
     this.coursesService.getTopCourses(this.numOfCoursesToGet).subscribe({
       next: res => {
         this.courses = res;
-        console.log(res);
+
       
       },
       error: error => console.log(error)
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
     this.instructorService.getTopInstructors(this.numOfInstructorsToGet).subscribe({
       next: res => {
         this.instructors = res;
-        console.log(res);
+
     
       },
       error: error => console.log(error)

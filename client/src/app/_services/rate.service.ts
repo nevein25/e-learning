@@ -22,7 +22,7 @@ export class RateService {
   }
 
   getAvgCourseRate(courseId: number) {
-    return this.http.get<any>(`${this.baseUrl}course/avg-rate-courses/${courseId}`);
+    return this.http.get<any>(`${this.baseUrl}rates/avg-rate-courses/${courseId}`);
   }
 
 }

@@ -33,8 +33,10 @@ export class AccountService {
     if (user && user.token) {
 
       const isverified = JSON.parse(atob(user.token.split('.')[1])).isInstructorVerified;
-      // console.log(isverified);
-      return isverified;
+
+      user.isInstructorVerified
+
+      return user.isInstructorVerified;
     }
     return;
   })
@@ -91,7 +93,7 @@ export class AccountService {
   }
 
   getVerification() {
-    return this.isInstructorVerfied() === "True";
+    return this.isInstructorVerfied();
   }
   // isLoggedInInstructorVerified() {
   //   return this.http.get<any>(`${this.baseUrl}Instructors/is-verified/`).subscribe({

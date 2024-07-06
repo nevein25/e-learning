@@ -13,6 +13,7 @@ import { BoughtCourseService } from '../_services/bought-course.service';
 import { RateService } from '../_services/rate.service';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { AccountService } from '../_services/account.service';
+import { HasRoleDirective } from '../_directives/has-role.directive';
 
 @Component({
   selector: 'app-course-main-page',
@@ -25,7 +26,8 @@ import { AccountService } from '../_services/account.service';
     FormsModule, 
     RateComponent, 
     ReviewComponent,
-    RatingModule
+    RatingModule,
+    HasRoleDirective
   ]
 })
 export class CourseMainPageComponent implements OnInit {
@@ -57,8 +59,6 @@ export class CourseMainPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.courseId = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log("Is Instructor:", this.isInstructor());
-    console.log("Role from authService:", this.authService.role());
     this.getCourseById();
     this.checkWishlist();
     this.checkIfCourseBought();
@@ -97,7 +97,7 @@ export class CourseMainPageComponent implements OnInit {
       .subscribe(
         () => {
           // Handle success (e.g., show a success message)
-          console.log('Course added to wishlist successfully');
+
           this.toastr.success("Course Added To WishList");
           this.isInWishlist = true;
 
@@ -114,7 +114,6 @@ export class CourseMainPageComponent implements OnInit {
       .subscribe(
         () => {
           // Handle success (e.g., show a success message)
-          console.log('Course removed from wishlist successfully');
           this.toastr.success("Course removed from wishlist");
 
           this.isInWishlist = false;
@@ -140,7 +139,7 @@ export class CourseMainPageComponent implements OnInit {
     this.boughtCourseService.isCourseBought(this.courseId).subscribe({
       next: res => {
         this.isCourseBought = res.isBought;
-        console.log(res.isBought);
+
 
       },
       error: error => console.log(error)
@@ -153,7 +152,7 @@ export class CourseMainPageComponent implements OnInit {
     this.rateService.getAvgCourseRate(this.courseId).subscribe({
       next: res => {
         this.avgRating = res.avgRating;
-        console.log(res);
+
 
 
       }

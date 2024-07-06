@@ -31,7 +31,6 @@ export class WishlistComponent implements OnInit {
       .subscribe(
         (wishlist: Course[]) => {
           this.wishlist = wishlist;
-          console.log(this.wishlist)
         },
         (error) => {
           console.error('Error loading wishlist:', error);

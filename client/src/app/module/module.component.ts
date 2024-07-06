@@ -38,7 +38,7 @@ export class ModuleComponent implements OnInit {
   ngOnInit(): void {
     //this.getCourses();
     this.courseDataService.currentCourseId.subscribe(courseId => {
-      console.log('Received courseId:', courseId);
+      // console.log('Received courseId:', courseId);
       this.courseId = courseId;
     });
   }

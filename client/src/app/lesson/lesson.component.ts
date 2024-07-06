@@ -75,7 +75,6 @@ export class LessonComponent implements OnInit {
           this.toastr.error(err.error)
         }
       });
-      console.log("Modles: ",this.Modules);
   }
 
   onFileChange(event: any): void {

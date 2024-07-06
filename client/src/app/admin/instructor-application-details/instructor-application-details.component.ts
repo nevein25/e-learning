@@ -33,7 +33,7 @@ export class InstructorApplicationDetailsComponent implements OnInit {
   loadApplication() {
     this.instructorService.getApplication(this.instructorId).subscribe({
       next: res => {
-        console.log(res);
+
         this.application = res
       },
       error: error => console.log(error)
@@ -44,7 +44,7 @@ export class InstructorApplicationDetailsComponent implements OnInit {
   verifyApplication() {
     this.instructorService.verifyApplication(this.instructorId).subscribe({
       next: res => {
-        console.log(res);
+
         this.toastr.success("Application Verified Successfuly")
       },
       error: error => console.log(error)

@@ -20,7 +20,6 @@ export class CertificateService {
     return this.http.get<Certificate>(`${this.baseUrl}certificates/${courseId}`).subscribe({
       next: res => {
         this.certifcate = res;
-        console.log(res);
         this.generatePdfCertificate(this.certifcate);
 
       },

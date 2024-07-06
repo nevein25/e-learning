@@ -27,7 +27,6 @@ export class BoughtCoursesListComponent implements OnInit {
     this.boughtCourses.coursesBoughtList().subscribe({
       next: res => {
         this.courses = res;
-        console.log(this.courses);
 
       },
       error: error => console.error(error)

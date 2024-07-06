@@ -38,7 +38,10 @@ export class RegisterComponent {
     this.accountService.register(this.model).subscribe({
       next: response => {
         this.toaster.success("Registration Successful!");
-        this.UploadPaper();
+
+        if (this.model.role === Role.Instructor)
+          this.UploadPaper();
+        
         this.router.navigate(['/', 'login']);
 
       },
@@ -73,7 +76,6 @@ export class RegisterComponent {
 
   // OnClick of button Upload
   UploadPaper() {
-    console.log(this.file);
     this.instructorService.uploadPaper(this.file, this.model.username).subscribe({
       next: _ => {
         //this.router.navigate(['/', 'course']);

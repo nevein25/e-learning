@@ -41,20 +41,16 @@ export class LoginComponent {
           this.router.navigate(['/', 'course-list']);
 
         else if (this.role === "Instructor") {
-          if (this.accountService.isInstructorVerfied() === "True") {
-            console.log("trrrrr");
-            console.log(typeof this.accountService.isInstructorVerfied());
+          if (this.accountService.isInstructorVerfied()) {
 
 
             this.router.navigate(['/', 'course']);
           }
           else {
-            console.log("ffffffff");
 
             this.router.navigate(['/', 'instructor-home']);
 
           }
-          console.log(this.accountService.isInstructorVerfied());
 
         }
 

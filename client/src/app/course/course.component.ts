@@ -88,9 +88,9 @@ export class CourseComponent implements OnInit {
       formData.append('categoryId', this.courseForm.get('cCategory')?.value);
       formData.append('thumbnail', this.selectedFile);
   
-      console.log('Form Data:');
+      // console.log('Form Data:');
       formData.forEach((value, key) => {
-        console.log(`${key}: ${value}`);
+        // console.log(`${key}: ${value}`);
       });
   
       this.courseService.addCourse(formData).subscribe({

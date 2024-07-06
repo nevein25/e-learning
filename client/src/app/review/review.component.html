@@ -81,7 +81,7 @@
 </ng-container>
 
 @if (isCourseBought) {
-<div  class="input-group mb-3">
+<div  class="input-group mb-3" *appHasRole="['Student']">
   <form  #reviewForm="ngForm" class="d-flex comment-input-con" 
     autocomplete="off">
     <input id="review" class="form-control" type="text" [(ngModel)]="review.text" name="text" #text="ngModel"

@@ -24,7 +24,7 @@ export class RateComponent implements OnInit {
   toastr = inject(ToastrService);
 
   max = 5;
-  rate = 5;
+  rate = 0;
   rateing: Rate = {
     stars: 0,
     courseId: 0
@@ -48,7 +48,7 @@ export class RateComponent implements OnInit {
         // if (this.newRate === 0)
         //   this.toastr.success("Rate removed successfully");
 
-         if (this.newRate !== this.oldRate)
+        if (this.newRate !== this.oldRate)
           this.toastr.success("Rated successfully");
 
         else {
@@ -56,7 +56,7 @@ export class RateComponent implements OnInit {
           this.rate = 0;
         }
 
-        this.oldRate = this.newRate; 
+        this.oldRate = this.newRate;
       },
       error: _ => this.toastr.error("Something went wrong")
     });
@@ -65,9 +65,12 @@ export class RateComponent implements OnInit {
   getRate() {
     this.rateService.getCourseRate(this.id()).subscribe({
       next: res => {
-        this.rate = res.stars;
-        this.oldRate = res.stars;
-        console.log(`old ${this.oldRate}`);
+        if (res) {
+          this.rate = res.stars;
+          this.oldRate = res.stars;
+
+
+        }
       }
     });
   }

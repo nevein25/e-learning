@@ -51,7 +51,7 @@ To get started with Learn'It, follow these steps:
         dotnet restore
         ```
 
-    - Update the `appsettings.json` file with your SQL Server and Cloudinary credentials.
+    - Update the `appsettings.json` file with your SQL Server, Stripe and Cloudinary credentials.
     
     - Run the API:
     
